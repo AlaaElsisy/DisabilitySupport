@@ -1,0 +1,6 @@
+@DisabilitySupport_HostAddress = http://localhost:5067
+
+GET {{DisabilitySupport_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
