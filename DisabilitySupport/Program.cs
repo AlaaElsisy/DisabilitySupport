@@ -5,7 +5,11 @@ using DisabilitySupport.BLL.Services;
 using DisabilitySupport.DAL.Data;
 using DisabilitySupport.DAL.Interfaces;
 using DisabilitySupport.DAL.Models;
+
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+
 using DisabilitySupport.DAL.Repositories;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -57,6 +61,17 @@ namespace DisabilitySupport
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                        .AddEntityFrameworkStores<ApplicationDbContext>()
                        .AddDefaultTokenProviders();
+
+            #endregion
+
+            #region Authentication
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            });
             #endregion
             var app = builder.Build();
 
