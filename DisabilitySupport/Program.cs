@@ -1,10 +1,15 @@
 
 using DisabilitySupport.BLL.Interfaces;
 using DisabilitySupport.BLL.Mapping;
+using DisabilitySupport.BLL.Services;
 using DisabilitySupport.DAL.Data;
 using DisabilitySupport.DAL.Interfaces;
 using DisabilitySupport.DAL.Models;
+
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+
 using DisabilitySupport.DAL.Repositories;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -41,17 +46,35 @@ namespace DisabilitySupport
             #region  add repos
             // DAL
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+ 
             builder.Services.AddScoped<IHelperRequestRepository, HelperRequestRepository>();
+ 
+            builder.Services.AddScoped<IDisabledRequestRepository, DisabledRequestRepository>();
+ 
 
             // BLL
             builder.Services.AddScoped<BLL.Interfaces.IHelperService, BLL.Services.HelperService>();
+            builder.Services.AddScoped<IServiceRequestService, ServiceRequestService>();
 
+            //Unit Of Work
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             #endregion
             #region identity
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                        .AddEntityFrameworkStores<ApplicationDbContext>()
                        .AddDefaultTokenProviders();
+
+            #endregion
+
+            #region Authentication
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            });
             #endregion
             var app = builder.Build();
 

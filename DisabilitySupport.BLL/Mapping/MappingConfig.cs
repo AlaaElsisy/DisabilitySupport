@@ -15,10 +15,11 @@ namespace DisabilitySupport.BLL.Mapping
         
             CreateMap<HelperRequest,HelperRequestDto>().ReverseMap();
             CreateMap<HelperService,HelperServiceDto>().ReverseMap();
-        
-        
+
+            CreateMap<DisabledRequest, DisabledRequestDto>()
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()))
+                .ReverseMap()
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => Enum.Parse<DisabilitySupport.DAL.Models.Enumerations.RequestStatus>(src.Status)));
         }
-
-
     }
 }

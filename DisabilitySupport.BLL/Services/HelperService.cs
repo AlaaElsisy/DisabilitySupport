@@ -15,26 +15,24 @@ namespace DisabilitySupport.BLL.Services
 {
     public class HelperService : IHelperService
     {
-        public IHelperRepository _helperRepository { get; }
+        public IHelperRequestRepository _helperRepository { get; }
         public IGenericRepository<HelperService> _helperServiceRepo { get; }
 
         private readonly IMapper _mapper;
-        public HelperService(IMapper mapper,IHelperRepository helperRepository , IGenericRepository<HelperService> helperServiceRepo)
+        public HelperService(IMapper mapper, IHelperRequestRepository helperRepository , IGenericRepository<HelperService> helperServiceRepo)
         { 
             _mapper = mapper;
             _helperRepository = helperRepository;
             _helperServiceRepo = helperServiceRepo;
         }
 
-         
-
+                
         public async Task AddHelperRequestAsync(HelperRequestDto dto)
         {
             try {
                 var request = _mapper.Map<HelperRequest>(dto);
                 await _helperRepository.Add(request);
                 await _helperRepository.Save();
-
 
             }
             catch (Exception ex)

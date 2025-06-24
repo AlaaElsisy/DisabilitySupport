@@ -13,3 +13,8 @@ namespace DisabilitySupport.DAL.Interfaces
         Task<List<HelperService>> GetServicesByHelperId(int helperId);
     }
 }
+
+
+
+
+

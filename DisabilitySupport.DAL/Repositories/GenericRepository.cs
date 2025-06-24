@@ -11,7 +11,7 @@ namespace DisabilitySupport.DAL.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        public ApplicationDbContext _Context { get; }
+        public ApplicationDbContext _Context { get; }   
 
         public GenericRepository(ApplicationDbContext applicationDbContext) {
             _Context = applicationDbContext;
