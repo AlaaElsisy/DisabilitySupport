@@ -1,6 +1,7 @@
 
 using DisabilitySupport.BLL.Interfaces;
 using DisabilitySupport.BLL.Mapping;
+using DisabilitySupport.BLL.Services;
 using DisabilitySupport.DAL.Data;
 using DisabilitySupport.DAL.Interfaces;
 using DisabilitySupport.DAL.Models;
@@ -42,10 +43,14 @@ namespace DisabilitySupport
             // DAL
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             builder.Services.AddScoped<IHelperRepository, HelperRepository>();
+            builder.Services.AddScoped<IDisabledRequestRepository, DisabledRequestRepository>();
 
             // BLL
             builder.Services.AddScoped<BLL.Interfaces.IHelperService, BLL.Services.HelperService>();
+            builder.Services.AddScoped<IServiceRequestService, ServiceRequestService>();
 
+            //Unit Of Work
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             #endregion
             #region identity
