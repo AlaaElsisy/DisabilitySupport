@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 using DisabilitySupport.DAL.Models;
 using DisabilitySupport.DAL.Models.Enumerations;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace DisabilitySupport.DAL.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
         {
@@ -30,6 +31,8 @@ namespace DisabilitySupport.DAL.Data
         public virtual DbSet<HelperRequest>? HelperRequests { get; set; }
         public virtual DbSet<Payment>? Payments { get; set; }
         public virtual DbSet<ServiceCategory> ServiceCategories { get; set; }
+
+
 
 
     }
