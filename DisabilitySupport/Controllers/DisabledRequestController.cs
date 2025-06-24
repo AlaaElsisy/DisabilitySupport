@@ -17,10 +17,17 @@ namespace DisabilitySupport.Api.Controllers
             _service = service;
         }
 
+
+         // To get all requests by DisabledId:
+        // GET /api/DisabledRequest?disabledId=5
+        //
+        // To get all requests by HelperServiceId:
+        // GET /api/DisabledRequest?helperServiceId=10
+        
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetPaged([FromQuery] DisabledRequestQueryDto query)
         {
-            var result = await _service.GetAllAsync();
+            var result = await _service.GetPagedAsync(query);
             return Ok(result);
         }
 
@@ -57,5 +64,7 @@ namespace DisabilitySupport.Api.Controllers
             if (!deleted) return NotFound();
             return NoContent();
         }
+
+       
     }
 }
