@@ -26,15 +26,13 @@ namespace DisabilitySupport.BLL.Services
             _helperServiceRepo = helperServiceRepo;
         }
 
-         
-
+                
         public async Task AddHelperRequestAsync(HelperRequestDto dto)
         {
             try {
                 var request = _mapper.Map<HelperRequest>(dto);
                 await _helperRepository.Add(request);
                 await _helperRepository.Save();
-
 
             }
             catch (Exception ex)
