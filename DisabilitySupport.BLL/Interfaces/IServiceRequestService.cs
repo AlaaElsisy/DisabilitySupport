@@ -10,11 +10,9 @@ namespace DisabilitySupport.BLL.Interfaces
     {
         Task<DisabledRequestDto> CreateAsync(DisabledRequestDto dto);
         Task<DisabledRequestDto> GetByIdAsync(int id);
-        Task<IEnumerable<DisabledRequestDto>> GetAllAsync();
-        Task<IEnumerable<DisabledRequestDto>> GetByDisabledIdAsync(int disabledId);
-        Task<IEnumerable<DisabledRequestDto>> GetByHelperServiceIdAsync(int helperServiceId);
         Task<bool> UpdateStatusAsync(int requestId, RequestStatus status);
         Task<bool> UpdateAsync(DisabledRequestDto dto);
         Task<bool> DeleteAsync(int id);
+        Task<PaginatedResult<DisabledRequestDto>> GetPagedAsync(DisabledRequestQueryDto query);
     }
 }

@@ -38,24 +38,6 @@ namespace DisabilitySupport.BLL.Services
             return _mapper.Map<DisabledRequestDto>(entity);
         }
 
-        public async Task<IEnumerable<DisabledRequestDto>> GetAllAsync()
-        {
-            var entities = await _unitOfWork._disabledRequestRepository.GetAll();
-            return entities.Select(_mapper.Map<DisabledRequestDto>);
-        }
-
-        public async Task<IEnumerable<DisabledRequestDto>> GetByDisabledIdAsync(int disabledId)
-        {
-            var entities = await _unitOfWork._disabledRequestRepository.GetAll();
-            return entities.Where(x => x.DisabledId == disabledId).Select(_mapper.Map<DisabledRequestDto>);
-        }
-
-        public async Task<IEnumerable<DisabledRequestDto>> GetByHelperServiceIdAsync(int helperServiceId)
-        {
-            var entities = await _unitOfWork._disabledRequestRepository.GetAll();
-            return entities.Where(x => x.HelperServiceId == helperServiceId).Select(_mapper.Map<DisabledRequestDto>);
-        }
-
         public async Task<bool> UpdateStatusAsync(int requestId, RequestStatus status)
         {
             var entity = await _unitOfWork._disabledRequestRepository.GetById(requestId);
@@ -83,6 +65,34 @@ namespace DisabilitySupport.BLL.Services
             await _unitOfWork._disabledRequestRepository.Delete(id);
             await _unitOfWork._disabledRequestRepository.Save();
             return true;
+        }
+
+        public async Task<PaginatedResult<DisabledRequestDto>> GetPagedAsync(DisabledRequestQueryDto query)
+        {
+            var entities = await _unitOfWork._disabledRequestRepository.GetAll();
+            var filtered = entities.AsQueryable();
+
+            if (query.DisabledId.HasValue)
+                filtered = filtered.Where(x => x.DisabledId == query.DisabledId.Value);
+            if (query.HelperServiceId.HasValue)
+                filtered = filtered.Where(x => x.HelperServiceId == query.HelperServiceId.Value);
+            if (!string.IsNullOrEmpty(query.Status))
+                filtered = filtered.Where(x =>x.Status.ToString().ToLower() == query.Status.ToLower());
+            if (!string.IsNullOrEmpty(query.SearchWord))
+                filtered = filtered.Where(x => (x.Description != null && x.Description.ToLower().Contains(query.SearchWord.ToLower())));
+
+            var totalCount = filtered.Count();
+            var items = filtered
+                .Skip((query.PageNumber - 1) * query.PageSize)
+                .Take(query.PageSize)
+                .Select(_mapper.Map<DisabledRequestDto>)
+                .ToList();
+
+            return new PaginatedResult<DisabledRequestDto>
+            {
+                Items = items,
+                TotalCount = totalCount
+            };
         }
     }
 }
