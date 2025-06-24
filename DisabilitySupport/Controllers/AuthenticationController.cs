@@ -33,7 +33,8 @@ namespace DisabilitySupport.Api.Controllers
             ApplicationUser user = new() { 
             Email = registerUser.Email,
             SecurityStamp = Guid.NewGuid().ToString(),
-            UserName = registerUser.FullName
+            FullName = registerUser.FullName,
+                UserName = registerUser.FullName
             };
 
             if (await roleManager.RoleExistsAsync(role))

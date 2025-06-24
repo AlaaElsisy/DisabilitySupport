@@ -107,6 +107,42 @@ namespace DisabilitySupport.DAL.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "2a3d9830-a243-4815-8ac3-917c222ca294",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "7a3f3df3-8ad7-4895-98a5-39310b926ada",
+                            Email = "elsisyalaa0@gmail.com",
+                            EmailConfirmed = false,
+                            FullName = "AlaaElsisy",
+                            LockoutEnabled = true,
+                            NormalizedEmail = "ELSISYALAA0@GMAIL.COM",
+                            NormalizedUserName = "ALAAELSISY",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPlYF+M2akELjIIoTDDtq90WHNEeqahwPbJxZWXd/1+LjhddpGYl3EN1gEvBtKDDZA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "5DBNFQNNIEM27IABAZQG2XURQSJC225I",
+                            TwoFactorEnabled = false,
+                            UserName = "AlaaElsisy"
+                        },
+                        new
+                        {
+                            Id = "ADMIN-USER-001",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "STATIC-CONCURRENCY-STAMP-001",
+                            Email = "admin@site.com",
+                            EmailConfirmed = true,
+                            FullName = "Admin User",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@SITE.COM",
+                            NormalizedUserName = "ADMIN@SITE.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIjJh6/LXD2Bg+3MJGc+CmiaE471FJWBEmlTQ/1OhqkFw0NIgG/beU7wkTfmnuQ/sQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "STATIC-SECURITY-STAMP-001",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@site.com"
+                        });
                 });
 
             modelBuilder.Entity("DisabilitySupport.DAL.Models.Disabled", b =>
@@ -141,6 +177,18 @@ namespace DisabilitySupport.DAL.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("DisabledPeople");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DisabilityType = "Mobility Impairment",
+                            EmergencyContactName = "Ahmed Elsisy",
+                            EmergencyContactPhone = "0123456789",
+                            EmergencyContactRelation = "Brother",
+                            MedicalConditionDescription = "Unable to walk long distances",
+                            UserId = "2a3d9830-a243-4815-8ac3-917c222ca294"
+                        });
                 });
 
             modelBuilder.Entity("DisabilitySupport.DAL.Models.DisabledOffer", b =>
@@ -152,6 +200,7 @@ namespace DisabilitySupport.DAL.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<decimal?>("Budget")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Description")
@@ -180,6 +229,19 @@ namespace DisabilitySupport.DAL.Migrations
                     b.HasIndex("ServiceCategorId");
 
                     b.ToTable("DisabledOffers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Budget = 500m,
+                            Description = "Need transportation to hospital every Monday",
+                            DisabledId = 1,
+                            OfferPostDate = new DateTime(2024, 6, 24, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            ServiceCategorId = 1,
+                            ServiceTime = new DateTime(2024, 6, 26, 14, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 0
+                        });
                 });
 
             modelBuilder.Entity("DisabilitySupport.DAL.Models.DisabledRequest", b =>
@@ -212,6 +274,17 @@ namespace DisabilitySupport.DAL.Migrations
                     b.HasIndex("HelperServiceId");
 
                     b.ToTable("DisabledRequests");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Medical check-up request",
+                            DisabledId = 1,
+                            HelperServiceId = 1,
+                            RequestDate = new DateTime(2024, 6, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 0
+                        });
                 });
 
             modelBuilder.Entity("DisabilitySupport.DAL.Models.Helper", b =>
@@ -233,6 +306,14 @@ namespace DisabilitySupport.DAL.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Helpers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Bio = "I have experience assisting people with mobility challenges.",
+                            UserId = "ADMIN-USER-001"
+                        });
                 });
 
             modelBuilder.Entity("DisabilitySupport.DAL.Models.HelperRequest", b =>
@@ -259,6 +340,7 @@ namespace DisabilitySupport.DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal?>("TotalPrice")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -268,6 +350,18 @@ namespace DisabilitySupport.DAL.Migrations
                     b.HasIndex("HelperId");
 
                     b.ToTable("HelperRequests");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ApplicationDate = new DateTime(2024, 6, 23, 15, 30, 0, 0, DateTimeKind.Unspecified),
+                            DisabledOfferId = 1,
+                            HelperId = 1,
+                            Message = "I can help with transportation.",
+                            Status = 0,
+                            TotalPrice = 400m
+                        });
                 });
 
             modelBuilder.Entity("DisabilitySupport.DAL.Models.HelperService", b =>
@@ -294,6 +388,7 @@ namespace DisabilitySupport.DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal?>("PricePerHour")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("ServiceCategoryId")
@@ -306,6 +401,19 @@ namespace DisabilitySupport.DAL.Migrations
                     b.HasIndex("ServiceCategoryId");
 
                     b.ToTable("HelperServices");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AvailableDateFrom = new DateTime(2024, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            AvailableDateTo = new DateTime(2024, 7, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2024, 6, 20, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Transportation support",
+                            HelperId = 1,
+                            PricePerHour = 100m,
+                            ServiceCategoryId = 1
+                        });
                 });
 
             modelBuilder.Entity("DisabilitySupport.DAL.Models.Payment", b =>
@@ -317,6 +425,7 @@ namespace DisabilitySupport.DAL.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<decimal>("Amount")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("Date")
@@ -341,6 +450,18 @@ namespace DisabilitySupport.DAL.Migrations
                     b.HasIndex("HelperRequestId");
 
                     b.ToTable("Payments");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Amount = 400m,
+                            Date = new DateTime(2024, 6, 24, 18, 45, 0, 0, DateTimeKind.Unspecified),
+                            DisabledRequestId = 1,
+                            HelperRequestId = 1,
+                            PaymentMethod = "Credit Card",
+                            Status = 1
+                        });
                 });
 
             modelBuilder.Entity("DisabilitySupport.DAL.Models.ServiceCategory", b =>
@@ -361,6 +482,20 @@ namespace DisabilitySupport.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ServiceCategories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Help with getting to appointments",
+                            Name = "Transportation"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "First aid or ongoing medical support",
+                            Name = "Medical Aid"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

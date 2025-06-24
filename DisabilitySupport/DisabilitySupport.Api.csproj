@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DisabilitySupport.BLL\DisabilitySupport.BLL.csproj" />
+    <ProjectReference Include="..\DisabilitySupport.DAL\DisabilitySupport.DAL.csproj" />
   </ItemGroup>
 
 </Project>

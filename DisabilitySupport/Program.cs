@@ -1,9 +1,18 @@
 
+using DisabilitySupport.BLL.Interfaces;
+using DisabilitySupport.BLL.Mapping;
+using DisabilitySupport.BLL.Services;
 using DisabilitySupport.DAL.Data;
+using DisabilitySupport.DAL.Interfaces;
 using DisabilitySupport.DAL.Models;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+
+using DisabilitySupport.DAL.Repositories;
+
 using Microsoft.AspNetCore.Identity;
- using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
  
 
 namespace DisabilitySupport
@@ -20,7 +29,9 @@ namespace DisabilitySupport
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
-
+            #region AutoMapper
+            builder.Services.AddAutoMapper(typeof(MappingConfig));
+            #endregion
             #region swagger
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -32,6 +43,20 @@ namespace DisabilitySupport
             });
             #endregion
 
+            #region  add repos
+            // DAL
+            builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            builder.Services.AddScoped<IHelperRepository, HelperRepository>();
+            builder.Services.AddScoped<IDisabledRequestRepository, DisabledRequestRepository>();
+
+            // BLL
+            builder.Services.AddScoped<BLL.Interfaces.IHelperService, BLL.Services.HelperService>();
+            builder.Services.AddScoped<IServiceRequestService, ServiceRequestService>();
+
+            //Unit Of Work
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            #endregion
             #region identity
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                        .AddEntityFrameworkStores<ApplicationDbContext>()

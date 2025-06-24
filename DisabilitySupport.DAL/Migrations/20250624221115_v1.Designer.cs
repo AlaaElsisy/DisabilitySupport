@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DisabilitySupport.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250620035143_CreateDisabilitySystemSchema")]
-    partial class CreateDisabilitySystemSchema
+    [Migration("20250624221115_v1")]
+    partial class v1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,6 +37,7 @@ namespace DisabilitySupport.DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("CreatedAt")
@@ -46,7 +47,8 @@ namespace DisabilitySupport.DAL.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
@@ -65,10 +67,12 @@ namespace DisabilitySupport.DAL.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -89,14 +93,59 @@ namespace DisabilitySupport.DAL.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("Zone")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("ApplicationUser");
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "2a3d9830-a243-4815-8ac3-917c222ca294",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "7a3f3df3-8ad7-4895-98a5-39310b926ada",
+                            Email = "elsisyalaa0@gmail.com",
+                            EmailConfirmed = false,
+                            FullName = "AlaaElsisy",
+                            LockoutEnabled = true,
+                            NormalizedEmail = "ELSISYALAA0@GMAIL.COM",
+                            NormalizedUserName = "ALAAELSISY",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPlYF+M2akELjIIoTDDtq90WHNEeqahwPbJxZWXd/1+LjhddpGYl3EN1gEvBtKDDZA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "5DBNFQNNIEM27IABAZQG2XURQSJC225I",
+                            TwoFactorEnabled = false,
+                            UserName = "AlaaElsisy"
+                        },
+                        new
+                        {
+                            Id = "ADMIN-USER-001",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "STATIC-CONCURRENCY-STAMP-001",
+                            Email = "admin@site.com",
+                            EmailConfirmed = true,
+                            FullName = "Admin User",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@SITE.COM",
+                            NormalizedUserName = "ADMIN@SITE.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIjJh6/LXD2Bg+3MJGc+CmiaE471FJWBEmlTQ/1OhqkFw0NIgG/beU7wkTfmnuQ/sQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "STATIC-SECURITY-STAMP-001",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@site.com"
+                        });
                 });
 
             modelBuilder.Entity("DisabilitySupport.DAL.Models.Disabled", b =>
@@ -131,6 +180,18 @@ namespace DisabilitySupport.DAL.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("DisabledPeople");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DisabilityType = "Mobility Impairment",
+                            EmergencyContactName = "Ahmed Elsisy",
+                            EmergencyContactPhone = "0123456789",
+                            EmergencyContactRelation = "Brother",
+                            MedicalConditionDescription = "Unable to walk long distances",
+                            UserId = "2a3d9830-a243-4815-8ac3-917c222ca294"
+                        });
                 });
 
             modelBuilder.Entity("DisabilitySupport.DAL.Models.DisabledOffer", b =>
@@ -142,6 +203,7 @@ namespace DisabilitySupport.DAL.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<decimal?>("Budget")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Description")
@@ -170,6 +232,19 @@ namespace DisabilitySupport.DAL.Migrations
                     b.HasIndex("ServiceCategorId");
 
                     b.ToTable("DisabledOffers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Budget = 500m,
+                            Description = "Need transportation to hospital every Monday",
+                            DisabledId = 1,
+                            OfferPostDate = new DateTime(2024, 6, 24, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            ServiceCategorId = 1,
+                            ServiceTime = new DateTime(2024, 6, 26, 14, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 0
+                        });
                 });
 
             modelBuilder.Entity("DisabilitySupport.DAL.Models.DisabledRequest", b =>
@@ -202,6 +277,17 @@ namespace DisabilitySupport.DAL.Migrations
                     b.HasIndex("HelperServiceId");
 
                     b.ToTable("DisabledRequests");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Medical check-up request",
+                            DisabledId = 1,
+                            HelperServiceId = 1,
+                            RequestDate = new DateTime(2024, 6, 21, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 0
+                        });
                 });
 
             modelBuilder.Entity("DisabilitySupport.DAL.Models.Helper", b =>
@@ -223,6 +309,14 @@ namespace DisabilitySupport.DAL.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Helpers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Bio = "I have experience assisting people with mobility challenges.",
+                            UserId = "ADMIN-USER-001"
+                        });
                 });
 
             modelBuilder.Entity("DisabilitySupport.DAL.Models.HelperRequest", b =>
@@ -249,6 +343,7 @@ namespace DisabilitySupport.DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal?>("TotalPrice")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -258,6 +353,18 @@ namespace DisabilitySupport.DAL.Migrations
                     b.HasIndex("HelperId");
 
                     b.ToTable("HelperRequests");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ApplicationDate = new DateTime(2024, 6, 23, 15, 30, 0, 0, DateTimeKind.Unspecified),
+                            DisabledOfferId = 1,
+                            HelperId = 1,
+                            Message = "I can help with transportation.",
+                            Status = 0,
+                            TotalPrice = 400m
+                        });
                 });
 
             modelBuilder.Entity("DisabilitySupport.DAL.Models.HelperService", b =>
@@ -284,6 +391,7 @@ namespace DisabilitySupport.DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal?>("PricePerHour")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("ServiceCategoryId")
@@ -296,6 +404,19 @@ namespace DisabilitySupport.DAL.Migrations
                     b.HasIndex("ServiceCategoryId");
 
                     b.ToTable("HelperServices");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AvailableDateFrom = new DateTime(2024, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            AvailableDateTo = new DateTime(2024, 7, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2024, 6, 20, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Transportation support",
+                            HelperId = 1,
+                            PricePerHour = 100m,
+                            ServiceCategoryId = 1
+                        });
                 });
 
             modelBuilder.Entity("DisabilitySupport.DAL.Models.Payment", b =>
@@ -307,6 +428,7 @@ namespace DisabilitySupport.DAL.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<decimal>("Amount")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("Date")
@@ -331,6 +453,18 @@ namespace DisabilitySupport.DAL.Migrations
                     b.HasIndex("HelperRequestId");
 
                     b.ToTable("Payments");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Amount = 400m,
+                            Date = new DateTime(2024, 6, 24, 18, 45, 0, 0, DateTimeKind.Unspecified),
+                            DisabledRequestId = 1,
+                            HelperRequestId = 1,
+                            PaymentMethod = "Credit Card",
+                            Status = 1
+                        });
                 });
 
             modelBuilder.Entity("DisabilitySupport.DAL.Models.ServiceCategory", b =>
@@ -351,6 +485,153 @@ namespace DisabilitySupport.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ServiceCategories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Help with getting to appointments",
+                            Name = "Transportation"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "First aid or ongoing medical support",
+                            Name = "Medical Aid"
+                        });
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
                 });
 
             modelBuilder.Entity("DisabilitySupport.DAL.Models.Disabled", b =>
@@ -446,6 +727,57 @@ namespace DisabilitySupport.DAL.Migrations
                     b.Navigation("DisabledRequest");
 
                     b.Navigation("HelperRequest");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("DisabilitySupport.DAL.Models.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("DisabilitySupport.DAL.Models.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DisabilitySupport.DAL.Models.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("DisabilitySupport.DAL.Models.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DisabilitySupport.DAL.Models.Disabled", b =>
