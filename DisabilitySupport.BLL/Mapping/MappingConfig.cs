@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using DisabilitySupport.BLL.DTOs;
+using DisabilitySupport.BLL.DTOs.helper;
+using DisabilitySupport.BLL.DTOs.helper.service;
 using DisabilitySupport.DAL.Models;
 
 namespace DisabilitySupport.BLL.Mapping
@@ -15,6 +17,8 @@ namespace DisabilitySupport.BLL.Mapping
         
             CreateMap<HelperRequest,HelperRequestDto>().ReverseMap();
             CreateMap<HelperService,HelperServiceDto>().ReverseMap();
+            CreateMap<HelperService, UpdateHelperServiceDto>().ReverseMap();
+
 
             CreateMap<DisabledRequest, DisabledRequestDto>()
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()))

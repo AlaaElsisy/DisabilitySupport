@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DisabilitySupport.BLL.DTOs
+namespace DisabilitySupport.BLL.DTOs.helper
 {
     public class HelperRequestDto
     {

@@ -10,7 +10,7 @@ namespace DisabilitySupport.DAL.Interfaces
     public interface IHelperRequestRepository: IGenericRepository<HelperRequest>
     {
         Task<List<HelperRequest>> GetHelperRequestByHelperId(int helperId);
-        Task<List<HelperService>> GetServicesByHelperId(int helperId);
+       
     }
 }
 

@@ -1,5 +1,6 @@
 ﻿using DisabilitySupport.DAL.Data;
 using DisabilitySupport.DAL.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +14,22 @@ namespace DisabilitySupport.DAL.Repositories
         private readonly ApplicationDbContext _context;
 
         public IDisabledRequestRepository _disabledRequestRepository {  get; set; }
+
+        public IHelperServiceRepository _helperServiceRepository { get; set; }
   
-        public UnitOfWork(ApplicationDbContext context , IDisabledRequestRepository disabledRequestRepository)
+        public UnitOfWork(ApplicationDbContext context , IDisabledRequestRepository disabledRequestRepository
+            ,IHelperServiceRepository helperServiceRepository)
         {
             _context = context;
             _disabledRequestRepository = disabledRequestRepository;
+            _helperServiceRepository = helperServiceRepository;
         }
 
+
+        
+        public async Task Save()
+        {
+            await _context.SaveChangesAsync();
+        }
     }
 }
