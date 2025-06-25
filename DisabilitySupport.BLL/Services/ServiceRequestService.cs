@@ -69,25 +69,16 @@ namespace DisabilitySupport.BLL.Services
 
         public async Task<PaginatedResult<DisabledRequestDto>> GetPagedAsync(DisabledRequestQueryDto query)
         {
-            var entities = await _unitOfWork._disabledRequestRepository.GetAll();
-            var filtered = entities.AsQueryable();
+            var (entities, totalCount) = await _unitOfWork._disabledRequestRepository.GetPagedAsync(
+                query.DisabledId,
+                query.HelperServiceId,
+                query.Status,
+                query.SearchWord,
+                query.PageNumber,
+                query.PageSize
+            );
 
-            if (query.DisabledId.HasValue)
-                filtered = filtered.Where(x => x.DisabledId == query.DisabledId.Value);
-            if (query.HelperServiceId.HasValue)
-                filtered = filtered.Where(x => x.HelperServiceId == query.HelperServiceId.Value);
-            if (!string.IsNullOrEmpty(query.Status))
-                filtered = filtered.Where(x =>x.Status.ToString().ToLower() == query.Status.ToLower());
-            if (!string.IsNullOrEmpty(query.SearchWord))
-                filtered = filtered.Where(x => (x.Description != null && x.Description.ToLower().Contains(query.SearchWord.ToLower())));
-
-            var totalCount = filtered.Count();
-            var items = filtered
-                .Skip((query.PageNumber - 1) * query.PageSize)
-                .Take(query.PageSize)
-                .Select(_mapper.Map<DisabledRequestDto>)
-                .ToList();
-
+            var items = entities.Select(_mapper.Map<DisabledRequestDto>).ToList();
             return new PaginatedResult<DisabledRequestDto>
             {
                 Items = items,

@@ -14,5 +14,27 @@ namespace DisabilitySupport.DAL.Repositories
         public DisabledRequestRepository(ApplicationDbContext context) : base(context)
         {
         } 
+
+        public async Task<(IEnumerable<DisabledRequest> Items, int TotalCount)> GetPagedAsync(int? disabledId, int? helperServiceId, string status, string? searchWord, int pageNumber, int pageSize)
+        {
+            var query = _Context.DisabledRequests.AsQueryable();
+
+            if (disabledId.HasValue)
+                query = query.Where(x => x.DisabledId == disabledId.Value);
+            if (helperServiceId.HasValue)
+                query = query.Where(x => x.HelperServiceId == helperServiceId.Value);
+            if (!string.IsNullOrEmpty(status))
+                query = query.Where(x => x.Status.ToString().ToLower() == status.ToLower());
+            if (!string.IsNullOrEmpty(searchWord))
+                query = query.Where(x => x.Description != null && x.Description.ToLower().Contains(searchWord.ToLower()));
+
+            var totalCount = await Task.FromResult(query.Count());
+            var items = await Task.FromResult(query
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList());
+
+            return (items, totalCount);
+        }
     }
 }
