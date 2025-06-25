@@ -34,5 +34,21 @@ namespace DisabilitySupport.DAL.Repositories
         {
             return await _Context.HelperServices.AnyAsync(s => s.Id == id);
         }
+
+        public async Task<(IEnumerable<HelperService> Items, int TotalCount)> GetPagedByHelperIdAsync(
+            int helperId,  int pageNumber = 1, int pageSize = 10)
+        {
+            var query = _Context.HelperServices
+                .Where(x => x.HelperId == helperId)
+                .OrderBy(x => x.Id);  
+
+            var totalCount = await query.CountAsync();
+            var items = await query
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return (items, totalCount);
+        }
     }
 }

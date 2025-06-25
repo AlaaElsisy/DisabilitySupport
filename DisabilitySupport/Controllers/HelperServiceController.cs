@@ -140,5 +140,23 @@ namespace DisabilitySupport.Api.Controllers
             }
         }
 
+        [HttpGet("paged-by-helper/{helperId}")]
+        public async Task<IActionResult> GetPagedByHelperId( int helperId, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        {
+            try
+            {
+                var result = await _helperService.GetPagedByHelperIdAsync(helperId, page, pageSize);
+                return Ok(result);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Internal server error", details = ex.Message });
+            }
+        }
+
     }
 }
