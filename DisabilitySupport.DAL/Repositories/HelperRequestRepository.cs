@@ -10,28 +10,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DisabilitySupport.DAL.Repositories
 {
-    public class HelperRepository : GenericRepository<HelperRequest>, IHelperRepository
+    public class HelperRequestRepository : GenericRepository<HelperRequest>, IHelperRequestRepository
     {
-        private readonly ApplicationDbContext _context;
-        public HelperRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
+        
+        public HelperRequestRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
         {
-            _context = applicationDbContext;
+           
         }
 
         public async Task<List<HelperRequest>> GetHelperRequestByHelperId(int helperId)
         {
-           return await _context.HelperRequests
+           return await _Context.HelperRequests
                 .Include(x => x.DisabledOffer)
                  .Where(r => r.HelperId == helperId)
                 .ToListAsync();
         }
 
-        public async Task<List<HelperService>> GetServicesByHelperId(int helperId)
-        {
-            return await _context.HelperServices
-            .Where(s => s.HelperId == helperId)
-            .ToListAsync();
-        }
+       
     }
  
 }

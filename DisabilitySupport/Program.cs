@@ -46,11 +46,16 @@ namespace DisabilitySupport
             #region  add repos
             // DAL
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-            builder.Services.AddScoped<IHelperRepository, HelperRepository>();
+ 
+            builder.Services.AddScoped<IHelperRequestRepository, HelperRequestRepository>();
+            builder.Services.AddScoped<DAL.Interfaces.IHelperServiceRepository, DAL.Repositories. HelperServiceRepository>();
+
+
             builder.Services.AddScoped<IDisabledRequestRepository, DisabledRequestRepository>();
+ 
 
             // BLL
-            builder.Services.AddScoped<BLL.Interfaces.IHelperService, BLL.Services.HelperService>();
+            builder.Services.AddScoped<BLL.Interfaces.IHelperServicesService, BLL.Services.HelperServicesService>();
             builder.Services.AddScoped<IServiceRequestService, ServiceRequestService>();
 
             //Unit Of Work

@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+
 using DisabilitySupport.DAL.Models;
 
 namespace DisabilitySupport.DAL.Interfaces
 {
-    public interface IHelperRepository : IGenericRepository<HelperRequest>
+    public interface IHelperServiceRepository:IGenericRepository<HelperService>
     {
-        Task<List<HelperRequest>> GetHelperRequestByHelperId(int helperId);
+        Task<bool> HelperExists(int id);
+        Task<bool> ServiceExixts(int id);
         Task<List<HelperService>> GetServicesByHelperId(int helperId);
+        
+
+
     }
 }
-
-
-
-
-

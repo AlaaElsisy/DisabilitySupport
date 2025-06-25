@@ -9,5 +9,7 @@ namespace DisabilitySupport.DAL.Interfaces
     public interface IUnitOfWork
     {
         public IDisabledRequestRepository _disabledRequestRepository { get;}
+        public IHelperServiceRepository _helperServiceRepository { get;}
+        Task Save();
     }
 }
