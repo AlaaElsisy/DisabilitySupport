@@ -13,7 +13,8 @@ using DisabilitySupport.DAL.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
- 
+using DisabilitySupport.DAL.Models.Authentication;
+
 
 namespace DisabilitySupport
 {
@@ -77,6 +78,21 @@ namespace DisabilitySupport
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 
             });
+            #endregion
+
+            #region Email Configuration
+            var configuiration = builder.Configuration;
+            var emailConfig = configuiration
+               .GetSection("EmailConfiguration")
+               .Get<EmailConfiguration>();
+            builder.Services.AddSingleton(emailConfig);
+            builder.Services.AddScoped<IEmailService, EmailService>();
+
+            //required email
+            builder.Services.Configure<IdentityOptions>(
+                opt=>opt.SignIn.RequireConfirmedEmail = true
+                );
+
             #endregion
             var app = builder.Build();
 

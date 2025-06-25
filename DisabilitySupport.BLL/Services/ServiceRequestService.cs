@@ -69,6 +69,7 @@ namespace DisabilitySupport.BLL.Services
 
         public async Task<PaginatedResult<DisabledRequestDto>> GetPagedAsync(DisabledRequestQueryDto query)
         {
+
             var (entities, totalCount) = await _unitOfWork._disabledRequestRepository.GetPagedAsync(
                 query.DisabledId,
                 query.HelperServiceId,
@@ -79,6 +80,7 @@ namespace DisabilitySupport.BLL.Services
             );
 
             var items = entities.Select(_mapper.Map<DisabledRequestDto>).ToList();
+
             return new PaginatedResult<DisabledRequestDto>
             {
                 Items = items,
