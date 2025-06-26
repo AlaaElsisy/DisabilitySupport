@@ -110,6 +110,8 @@ namespace DisabilitySupport
 
             #endregion
 
+            builder.Services.Configure<DataProtectionTokenProviderOptions>(opts=>opts.TokenLifespan = TimeSpan.FromHours(10));
+
             #region Authentication
             builder.Services.AddAuthentication(options =>
             {

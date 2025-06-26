@@ -1,4 +1,5 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using System.ComponentModel.DataAnnotations;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using DisabilitySupport.BLL.Interfaces;
@@ -30,7 +31,7 @@ namespace DisabilitySupport.Api.Controllers
             this.configuration = configuration;
         }
 
-        [HttpPost]
+        [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterUser registerUser, string role)
         {
             var userExists = await userManager.FindByEmailAsync(registerUser.Email);
@@ -122,16 +123,57 @@ namespace DisabilitySupport.Api.Controllers
 
             return Unauthorized("Invalid credentials");
 
-            //var result = await authService.LoginAsync(model.Email, model.Password);
+        }
 
-            //if (result.Succeeded)
-            //{
-            //    var user = await _authService.GetUserByEmailAsync(model.Email);
-            //    var token = await _authService.GenerateJwtToken(user);
-            //    return Ok(new { token });
-            //}
+        [HttpPost("forgotpassword")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ForgotPassword([Required] string email)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+            if (user != null)
+            {
+               var token = await userManager.GeneratePasswordResetTokenAsync(user);
+                var resetLink = Url.Action(nameof(ResetPassword), "Authentication", new { token, email = user.Email }, Request.Scheme);
+                var message = new Message(new string[] { user.Email! }, "Reset your password", resetLink);
+                emailService.sendEmail(message);
+                return StatusCode(StatusCodes.Status200OK, new Response { Status = "Success", Message = $"Password reset link sent to {user.Email}!" });
+            }
 
-            //return Unauthorized("Invalid credentials");
+            return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = $"Couldn`t send email,Please try again" });
+
+        }
+
+        [HttpGet("resetPassword")]
+        public async Task<IActionResult> ResetPassword(string token, string email)
+        {
+            var model = new ResetPasswordModel
+            {
+                Token = token,
+                Email = email
+            };
+
+              return Ok(new {model});
+        }
+
+        [HttpPost("resetPassword")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResetPassword(ResetPasswordModel resetPasswordModel)
+        {
+            var user = await userManager.FindByEmailAsync(resetPasswordModel.Email);
+            if (user != null)
+            {
+                var resetPasswordResult = await userManager.ResetPasswordAsync(user, resetPasswordModel.Token, resetPasswordModel.Password);
+                if (!resetPasswordResult.Succeeded)
+                {
+                    foreach (var error in resetPasswordResult.Errors)
+                    {
+                        ModelState.AddModelError(error.Code, error.Description);
+                    }
+                    return Ok(ModelState);
+                }
+                return StatusCode(StatusCodes.Status200OK, new Response { Status = "Success", Message = "Password reset successfully!" });
+            }
+            return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = "User not found!" });
         }
 
         private JwtSecurityToken GetToken(List<Claim> authClaims)
@@ -148,11 +190,7 @@ namespace DisabilitySupport.Api.Controllers
             return token;
         }
 
-        //[HttpGet("validate-token")]
-        //[Authorize]
-        //public IActionResult ValidateToken()
-        //{
-        //    return Ok(new { Valid = true });
-        //}
+
+
     }
 }
