@@ -14,6 +14,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using DisabilitySupport.DAL.Models.Authentication;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.OpenApi.Models;
 
 
 namespace DisabilitySupport
@@ -23,6 +26,8 @@ namespace DisabilitySupport
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            var configuiration = builder.Configuration;
+
 
             // Add services to the container.
 
@@ -35,7 +40,42 @@ namespace DisabilitySupport
             #endregion
             #region swagger
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            #region role based authorization configuration
+            builder.Services.AddSwaggerGen(
+                option =>
+                {
+                    option.SwaggerDoc("v1", new OpenApiInfo
+                    {
+                        Title = "Disability Support API",
+                        Version = "v1",
+                        Description = "API for managing disability support services and requests."
+                    });
+                    option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                    {
+                        Description = "JWT Authorization header using the Bearer scheme. Example: \"Bearer {token}\"",
+                        Name = "Authorization",
+                        In = ParameterLocation.Header,
+                        Type = SecuritySchemeType.Http,
+                        BearerFormat = "JWT",
+                        Scheme = "Bearer"
+                    });
+                    option.AddSecurityRequirement(new OpenApiSecurityRequirement
+                    {
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = "Bearer"
+                                }
+                            },
+                            new string[] {}
+                        }
+                    });
+                }
+                );
+            #endregion
             #endregion
 
             #region db
@@ -77,11 +117,25 @@ namespace DisabilitySupport
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 
-            });
+            }).AddJwtBearer(
+                options =>
+                {
+                    options.SaveToken = true;
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                    {ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidAudience = configuiration["JWT:ValidAudience"],
+                    ValidIssuer = configuiration["JWT:ValidIssuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuiration["JWT:Secret"]))
+
+
+                    };
+                }
+                );
             #endregion
 
             #region Email Configuration
-            var configuiration = builder.Configuration;
             var emailConfig = configuiration
                .GetSection("EmailConfiguration")
                .Get<EmailConfiguration>();
@@ -107,7 +161,7 @@ namespace DisabilitySupport
             }
 
             app.UseHttpsRedirection();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
 
