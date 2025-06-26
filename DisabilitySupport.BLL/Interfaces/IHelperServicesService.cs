@@ -21,9 +21,9 @@ namespace DisabilitySupport.BLL.Interfaces
         Task<HelperServiceDto> UpdateAsync(UpdateHelperServiceDto dto);
         Task<bool> DeleteAsync(int id);
 
-     
+        public  Task<PaginatedResult<HelperServiceDto>> GetPagedByHelperIdAsync(int helperId, int pageNumber = 1, int pageSize = 10);
 
-        //Task AddHelperRequestAsync(HelperRequestDto dto);
-        //Task<List<HelperRequest>> GetRequestsByHelperIdAsync(int helperId);
-    }
+    //Task AddHelperRequestAsync(HelperRequestDto dto);
+    //Task<List<HelperRequest>> GetRequestsByHelperIdAsync(int helperId);
+}
 }

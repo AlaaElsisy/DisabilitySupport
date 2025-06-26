@@ -14,7 +14,7 @@ namespace DisabilitySupport.DAL.Interfaces
         Task<bool> HelperExists(int id);
         Task<bool> ServiceExixts(int id);
         Task<List<HelperService>> GetServicesByHelperId(int helperId);
-        
+        Task<(IEnumerable<HelperService> Items, int TotalCount)> GetPagedByHelperIdAsync(int helperId,int pageNumber, int pageSize);
 
 
     }

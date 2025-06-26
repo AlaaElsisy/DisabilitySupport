@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using DisabilitySupport.BLL.DTOs;
 using DisabilitySupport.BLL.DTOs.helper.service;
 using DisabilitySupport.BLL.Interfaces;
 using DisabilitySupport.DAL.Interfaces;
@@ -114,8 +115,29 @@ namespace DisabilitySupport.BLL.Services
         
         }
 
-       
-         
+
+        public async Task<PaginatedResult<HelperServiceDto>> GetPagedByHelperIdAsync(
+                 int helperId, int pageNumber = 1, int pageSize = 10)
+        {
+            
+                if (!await _unitOfWork._helperServiceRepository.HelperExists(helperId))
+                    throw new KeyNotFoundException($"Helper with ID {helperId} does not exist.");
+
+                var (items, totalCount) = await _unitOfWork._helperServiceRepository
+                    .GetPagedByHelperIdAsync(helperId, pageNumber, pageSize);
+
+                if (items == null || !items.Any())
+                    throw new KeyNotFoundException("No services found for this helper");
+
+                var result = new PaginatedResult<HelperServiceDto>
+                {
+                    Items = _mapper.Map<List<HelperServiceDto>>(items),
+                    TotalCount = totalCount
+                };
+
+                return result;
+             
+        }
 
         
     }
