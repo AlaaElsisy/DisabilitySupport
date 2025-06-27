@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using DisabilitySupport.BLL.Interfaces;
 using DisabilitySupport.BLL.DTOs;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DisabilitySupport.Api.Controllers
 {
@@ -18,12 +19,12 @@ namespace DisabilitySupport.Api.Controllers
         }
 
 
-         // To get all requests by DisabledId:
+        // To get all requests by DisabledId:
         // GET /api/DisabledRequest?disabledId=5
         //
         // To get all requests by HelperServiceId:
         // GET /api/DisabledRequest?helperServiceId=10
-        
+       
         [HttpGet]
         public async Task<IActionResult> GetPaged([FromQuery] DisabledRequestQueryDto query)
         {
