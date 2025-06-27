@@ -57,7 +57,7 @@ namespace DisabilitySupport.BLL.Services
                 var services = await _unitOfWork._helperServiceRepository.GetServicesByHelperId(helperId);
                 if (services == null)
                     throw new KeyNotFoundException("No services for that helper");
-
+                    
                 return services.ToList();
             }
             catch (Exception ex)

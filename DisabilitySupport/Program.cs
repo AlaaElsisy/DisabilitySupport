@@ -1,4 +1,3 @@
-
 using DisabilitySupport.BLL.Interfaces;
 using DisabilitySupport.BLL.Mapping;
 using DisabilitySupport.BLL.Services;
@@ -14,9 +13,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using DisabilitySupport.DAL.Models.Authentication;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+
 
 
 namespace DisabilitySupport
@@ -32,6 +33,14 @@ namespace DisabilitySupport
             // Add services to the container.
 
             builder.Services.AddControllers();
+            // Add CORS
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    policy => policy.AllowAnyOrigin()
+                                    .AllowAnyHeader()
+                                    .AllowAnyMethod());
+            });
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
@@ -163,7 +172,10 @@ namespace DisabilitySupport
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors("AllowAll");
             app.UseAuthentication();
+
             app.UseAuthorization();
 
 
