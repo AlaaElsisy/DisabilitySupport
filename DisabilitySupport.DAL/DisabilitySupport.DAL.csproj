@@ -7,9 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="RepositModelsories\**" />
+    <EmbeddedResource Remove="RepositModelsories\**" />
+    <None Remove="RepositModelsories\**" />
+  </ItemGroup>
+
+  <ItemGroup>
    <Folder Include="Interfaces\" />
 	  <Folder Include="Data\" />
-	  <Folder Include="RepositModelsories\" />
   </ItemGroup>
 
   <ItemGroup>
