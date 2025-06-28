@@ -36,6 +36,10 @@ namespace DisabilitySupport
 
             builder.Services.AddScoped<IDisabledOfferRepository, DisabledOfferRepository>();
             builder.Services.AddScoped<IDisabledOfferService, DisabledOfferService>();
+            builder.Services.AddScoped<IDisabledRepository, DisabledRepository>();
+            builder.Services.AddScoped<IHelperRepository, HelperRepository>();
+            builder.Services.AddScoped<IUserProfileService, UserProfileService>();
+
 
             // Add CORS
             builder.Services.AddCors(options =>

@@ -8,10 +8,11 @@ namespace DisabilitySupport.DAL.Models.Enumerations
 {
     public enum DisabledOfferStatus
     {
-        
+        Pending,
         Open,
         Accepted,
         Completed,
-        Cancelled
+        Cancelled,
+        Rejected
     }
 }
