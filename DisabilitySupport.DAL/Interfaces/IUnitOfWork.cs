@@ -10,6 +10,8 @@ namespace DisabilitySupport.DAL.Interfaces
     {
         public IDisabledRequestRepository _disabledRequestRepository { get;}
         public IHelperServiceRepository _helperServiceRepository { get;}
+        public IHelperRequestRepository _helperRequestRepository { get; }
+
         Task Save();
     }
 }

@@ -26,7 +26,67 @@ namespace DisabilitySupport.DAL.Repositories
                 .ToListAsync();
         }
 
-       
+
+
+
+        public async Task<bool> HelperExists(int id)
+        {
+            return await _Context.Helpers.AnyAsync(h => h.Id == id);
+        }
+
+        public async Task<bool> DisabledOffersExixts(int id)
+        {
+            return await _Context.DisabledOffers.AnyAsync(h => h.Id == id);
+        }
+        public async Task<bool> RequestExixts(int id)
+        {
+            return await _Context.HelperRequests.AnyAsync(s => s.Id == id);
+        }
+
+
+        public async Task<(IEnumerable<HelperRequest> Items, int TotalCount)> GetPagedByHelperIdAsync(
+           int helperId, int pageNumber = 1, int pageSize = 10)
+        {
+            var query = _Context.HelperRequests
+                .Where(x => x.HelperId == helperId)
+                .OrderBy(x => x.Id);
+
+            var totalCount = await query.CountAsync();
+            var items = await query
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return (items, totalCount);
+        }
+
+        public async Task<(List<HelperRequest> Items, int TotalCount)> GetPagedAsync(  int? helperId,  int? disabledOfferId, string? status, string? searchWord, int pageNumber, int pageSize)
+        {
+            var query = _Context.HelperRequests.AsQueryable();
+
+            if (helperId.HasValue)
+                query = query.Where(x => x.HelperId == helperId.Value);
+
+            if (disabledOfferId.HasValue)
+                query = query.Where(x => x.DisabledOfferId == disabledOfferId.Value);
+
+            if (!string.IsNullOrEmpty(status))
+                query = query.Where(x => x.Status.ToString().ToLower() == status.ToLower());
+
+            if (!string.IsNullOrEmpty(searchWord))
+                query = query.Where(x => x.Message != null && x.Message.ToLower().Contains(searchWord.ToLower()));
+
+            var totalCount = await query.CountAsync();
+
+            var items = await query
+                .OrderByDescending(x => x.ApplicationDate)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return (items, totalCount);
+        }
+
     }
- 
+
 }
