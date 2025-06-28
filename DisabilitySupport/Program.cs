@@ -33,6 +33,10 @@ namespace DisabilitySupport
             // Add services to the container.
 
             builder.Services.AddControllers();
+
+            builder.Services.AddScoped<IDisabledOfferRepository, DisabledOfferRepository>();
+            builder.Services.AddScoped<IDisabledOfferService, DisabledOfferService>();
+
             // Add CORS
             builder.Services.AddCors(options =>
             {

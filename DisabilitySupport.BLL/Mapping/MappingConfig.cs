@@ -8,6 +8,7 @@ using DisabilitySupport.BLL.DTOs;
 using DisabilitySupport.BLL.DTOs.helper;
 using DisabilitySupport.BLL.DTOs.helper.service;
 using DisabilitySupport.DAL.Models;
+using DisabilitySupport.DAL.Models.Enumerations;
 
 namespace DisabilitySupport.BLL.Mapping
 {
@@ -18,6 +19,11 @@ namespace DisabilitySupport.BLL.Mapping
             CreateMap<HelperRequest,HelperRequestDto>().ReverseMap();
             CreateMap<HelperService,HelperServiceDto>().ReverseMap();
             CreateMap<HelperService, UpdateHelperServiceDto>().ReverseMap();
+           
+            CreateMap<DisabledOffer, DisabledOfferDto>()
+             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()))
+             .ReverseMap()
+             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => Enum.Parse<DisabledOfferStatus>(src.Status)));
 
 
             CreateMap<DisabledRequest, DisabledRequestDto>()
