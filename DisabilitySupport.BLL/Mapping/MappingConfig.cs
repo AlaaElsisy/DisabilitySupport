@@ -19,6 +19,12 @@ namespace DisabilitySupport.BLL.Mapping
             CreateMap<HelperRequest,HelperRequestDto>().ReverseMap();
             CreateMap<HelperService,HelperServiceDto>().ReverseMap();
             CreateMap<HelperService, UpdateHelperServiceDto>().ReverseMap();
+           
+            CreateMap<DisabledOffer, DisabledOfferDto>()
+             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()))
+             .ReverseMap()
+             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => Enum.Parse<DisabledOfferStatus>(src.Status)));
+
             CreateMap<UpdateHelperRequestDto, HelperRequest>()
                  .ForMember(dest => dest.Status, opt => opt.MapFrom(src => Enum.Parse<HelperRequestStatus>(src.Status, true)))
                  .ReverseMap()

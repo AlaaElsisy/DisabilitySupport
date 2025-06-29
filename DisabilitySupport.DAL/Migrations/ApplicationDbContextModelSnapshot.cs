@@ -176,7 +176,7 @@ namespace DisabilitySupport.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("DisabledPeople");
+                    b.ToTable("DisabledPeople", (string)null);
 
                     b.HasData(
                         new
@@ -228,7 +228,7 @@ namespace DisabilitySupport.DAL.Migrations
 
                     b.HasIndex("ServiceCategorId");
 
-                    b.ToTable("DisabledOffers");
+                    b.ToTable("DisabledOffers", (string)null);
 
                     b.HasData(
                         new
@@ -273,7 +273,7 @@ namespace DisabilitySupport.DAL.Migrations
 
                     b.HasIndex("HelperServiceId");
 
-                    b.ToTable("DisabledRequests");
+                    b.ToTable("DisabledRequests", (string)null);
 
                     b.HasData(
                         new
@@ -305,7 +305,7 @@ namespace DisabilitySupport.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Helpers");
+                    b.ToTable("Helpers", (string)null);
 
                     b.HasData(
                         new
@@ -349,7 +349,7 @@ namespace DisabilitySupport.DAL.Migrations
 
                     b.HasIndex("HelperId");
 
-                    b.ToTable("HelperRequests");
+                    b.ToTable("HelperRequests", (string)null);
 
                     b.HasData(
                         new
@@ -400,7 +400,7 @@ namespace DisabilitySupport.DAL.Migrations
 
                     b.HasIndex("ServiceCategoryId");
 
-                    b.ToTable("HelperServices");
+                    b.ToTable("HelperServices", (string)null);
 
                     b.HasData(
                         new
@@ -449,7 +449,7 @@ namespace DisabilitySupport.DAL.Migrations
 
                     b.HasIndex("HelperRequestId");
 
-                    b.ToTable("Payments");
+                    b.ToTable("Payments", (string)null);
 
                     b.HasData(
                         new
@@ -481,7 +481,7 @@ namespace DisabilitySupport.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ServiceCategories");
+                    b.ToTable("ServiceCategories", (string)null);
 
                     b.HasData(
                         new
