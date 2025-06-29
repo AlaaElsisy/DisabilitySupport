@@ -114,6 +114,8 @@ namespace DisabilitySupport
 
             // BLL
             builder.Services.AddScoped<BLL.Interfaces.IHelperServicesService, BLL.Services.HelperServicesService>();
+            builder.Services.AddScoped<BLL.Interfaces.IHelperRequestsService, BLL.Services.HelperRequestsService>();
+
             builder.Services.AddScoped<IServiceRequestService, ServiceRequestService>();
 
             //Unit Of Work

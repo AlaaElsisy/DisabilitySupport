@@ -11,6 +11,7 @@ using DisabilitySupport.DAL.Interfaces;
 using DisabilitySupport.DAL.Models;
 
 using DisabilitySupport.DAL.Repositories;
+using MimeKit;
 
 namespace DisabilitySupport.BLL.Services
 {
@@ -139,6 +140,32 @@ namespace DisabilitySupport.BLL.Services
              
         }
 
-        
+        public async Task<PaginatedResult<HelperServiceDto>> GetPagedAsync(HelperServiceQueryDto query)
+        {
+            if (query.HelperId.HasValue)
+            {
+                var exists = await _unitOfWork._helperServiceRepository.HelperExists(query.HelperId.Value);
+                if (!exists)
+                    throw new KeyNotFoundException($"Helper with ID {query.HelperId} does not exist.");
+            }
+
+            var (entities, totalCount) = await _unitOfWork._helperServiceRepository.GetPagedAsync(
+                query.HelperId,
+                query.ServiceCategoryId,
+                query.SearchWord,
+                query.PageNumber,
+                query.PageSize
+            );
+
+            var items = _mapper.Map<List<HelperServiceDto>>(entities);
+
+            return new PaginatedResult<HelperServiceDto>
+            {
+                Items = items,
+                TotalCount = totalCount
+            };
+        }
+
+
     }
 }

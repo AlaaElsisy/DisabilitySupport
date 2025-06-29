@@ -50,5 +50,30 @@ namespace DisabilitySupport.DAL.Repositories
 
             return (items, totalCount);
         }
+
+
+        public async Task<(List<HelperService> Items, int TotalCount)> GetPagedAsync(  int? helperId,  int? serviceCategoryId,  string? searchWord,  int pageNumber, int pageSize)
+        {
+            var query = _Context.HelperServices.AsQueryable();
+
+            if (helperId.HasValue)
+                query = query.Where(x => x.HelperId == helperId.Value);
+
+            if (serviceCategoryId.HasValue)
+                query = query.Where(x => x.ServiceCategoryId == serviceCategoryId.Value);
+
+            if (!string.IsNullOrWhiteSpace(searchWord))
+                query = query.Where(x => x.Description != null && x.Description.ToLower().Contains(searchWord.ToLower()));
+
+            var totalCount = await query.CountAsync();
+
+            var items = await query
+                .OrderByDescending(x => x.CreatedAt)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return (items, totalCount);
+        }
     }
 }
