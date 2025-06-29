@@ -23,7 +23,7 @@ namespace DisabilitySupport.BLL.Interfaces
 
         public  Task<PaginatedResult<HelperServiceDto>> GetPagedByHelperIdAsync(int helperId, int pageNumber = 1, int pageSize = 10);
 
-        public Task<PaginatedResult<HelperServiceDto>> GetPagedAsync(HelperServiceQueryDto query);
+        public Task<PaginatedResult<HelperServiceDetailsDto>> GetPagedAsync(HelperServiceQueryDto query);
 
     //Task AddHelperRequestAsync(HelperRequestDto dto);
     //Task<List<HelperRequest>> GetRequestsByHelperIdAsync(int helperId);

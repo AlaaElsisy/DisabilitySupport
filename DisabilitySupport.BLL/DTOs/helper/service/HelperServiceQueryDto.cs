@@ -13,5 +13,8 @@ namespace DisabilitySupport.BLL.DTOs.helper.service
         public string? SearchWord { get; set; }
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
+         public decimal? MinBudget { get; set; }
+        public decimal? MaxBudget { get; set; }
+        public string? SortBy { get; set; }
     }
 }

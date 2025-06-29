@@ -52,9 +52,13 @@ namespace DisabilitySupport.DAL.Repositories
         }
 
 
-        public async Task<(List<HelperService> Items, int TotalCount)> GetPagedAsync(  int? helperId,  int? serviceCategoryId,  string? searchWord,  int pageNumber, int pageSize)
+        public async Task<(List<HelperService> Items, int TotalCount)> GetPagedAsync(  int? helperId,  int? serviceCategoryId,  string? searchWord, decimal? minBudget, decimal? maxBudget, string? sortBy, int pageNumber, int pageSize)
         {
-            var query = _Context.HelperServices.AsQueryable();
+            var query = _Context.HelperServices
+                .Include(x => x.Helper)
+                .ThenInclude(h => h.User)
+                .Include(x => x.ServiceCategory)
+                .AsQueryable();
 
             if (helperId.HasValue)
                 query = query.Where(x => x.HelperId == helperId.Value);
@@ -65,10 +69,30 @@ namespace DisabilitySupport.DAL.Repositories
             if (!string.IsNullOrWhiteSpace(searchWord))
                 query = query.Where(x => x.Description != null && x.Description.ToLower().Contains(searchWord.ToLower()));
 
+            if (minBudget.HasValue)
+                query = query.Where(x => x.PricePerHour >= minBudget.Value);
+
+            if (maxBudget.HasValue)
+                query = query.Where(x => x.PricePerHour <= maxBudget.Value);
+
+            // Sorting logic
+            if (!string.IsNullOrEmpty(sortBy))
+            {
+                if (sortBy == "priceAsc")
+                    query = query.OrderBy(x => x.PricePerHour);
+                else if (sortBy == "newest")
+                    query = query.OrderByDescending(x => x.CreatedAt);
+                else
+                    query = query.OrderByDescending(x => x.CreatedAt);
+            }
+            else
+            {
+                query = query.OrderByDescending(x => x.CreatedAt);
+            }
+
             var totalCount = await query.CountAsync();
 
             var items = await query
-                .OrderByDescending(x => x.CreatedAt)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
