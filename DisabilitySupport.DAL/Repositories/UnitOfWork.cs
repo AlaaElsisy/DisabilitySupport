@@ -23,7 +23,7 @@ namespace DisabilitySupport.DAL.Repositories
 
 
         public UnitOfWork(ApplicationDbContext context , IDisabledRequestRepository disabledRequestRepository
-            ,IHelperServiceRepository helperServiceRepository)
+            ,IHelperServiceRepository helperServiceRepository,IHelperRequestRepository helperRequestRepository)
         {
             _context = context;
             _disabledRequestRepository = disabledRequestRepository;
