@@ -15,6 +15,9 @@ namespace DisabilitySupport.BLL.DTOs
         public DateTime RequestDate { get; set; }
 
         public string? Status { get; set; } 
+        public DateTime? Start { get; set; }
+        public DateTime? End { get; set; }
+        public decimal? price { get; set; }
 
         [Required]
         public int? DisabledId { get; set; }

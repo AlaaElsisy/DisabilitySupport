@@ -6,7 +6,8 @@ public class HelperServiceDetailsDto
     public DateTime? AvailableDateFrom { get; set; }
     public DateTime? AvailableDateTo { get; set; }
     public int? HelperId { get; set; }
-    public string? HelperName { get; set; } // New
+    public string? HelperImage { get; set; } 
+    public string? HelperName { get; set; }
     public int ServiceCategoryId { get; set; }
-    public string? ServiceCategoryName { get; set; } // New
+    public string? ServiceCategoryName { get; set; } 
 }
