@@ -14,7 +14,7 @@ public class DisabledRepository : IDisabledRepository
 
     public async Task<Disabled?> GetByUserIdAsync(string userId)
     {
-        return await _context.DisabledPeople!
+        return await _context.DisabledPeople
             .Include(d => d.User)
             .FirstOrDefaultAsync(d => d.UserId == userId);
     }

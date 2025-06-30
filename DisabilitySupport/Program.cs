@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using System.Security.Claims;
 
 
 
@@ -39,6 +40,7 @@ namespace DisabilitySupport
             builder.Services.AddScoped<IDisabledRepository, DisabledRepository>();
             builder.Services.AddScoped<IHelperRepository, HelperRepository>();
             builder.Services.AddScoped<IUserProfileService, UserProfileService>();
+            builder.Services.AddScoped<IDisabledService, DisabledService>();
 
 
             // Add CORS
@@ -148,9 +150,7 @@ namespace DisabilitySupport
                     ValidateAudience = true,
                     ValidAudience = configuiration["JWT:ValidAudience"],
                     ValidIssuer = configuiration["JWT:ValidIssuer"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuiration["JWT:Secret"]))
-
-
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuiration["JWT:Secret"])),
                     };
                 }
                 );
