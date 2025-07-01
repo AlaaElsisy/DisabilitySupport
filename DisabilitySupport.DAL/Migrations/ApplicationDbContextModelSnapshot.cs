@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using DisabilitySupport.DAL.Data;
 using Microsoft.EntityFrameworkCore;
@@ -245,7 +245,6 @@ namespace DisabilitySupport.DAL.Migrations
                             ServiceCategorId = 1,
 
                             StartServiceTime = new DateTime(2024, 6, 26, 14, 0, 0, 0, DateTimeKind.Unspecified),
-
 
                             Status = 1
                         });
