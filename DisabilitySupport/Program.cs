@@ -112,13 +112,15 @@ namespace DisabilitySupport
 
 
             builder.Services.AddScoped<IDisabledRequestRepository, DisabledRequestRepository>();
- 
+            builder.Services.AddScoped<IHelperRepository, HelperRepository>();
 
             // BLL
             builder.Services.AddScoped<BLL.Interfaces.IHelperServicesService, BLL.Services.HelperServicesService>();
             builder.Services.AddScoped<BLL.Interfaces.IHelperRequestsService, BLL.Services.HelperRequestsService>();
 
             builder.Services.AddScoped<IServiceRequestService, ServiceRequestService>();
+            builder.Services.AddScoped<IHelperService, s_helperservise>();
+
 
             //Unit Of Work
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
