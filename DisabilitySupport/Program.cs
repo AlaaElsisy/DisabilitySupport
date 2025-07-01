@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using System.Security.Claims;
 
 
 
@@ -39,6 +40,7 @@ namespace DisabilitySupport
             builder.Services.AddScoped<IDisabledRepository, DisabledRepository>();
             builder.Services.AddScoped<IHelperRepository, HelperRepository>();
             builder.Services.AddScoped<IUserProfileService, UserProfileService>();
+            builder.Services.AddScoped<IDisabledService, DisabledService>();
 
 
             // Add CORS
@@ -110,11 +112,15 @@ namespace DisabilitySupport
 
 
             builder.Services.AddScoped<IDisabledRequestRepository, DisabledRequestRepository>();
- 
+            builder.Services.AddScoped<IHelperRepository, HelperRepository>();
 
             // BLL
             builder.Services.AddScoped<BLL.Interfaces.IHelperServicesService, BLL.Services.HelperServicesService>();
+            builder.Services.AddScoped<BLL.Interfaces.IHelperRequestsService, BLL.Services.HelperRequestsService>();
+
             builder.Services.AddScoped<IServiceRequestService, ServiceRequestService>();
+            builder.Services.AddScoped<IHelperService, s_helperservise>();
+
 
             //Unit Of Work
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -146,9 +152,7 @@ namespace DisabilitySupport
                     ValidateAudience = true,
                     ValidAudience = configuiration["JWT:ValidAudience"],
                     ValidIssuer = configuiration["JWT:ValidIssuer"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuiration["JWT:Secret"]))
-
-
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuiration["JWT:Secret"])),
                     };
                 }
                 );

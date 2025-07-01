@@ -13,7 +13,7 @@ namespace DisabilitySupport.DAL.Models
         public string? Description { get; set; }
         public decimal? PricePerHour { get; set; }
         public DateTime CreatedAt { get; set; }
-        public DateTime? AvailableDateFrom { get; set; }
+        public DateTime? AvailableDateFrom { get; set; }    
         public DateTime? AvailableDateTo { get; set; }
 
         [ForeignKey("Helper")]

@@ -5,15 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DisabilitySupport.BLL.DTOs.helper
+namespace DisabilitySupport.BLL.DTOs.helper.Request
 {
     public class HelperRequestDto
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
+        public DateTime ApplicationDate { get; set; }
+        public string Status { get; set; } = string.Empty;
         public string? Message { get; set; }
-        [Range(typeof(decimal), "0", "9999999", ErrorMessage = "Price must be a positive number.")]
         public decimal? TotalPrice { get; set; }
-        public int HelperId { get; set; }
-        public int DisabledOfferId { get; set; }
+        public int? HelperId { get; set; }
+        public int? DisabledOfferId { get; set; }
     }
 }
