@@ -14,8 +14,8 @@ namespace DisabilitySupport.BLL.DTOs
         [Required]
         public DateTime OfferPostDate { get; set; }
 
-        public DateTime? ServiceTime { get; set; }
-
+        public DateTime? StartServiceTime { get; set; }
+        public DateTime? EndServiceTime { get; set; }
         public string? Status { get; set; }
 
         public decimal? Budget { get; set; }
