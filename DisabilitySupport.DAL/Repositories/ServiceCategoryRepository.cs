@@ -1,0 +1,24 @@
+﻿using DisabilitySupport.DAL.Data;
+using DisabilitySupport.DAL.Interfaces;
+using DisabilitySupport.DAL.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace DisabilitySupport.DAL.Repositories
+{
+    public class ServiceCategoryRepository : IServiceCategoryRepository
+    {
+        private readonly ApplicationDbContext _context;
+
+        public ServiceCategoryRepository(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<List<ServiceCategory>> GetAll()
+        {
+            return await _context.ServiceCategories.ToListAsync();
+        }
+    }
+}

@@ -20,7 +20,7 @@ namespace DisabilitySupport.BLL.DTOs
 
         public decimal? Budget { get; set; }
 
-        [Required]
+       
         public int? DisabledId { get; set; }
 
         [Required]
