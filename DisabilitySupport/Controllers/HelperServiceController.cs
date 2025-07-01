@@ -1,5 +1,6 @@
 ﻿using DisabilitySupport.BLL.DTOs.helper.service;
 using DisabilitySupport.BLL.Interfaces;
+using DisabilitySupport.BLL.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -158,5 +159,20 @@ namespace DisabilitySupport.Api.Controllers
             }
         }
 
+
+        [HttpGet("paged")]
+        public async Task<IActionResult> GetPaged([FromQuery] HelperServiceQueryDto query)
+        {
+            try
+            {
+                var result = await _helperService.GetPagedAsync(query);
+                return Ok(result);  // result is now PaginatedResult<HelperServiceDetailsDto>
+            }
+            catch (Exception ex)
+            {
+                
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
     }
 }

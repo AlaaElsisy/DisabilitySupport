@@ -37,4 +37,5 @@ public class UserProfileController : ControllerBase
         if (profile == null) return NotFound();
         return Ok(profile);
     }
+
 }

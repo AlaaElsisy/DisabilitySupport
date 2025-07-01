@@ -19,12 +19,19 @@ namespace DisabilitySupport.DAL.Repositories
 
         public IDisabledOfferRepository _disabledOfferRepository { get; set; }
 
+        public IHelperRequestRepository _helperRequestRepository { get; set; }
+
+
         public UnitOfWork(ApplicationDbContext context , IDisabledRequestRepository disabledRequestRepository
-            ,IHelperServiceRepository helperServiceRepository)
+            ,IHelperServiceRepository helperServiceRepository,IHelperRequestRepository helperRequestRepository)
         {
             _context = context;
             _disabledRequestRepository = disabledRequestRepository;
             _helperServiceRepository = helperServiceRepository;
+
+            _helperRequestRepository = helperRequestRepository;
+
+
         }
 
 
