@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace DisabilitySupport.BLL.Interfaces
 {
-    public interface IDisabledService
+    public interface IServiceCategoryService
     {
-        Task<Disabled?> GetDisabledByUserIdAsync(string userId);
-        Task<Disabled?> GetByUserIdAsync(string userId);
+        Task<List<ServiceCategory>> GetAllAsync();
     }
 }

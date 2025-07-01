@@ -21,21 +21,21 @@ namespace DisabilitySupport.DAL.Repositories
 
         public IHelperRequestRepository _helperRequestRepository { get; set; }
 
+        public IServiceCategoryRepository _serviceCategoryRepository { get; }
 
         public UnitOfWork(ApplicationDbContext context , IDisabledRequestRepository disabledRequestRepository
-            ,IHelperServiceRepository helperServiceRepository,IHelperRequestRepository helperRequestRepository)
+            , IHelperServiceRepository helperServiceRepository, IHelperRequestRepository helperRequestRepository, IServiceCategoryRepository serviceCategoryRepository)
         {
             _context = context;
             _disabledRequestRepository = disabledRequestRepository;
             _helperServiceRepository = helperServiceRepository;
 
             _helperRequestRepository = helperRequestRepository;
-
-
+            _serviceCategoryRepository = serviceCategoryRepository;
         }
 
 
-        
+
         public async Task Save()
         {
             await _context.SaveChangesAsync();

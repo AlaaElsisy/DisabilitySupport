@@ -42,7 +42,7 @@ namespace DisabilitySupport.Api.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterUser registerUser, string role)
+        public async Task<IActionResult> Register([FromQuery] string role, [FromBody] RegisterUser registerUser)
         {
             var userExists = await userManager.FindByEmailAsync(registerUser.Email);
             if (userExists != null)
@@ -77,6 +77,7 @@ namespace DisabilitySupport.Api.Controllers
             
             if (registerUser.IsDisabled && role == "Patient")
             {
+                Console.WriteLine(" test enter condition Patient + IsDisabled");
                 var disabled = new Disabled
                 {
                     UserId = user.Id,
