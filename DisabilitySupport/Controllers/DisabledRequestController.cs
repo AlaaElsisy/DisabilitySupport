@@ -4,6 +4,8 @@ using DisabilitySupport.BLL.Interfaces;
 using DisabilitySupport.BLL.DTOs;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using DisabilitySupport.DAL.Models.Enumerations;
+using DisabilitySupport.DAL.Models;
 
 namespace DisabilitySupport.Api.Controllers
 {
@@ -66,6 +68,26 @@ namespace DisabilitySupport.Api.Controllers
             return NoContent();
         }
 
-       
+
+
+        [HttpPatch("request/status")]
+        public async Task<IActionResult> UpdateStatus([FromQuery] int requestId, [FromQuery] RequestStatus status)
+        {
+            if (requestId <= 0)
+                return BadRequest("Invalid request ID.");
+            try
+            {
+                var updated = await _service.UpdateStatusAsync(requestId, status);
+                return Ok(updated);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
     }
 }
