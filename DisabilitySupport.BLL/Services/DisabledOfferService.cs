@@ -4,6 +4,8 @@ using DisabilitySupport.BLL.Interfaces;
 using DisabilitySupport.DAL.Interfaces;
 using DisabilitySupport.DAL.Models;
 using DisabilitySupport.DAL.Models.Enumerations;
+using DisabilitySupport.DAL.Repositories;
+
 
 namespace DisabilitySupport.BLL.Services
 {
@@ -11,11 +13,12 @@ namespace DisabilitySupport.BLL.Services
     {
         private readonly IDisabledOfferRepository _repository;
         private readonly IMapper _mapper;
-
+   
         public DisabledOfferService(IDisabledOfferRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
+          
         }
 
         public async Task<PaginatedResult<DisabledOfferDto>> GetPagedAsync(DisabledOfferQueryDto query)
@@ -43,6 +46,7 @@ namespace DisabilitySupport.BLL.Services
             var offer = await _repository.GetById(id);
             return offer == null ? null : _mapper.Map<DisabledOfferDto>(offer);
         }
+       
 
         public async Task<DisabledOfferDto> CreateAsync(DisabledOfferDto dto)
         {

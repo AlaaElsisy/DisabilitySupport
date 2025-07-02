@@ -31,6 +31,25 @@ namespace DisabilitySupport.Api.Controllers
         }
 
 
+
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            try
+            {
+                var result = await _disabledService.GetByIdAsync(id);
+                return Ok(result);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Unexpected error.", details = ex.Message });
+            }
+        }
     }
 }
 

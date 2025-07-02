@@ -41,8 +41,10 @@ namespace DisabilitySupport
             builder.Services.AddScoped<IHelperRepository, HelperRepository>();
             builder.Services.AddScoped<IUserProfileService, UserProfileService>();
             builder.Services.AddScoped<IDisabledService, DisabledService>();
+            builder.Services.AddScoped<IServiceCategoryService, ServiceCategoryService>();
 
-
+       
+            
             // Add CORS
             builder.Services.AddCors(options =>
             {
@@ -112,13 +114,22 @@ namespace DisabilitySupport
 
 
             builder.Services.AddScoped<IDisabledRequestRepository, DisabledRequestRepository>();
- 
+            builder.Services.AddScoped<IHelperRepository, HelperRepository>();
+
+            
+            builder.Services.AddScoped<IServiceCategoryRepository, ServiceCategoryRepository>();
 
             // BLL
             builder.Services.AddScoped<BLL.Interfaces.IHelperServicesService, BLL.Services.HelperServicesService>();
             builder.Services.AddScoped<BLL.Interfaces.IHelperRequestsService, BLL.Services.HelperRequestsService>();
 
             builder.Services.AddScoped<IServiceRequestService, ServiceRequestService>();
+            builder.Services.AddScoped<IHelperService, s_helperservise>();
+
+
+            builder.Services.AddScoped<IServiceCategoryService, ServiceCategoryService>();
+
+
 
             //Unit Of Work
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();

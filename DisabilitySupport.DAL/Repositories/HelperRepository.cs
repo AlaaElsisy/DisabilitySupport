@@ -25,6 +25,13 @@ namespace DisabilitySupport.DAL.Repositories
                 .Include(h => h.User)
                 .FirstOrDefaultAsync(h => h.UserId == userId);
         }
+
+        public async Task<Helper> GetByIdAsync(int id)
+        {
+            return await _context.Helpers
+                 .Include(d => d.User)
+                 .FirstOrDefaultAsync(d => d.Id == id);
+        }
     }
 
 }

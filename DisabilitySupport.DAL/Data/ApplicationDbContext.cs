@@ -122,8 +122,8 @@ namespace DisabilitySupport.DAL.Data
                 Budget = 500,
                 DisabledId = 1,
                 ServiceCategorId = 1,
-                ServiceTime = new DateTime(2024, 06, 26, 14, 0, 0)
-
+                StartServiceTime = new DateTime(2024, 06, 26, 14, 0, 0),
+                EndServiceTime = new DateTime(2024, 06, 27, 15, 0, 0)
             });
 
             // Seed DisabledRequest
