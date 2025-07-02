@@ -19,6 +19,12 @@ namespace DisabilitySupport.BLL.Mapping
         public MappingConfig() {
             #region helper
             CreateMap<HelperRequest,HelperRequestDto>().ReverseMap();
+
+            CreateMap<HelperRequest,HelperRequestDetailsDto>()
+            .ForMember(dest => dest.HelperName, opt => opt.MapFrom(src => src.Helper != null && src.Helper.User != null ? src.Helper.User.FullName : null))
+            .ForMember(dest => dest.HelperImage, opt => opt.MapFrom(src => src.Helper != null && src.Helper.User != null ? src.Helper.User.ProfileImage : null)).ReverseMap();
+
+
             CreateMap<HelperService,HelperServiceDto>().ReverseMap();
             CreateMap<HelperService, UpdateHelperServiceDto>().ReverseMap();
  
@@ -26,7 +32,9 @@ namespace DisabilitySupport.BLL.Mapping
                  .ForMember(dest => dest.Status, opt => opt.MapFrom(src => Enum.Parse<HelperRequestStatus>(src.Status, true)))
                  .ReverseMap()
                  .ForMember(dest => dest.Status,  opt => opt.MapFrom(src => src.Status.ToString()));
+
             #endregion
+
 
 
             #region disabled

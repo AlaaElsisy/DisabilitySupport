@@ -139,7 +139,7 @@ namespace DisabilitySupport.BLL.Services
 
         }
 
-        public async Task<PaginatedResult<HelperRequestDto>> GetPagedAsync(HelperRequestQueryDto query)
+        public async Task<PaginatedResult<HelperRequestDetailsDto>> GetPagedAsync(HelperRequestQueryDto query)
         {
             if (query.HelperId.HasValue)
             {
@@ -157,9 +157,9 @@ namespace DisabilitySupport.BLL.Services
             query.PageSize
         );
 
-            var items = _mapper.Map<List<HelperRequestDto>>(entities);
+            var items = _mapper.Map<List<HelperRequestDetailsDto>>(entities);
 
-            return new PaginatedResult<HelperRequestDto>
+            return new PaginatedResult<HelperRequestDetailsDto>
             {
                 Items = items,
                 TotalCount = totalCount

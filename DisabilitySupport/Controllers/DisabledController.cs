@@ -32,6 +32,7 @@ namespace DisabilitySupport.Api.Controllers
 
 
 
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {

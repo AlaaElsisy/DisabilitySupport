@@ -62,7 +62,7 @@ namespace DisabilitySupport.DAL.Repositories
 
         public async Task<(List<HelperRequest> Items, int TotalCount)> GetPagedAsync(  int? helperId,  int? disabledOfferId, string? status, string? searchWord, int pageNumber, int pageSize)
         {
-            var query = _Context.HelperRequests.AsQueryable();
+            var query = _Context.HelperRequests.Include(x=> x.Helper).ThenInclude(y => y.User).AsQueryable();
 
             if (helperId.HasValue)
                 query = query.Where(x => x.HelperId == helperId.Value);

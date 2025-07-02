@@ -166,7 +166,7 @@ namespace DisabilitySupport.Api.Controllers
             try
             {
                 var result = await _helperService.GetPagedAsync(query);
-                return Ok(result);  // result is now PaginatedResult<HelperServiceDetailsDto>
+                return Ok(result);  
             }
             catch (Exception ex)
             {
