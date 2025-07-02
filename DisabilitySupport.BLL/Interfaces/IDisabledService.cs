@@ -12,5 +12,6 @@ namespace DisabilitySupport.BLL.Interfaces
     {
         Task<Disabled?> GetDisabledByUserIdAsync(string userId);
         Task<DisabledDto> GetByIdAsync(int id);
+
     }
 }

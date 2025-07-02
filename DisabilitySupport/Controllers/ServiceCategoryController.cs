@@ -8,6 +8,7 @@ namespace DisabilitySupport.Api.Controllers
     [ApiController]
     public class ServiceCategoryController : ControllerBase
     {
+    -
         private readonly IServiceCategoryService _serviceCategoryService;
 
         public ServiceCategoryController(IServiceCategoryService serviceCategoryService)

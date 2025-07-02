@@ -24,6 +24,7 @@ namespace DisabilitySupport.DAL.Repositories
         public IDisabledRepository _disabledRepository { get; }
         public IHelperRepository _helperRepository{ get; }
 
+        public IServiceCategoryRepository _serviceCategoryRepository { get; }
 
         public UnitOfWork(ApplicationDbContext context , IDisabledRequestRepository disabledRequestRepository
             ,IHelperServiceRepository helperServiceRepository,IHelperRequestRepository helperRequestRepository,IServiceCategoryRepository serviceCategoryRepository ,IDisabledRepository disabledRepository,IHelperRepository helperRepository)
@@ -31,7 +32,6 @@ namespace DisabilitySupport.DAL.Repositories
             _context = context;
             _disabledRequestRepository = disabledRequestRepository;
             _helperServiceRepository = helperServiceRepository;
-
             _helperRequestRepository = helperRequestRepository;
             _serviceCategoryRepository = serviceCategoryRepository;
             _disabledRepository = disabledRepository;
@@ -39,7 +39,6 @@ namespace DisabilitySupport.DAL.Repositories
         }
 
 
-        
         public async Task Save()
         {
             await _context.SaveChangesAsync();
