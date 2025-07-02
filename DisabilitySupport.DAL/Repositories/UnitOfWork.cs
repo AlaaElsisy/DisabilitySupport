@@ -32,13 +32,11 @@ namespace DisabilitySupport.DAL.Repositories
             _context = context;
             _disabledRequestRepository = disabledRequestRepository;
             _helperServiceRepository = helperServiceRepository;
-
             _helperRequestRepository = helperRequestRepository;
             _serviceCategoryRepository = serviceCategoryRepository;
             _disabledRepository = disabledRepository;
             _helperRepository = helperRepository;
         }
-
 
 
         public async Task Save()

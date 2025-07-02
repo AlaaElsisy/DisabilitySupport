@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+
 namespace DisabilitySupport.DAL.Repositories
 {
     public class ServiceCategoryRepository : IServiceCategoryRepository

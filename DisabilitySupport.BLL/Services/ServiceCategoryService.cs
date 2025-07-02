@@ -8,8 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using DisabilitySupport.BLL.DTOs.ServiceCategory;
-using DisabilitySupport.BLL.Interfaces;
-using DisabilitySupport.DAL.Interfaces;
+
 
 namespace DisabilitySupport.BLL.Services
 {
@@ -22,7 +21,6 @@ namespace DisabilitySupport.BLL.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-
 
 
         public async Task<List<ServiceCategoryDto>> GetAllCategoriesAsync()
