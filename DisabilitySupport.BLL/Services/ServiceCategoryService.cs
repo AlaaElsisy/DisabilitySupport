@@ -1,4 +1,7 @@
-﻿using System;
+﻿using DisabilitySupport.BLL.Interfaces;
+using DisabilitySupport.DAL.Interfaces;
+using DisabilitySupport.DAL.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,7 +40,7 @@ namespace DisabilitySupport.BLL.Services
                 return result;
             }
             catch (Exception ex)
-            {
+        {
                 throw new ApplicationException("An error occurred while retrieving Service Categories.", ex);
             }
         }
@@ -45,7 +48,7 @@ namespace DisabilitySupport.BLL.Services
         public async Task<List<ServiceCategoryDiscDto>> GetAllCategoriesDiscAsync()
         {
             try
-            {
+        {
                 var services = await _unitOfWork._serviceCategoryRepository.GetAllAsync();
 
                 if (services == null || !services.Any())
@@ -54,12 +57,12 @@ namespace DisabilitySupport.BLL.Services
                 var result = _mapper.Map<List<ServiceCategoryDiscDto>>(services);
 
                 return result;
-            }
+        }
             catch (Exception ex)
             {
                 throw new ApplicationException("An error occurred while retrieving Service Categories.", ex);
-            }
-        }
+    }
+}
 
     }
 }

@@ -27,6 +27,10 @@ namespace DisabilitySupport.BLL.Services
         {
             return await _disabledRepo.GetByUserIdAsync(userId);
         }
+        public async Task<Disabled?> GetByUserIdAsync(string userId) 
+        {
+            return await _disabledRepo.GetByUserIdAsync(userId);
+        }
         public async Task<DisabledDto> GetByIdAsync(int id)
         {
             try

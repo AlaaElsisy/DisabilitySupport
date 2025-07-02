@@ -41,6 +41,7 @@ namespace DisabilitySupport
             builder.Services.AddScoped<IHelperRepository, HelperRepository>();
             builder.Services.AddScoped<IUserProfileService, UserProfileService>();
             builder.Services.AddScoped<IDisabledService, DisabledService>();
+            builder.Services.AddScoped<IServiceCategoryService, ServiceCategoryService>();
 
        
             

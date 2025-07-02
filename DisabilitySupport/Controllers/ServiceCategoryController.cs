@@ -13,7 +13,7 @@ namespace DisabilitySupport.Api.Controllers
         public ServiceCategoryController(IServiceCategoryService serviceCategoryService)
         {
             _serviceCategoryService = serviceCategoryService;
-            
+
         }
 
         [HttpGet("dropdown")]
@@ -55,10 +55,10 @@ namespace DisabilitySupport.Api.Controllers
                 return BadRequest(new { message = ex.Message });
             }
             catch (Exception ex)
-            {
+        {
                 return StatusCode(500, new { message = "An unexpected error occurred.", details = ex.Message });
-            }
         }
-
     }
+
+}
 }
