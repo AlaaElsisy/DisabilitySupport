@@ -10,7 +10,7 @@ namespace DisabilitySupport.BLL.Interfaces
 {
     public interface IServiceCategoryService
     {
-        Task<List<ServiceCategory>> GetAllAsync();
+        //Task<List<ServiceCategory>> GetAllAsync();
         Task<List<ServiceCategoryDto>> GetAllCategoriesAsync();
         Task<List<ServiceCategoryDiscDto>> GetAllCategoriesDiscAsync();
     }
