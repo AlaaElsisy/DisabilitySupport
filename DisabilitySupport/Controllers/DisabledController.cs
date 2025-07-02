@@ -29,6 +29,8 @@ namespace DisabilitySupport.Api.Controllers
             if (disabled == null) return NotFound();
             return Ok(disabled.Id);
         }
+
+
     }
 }
 
