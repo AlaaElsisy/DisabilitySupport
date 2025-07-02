@@ -10,6 +10,7 @@ namespace DisabilitySupport.DAL.Interfaces
     public interface IHelperRepository
     {
         Task<Helper?> GetByUserIdAsync(string userId);
+        Task<Helper> GetByIdAsync(int id);
     }
 
 }

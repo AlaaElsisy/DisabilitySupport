@@ -1,9 +1,15 @@
-﻿using DisabilitySupport.DAL.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using DisabilitySupport.DAL.Data;
 using DisabilitySupport.DAL.Interfaces;
 using DisabilitySupport.DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+
 
 namespace DisabilitySupport.DAL.Repositories
 {
@@ -16,7 +22,7 @@ namespace DisabilitySupport.DAL.Repositories
             _context = context;
         }
 
-        public async Task<List<ServiceCategory>> GetAll()
+        public async Task<List<ServiceCategory>> GetAllAsync()
         {
             return await _context.ServiceCategories.ToListAsync();
         }

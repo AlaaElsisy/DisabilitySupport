@@ -8,20 +8,57 @@ namespace DisabilitySupport.Api.Controllers
     [ApiController]
     public class ServiceCategoryController : ControllerBase
     {
+        private readonly IServiceCategoryService _serviceCategoryService;
 
-        private readonly IServiceCategoryService _service;
-
-        public ServiceCategoryController(IServiceCategoryService service)
+        public ServiceCategoryController(IServiceCategoryService serviceCategoryService)
         {
-            _service = service;
+            _serviceCategoryService = serviceCategoryService;
+
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
+        [HttpGet("dropdown")]
+        public async Task<IActionResult> GetDropdownCategories()
         {
-            var categories = await _service.GetAllAsync();
-            return Ok(categories);
+            try
+            {
+                var result = await _serviceCategoryService.GetAllCategoriesAsync();
+                return Ok(result);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (ApplicationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An unexpected error occurred.", details = ex.Message });
+            }
+        }
+
+        [HttpGet("serviceCategory")]
+        public async Task<IActionResult> GetserviceCategorieswithdis()
+        {
+            try
+            {
+                var result = await _serviceCategoryService.GetAllCategoriesDiscAsync();
+                return Ok(result);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (ApplicationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception ex)
+        {
+                return StatusCode(500, new { message = "An unexpected error occurred.", details = ex.Message });
         }
     }
 
+}
 }

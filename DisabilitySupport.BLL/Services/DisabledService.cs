@@ -1,4 +1,6 @@
-﻿using DisabilitySupport.BLL.Interfaces;
+﻿using AutoMapper;
+using DisabilitySupport.BLL.DTOs;
+using DisabilitySupport.BLL.Interfaces;
 using DisabilitySupport.DAL.Interfaces;
 using DisabilitySupport.DAL.Models;
 using System;
@@ -12,10 +14,14 @@ namespace DisabilitySupport.BLL.Services
     public class DisabledService : IDisabledService
     {
         private readonly IDisabledRepository _disabledRepo;
-
-        public DisabledService(IDisabledRepository disabledRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
+        public DisabledService(IDisabledRepository disabledRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _disabledRepo = disabledRepository;
+
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
         public async Task<Disabled?> GetDisabledByUserIdAsync(string userId)
         {
@@ -25,5 +31,26 @@ namespace DisabilitySupport.BLL.Services
         {
             return await _disabledRepo.GetByUserIdAsync(userId);
         }
+        public async Task<DisabledDto> GetByIdAsync(int id)
+        {
+            try
+            {
+                var disabled = await _unitOfWork._disabledRepository.GetByIdAsync(id);
+
+                if (disabled == null)
+                    throw new KeyNotFoundException($"Disabled user with ID {id} not found.");
+
+                return _mapper.Map<DisabledDto>(disabled);
+            }
+            catch (KeyNotFoundException)
+            {
+                throw; 
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("An error occurred while retrieving the disabled user.", ex);
+            }
+        }
+
     }
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DisabilitySupport.BLL.DTOs;
+using DisabilitySupport.BLL.DTOs.helper;
 
 namespace DisabilitySupport.BLL.Interfaces
 {
@@ -10,5 +12,6 @@ namespace DisabilitySupport.BLL.Interfaces
     {
 
         Task<int?> GetHelperIdByUserIdAsync(string userId);
+        Task<HelperDto> GetByIdAsync(int id);
     }
 }

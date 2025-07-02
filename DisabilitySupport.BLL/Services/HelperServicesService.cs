@@ -169,9 +169,6 @@ namespace DisabilitySupport.BLL.Services
             };
         }
 
-        Task<List<DAL.Models.HelperService>> IHelperServicesService.GetByHelperIdAsync(int helperId)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }
