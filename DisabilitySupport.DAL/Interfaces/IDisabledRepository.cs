@@ -10,6 +10,9 @@ namespace DisabilitySupport.DAL.Interfaces
     public interface IDisabledRepository
     {
         Task<Disabled?> GetByUserIdAsync(string userId);
+
+        Task<Disabled> GetByIdAsync(int id);
+
     }
 
 }

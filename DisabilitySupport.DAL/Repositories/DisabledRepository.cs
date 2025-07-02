@@ -18,4 +18,11 @@ public class DisabledRepository : IDisabledRepository
             .Include(d => d.User)
             .FirstOrDefaultAsync(d => d.UserId == userId);
     }
+
+    public async Task<Disabled> GetByIdAsync(int id)
+    {
+        return await _context.DisabledPeople
+             .Include(d => d.User)
+             .FirstOrDefaultAsync(d => d.Id == id);
+    }
 }

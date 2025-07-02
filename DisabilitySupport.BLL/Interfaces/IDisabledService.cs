@@ -1,4 +1,5 @@
-﻿using DisabilitySupport.DAL.Models;
+﻿using DisabilitySupport.BLL.DTOs;
+using DisabilitySupport.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace DisabilitySupport.BLL.Interfaces
     public interface IDisabledService
     {
         Task<Disabled?> GetDisabledByUserIdAsync(string userId);
+        Task<DisabledDto> GetByIdAsync(int id);
     }
 }
