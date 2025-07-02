@@ -15,6 +15,7 @@ namespace DisabilitySupport.DAL.Interfaces
         public IServiceCategoryRepository _serviceCategoryRepository { get; }
 
         public IDisabledRepository _disabledRepository { get; }
+        public IHelperRepository _helperRepository { get; }
 
 
         Task Save();

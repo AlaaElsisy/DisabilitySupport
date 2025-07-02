@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using DisabilitySupport.BLL.DTOs;
+using DisabilitySupport.BLL.DTOs.helper;
 using DisabilitySupport.BLL.DTOs.helper.Request;
 using DisabilitySupport.BLL.DTOs.helper.service;
 using DisabilitySupport.BLL.DTOs.ServiceCategory;
@@ -66,7 +67,15 @@ namespace DisabilitySupport.BLL.Mapping
             .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.User.Gender))
             .ForMember(dest => dest.ProfileImage, opt => opt.MapFrom(src => src.User.ProfileImage));
 
-
+            CreateMap<Helper, HelperDto>()
+            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.User.Id))
+            .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.User.FullName))
+            .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.User.Address))
+            .ForMember(dest => dest.Zone, opt => opt.MapFrom(src => src.User.Zone))
+            .ForMember(dest => dest.DateOfBirth, opt => opt.MapFrom(src => src.User.DateOfBirth))
+            .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.User.Gender))
+            .ForMember(dest => dest.ProfileImage, opt => opt.MapFrom(src => src.User.ProfileImage))
+            .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.User.CreatedAt));
         }
     }
 }

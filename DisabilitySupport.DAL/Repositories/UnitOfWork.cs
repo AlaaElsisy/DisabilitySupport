@@ -22,9 +22,11 @@ namespace DisabilitySupport.DAL.Repositories
         public IHelperRequestRepository _helperRequestRepository { get; set; }
         public IServiceCategoryRepository _serviceCategoryRepository { get; }
         public IDisabledRepository _disabledRepository { get; }
+        public IHelperRepository _helperRepository{ get; }
+
 
         public UnitOfWork(ApplicationDbContext context , IDisabledRequestRepository disabledRequestRepository
-            ,IHelperServiceRepository helperServiceRepository,IHelperRequestRepository helperRequestRepository,IServiceCategoryRepository serviceCategoryRepository ,IDisabledRepository disabledRepository)
+            ,IHelperServiceRepository helperServiceRepository,IHelperRequestRepository helperRequestRepository,IServiceCategoryRepository serviceCategoryRepository ,IDisabledRepository disabledRepository,IHelperRepository helperRepository)
         {
             _context = context;
             _disabledRequestRepository = disabledRequestRepository;
@@ -33,6 +35,7 @@ namespace DisabilitySupport.DAL.Repositories
             _helperRequestRepository = helperRequestRepository;
             _serviceCategoryRepository = serviceCategoryRepository;
             _disabledRepository = disabledRepository;
+            _helperRepository = helperRepository;
         }
 
 
