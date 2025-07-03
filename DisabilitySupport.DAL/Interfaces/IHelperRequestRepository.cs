@@ -19,7 +19,17 @@ namespace DisabilitySupport.DAL.Interfaces
 
         Task<(IEnumerable<HelperRequest> Items, int TotalCount)> GetPagedByHelperIdAsync(int helperId, int pageNumber, int pageSize);
 
-        Task<(List<HelperRequest> Items, int TotalCount)> GetPagedAsync( int? helperId, int? disabledOfferId, string? status, string? searchWord,  int pageNumber,  int pageSize  );
+        Task<(List<HelperRequest> Items, int TotalCount)> GetPagedAsync(
+            int? helperId,
+            int? disabledOfferId,
+            string? status,
+            string? searchWord,
+            int? minTotalPrice,
+            int? maxTotalPrice,
+            string? orderBy,
+            int pageNumber,
+            int pageSize
+        );
 
     }
 }

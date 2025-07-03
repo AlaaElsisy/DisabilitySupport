@@ -14,6 +14,8 @@ namespace DisabilitySupport.BLL.DTOs.helper.Request
         public string? SearchWord { get; set; }
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
-
+        public int? MinTotalPrice { get; set; }
+        public int? MaxTotalPrice { get; set; }
+        public string? OrderBy { get; set; } // e.g., "TotalPrice", "-TotalPrice" for desc
     }
 }

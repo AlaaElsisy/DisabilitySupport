@@ -10,6 +10,8 @@ namespace DisabilitySupport.DAL.Models.Enumerations
     {
         Pending,
         Accepted,
+        Rejected,
+        Completed,
         Cancelled
     }
 }

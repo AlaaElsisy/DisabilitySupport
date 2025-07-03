@@ -4,6 +4,7 @@ using DisabilitySupport.BLL.DTOs;
 using DisabilitySupport.BLL.Services;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using DisabilitySupport.DAL.Models.Enumerations;
 
 namespace DisabilitySupport.Api.Controllers
 {
@@ -80,14 +81,40 @@ namespace DisabilitySupport.Api.Controllers
             return NoContent();
         }
 
-        
+        [HttpPatch("request/status")]
+        public async Task<IActionResult> UpdateStatus([FromQuery] int offerId, [FromQuery] DisabledOfferStatus status)
+        {
+            if (offerId <= 0)
+                return BadRequest("Invalid request ID.");
+            try
+            {
+                var updated = await _service.UpdateStatusAsync(offerId, status);
+                return Ok(updated);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var deleted = await _service.DeleteAsync(id);
             if (!deleted) return NotFound();
-
             return NoContent();
+        }
+
+        [HttpGet("statuses")]
+        public IActionResult GetStatuses()
+        {
+            var statuses = Enum.GetNames(typeof(DisabledOfferStatus));
+            return Ok(statuses);
         }
     }
 }

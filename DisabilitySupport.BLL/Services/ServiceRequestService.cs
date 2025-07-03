@@ -43,7 +43,6 @@ namespace DisabilitySupport.BLL.Services
             var entity = await _unitOfWork._disabledRequestRepository.GetById(requestId);
             if (entity == null) return false;
             entity.Status = status;
-            await _unitOfWork._disabledRequestRepository.Update(entity);
             await _unitOfWork._disabledRequestRepository.Save();
             return true;
         }
