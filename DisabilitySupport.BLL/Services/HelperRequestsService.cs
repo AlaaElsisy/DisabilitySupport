@@ -112,7 +112,6 @@ namespace DisabilitySupport.BLL.Services
             }
             Request.Status = status;
 
-            await _unitOfWork._helperRequestRepository.Update(Request);
             await _unitOfWork.Save();
             return _mapper.Map<HelperRequestDto>(Request);
         }
@@ -149,13 +148,16 @@ namespace DisabilitySupport.BLL.Services
             }
 
             var (entities, totalCount) = await _unitOfWork._helperRequestRepository.GetPagedAsync(
-            query.HelperId,
-            query.DisabledOfferId,
-            query.Status,
-            query.SearchWord,
-            query.PageNumber,
-            query.PageSize
-        );
+                query.HelperId,
+                query.DisabledOfferId,
+                query.Status,
+                query.SearchWord,
+                query.MinTotalPrice,
+                query.MaxTotalPrice,
+                query.OrderBy,
+                query.PageNumber,
+                query.PageSize
+            );
 
             var items = _mapper.Map<List<HelperRequestDetailsDto>>(entities);
 

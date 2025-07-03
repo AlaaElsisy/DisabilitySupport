@@ -60,9 +60,18 @@ namespace DisabilitySupport.DAL.Repositories
             return (items, totalCount);
         }
 
-        public async Task<(List<HelperRequest> Items, int TotalCount)> GetPagedAsync(  int? helperId,  int? disabledOfferId, string? status, string? searchWord, int pageNumber, int pageSize)
+        public async Task<(List<HelperRequest> Items, int TotalCount)> GetPagedAsync(
+            int? helperId,
+            int? disabledOfferId,
+            string? status,
+            string? searchWord,
+            int? minTotalPrice,
+            int? maxTotalPrice,
+            string? orderBy,
+            int pageNumber,
+            int pageSize)
         {
-            var query = _Context.HelperRequests.Include(x=> x.Helper).ThenInclude(y => y.User).AsQueryable();
+            var query = _Context.HelperRequests.Include(x => x.Helper).ThenInclude(y => y.User).AsQueryable();
 
             if (helperId.HasValue)
                 query = query.Where(x => x.HelperId == helperId.Value);
@@ -76,10 +85,30 @@ namespace DisabilitySupport.DAL.Repositories
             if (!string.IsNullOrEmpty(searchWord))
                 query = query.Where(x => x.Message != null && x.Message.ToLower().Contains(searchWord.ToLower()));
 
+            if (minTotalPrice.HasValue)
+                query = query.Where(x => x.TotalPrice >= minTotalPrice.Value);
+
+            if (maxTotalPrice.HasValue)
+                query = query.Where(x => x.TotalPrice <= maxTotalPrice.Value);
+
+            // Default ordering: ApplicationDate desc
+            if (!string.IsNullOrEmpty(orderBy))
+            {
+                if (orderBy.ToLower() == "totalprice")
+                    query = query.OrderBy(x => x.TotalPrice);
+                else if (orderBy.ToLower() == "-totalprice")
+                    query = query.OrderByDescending(x => x.TotalPrice);
+                else
+                    query = query.OrderByDescending(x => x.ApplicationDate);
+            }
+            else
+            {
+                query = query.OrderByDescending(x => x.ApplicationDate);
+            }
+
             var totalCount = await query.CountAsync();
 
             var items = await query
-                .OrderByDescending(x => x.ApplicationDate)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();

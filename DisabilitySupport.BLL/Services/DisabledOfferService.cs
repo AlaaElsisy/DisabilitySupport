@@ -67,6 +67,16 @@ namespace DisabilitySupport.BLL.Services
             return true;
         }
 
+
+        public async Task<bool> UpdateStatusAsync(int offerId, DisabledOfferStatus status)
+        {
+            var entity = await _repository.GetById(offerId);
+            if (entity == null) return false;
+            entity.Status = status;
+            await _repository.Save();
+            return true;
+        }
+
         public async Task<bool> DeleteAsync(int id)
         {
             var entity = await _repository.GetById(id);
