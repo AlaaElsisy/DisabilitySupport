@@ -10,5 +10,6 @@ namespace DisabilitySupport.BLL.DTOs
         public int? HelperServiceId { get; set; }
         public string Status { get; set; } = "pending";
         public string? SearchWord { get; set; }
+        public int? CategoryId { get; set; }
     }
 } 

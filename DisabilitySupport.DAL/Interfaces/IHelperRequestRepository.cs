@@ -30,6 +30,7 @@ namespace DisabilitySupport.DAL.Interfaces
             int pageNumber,
             int pageSize
         );
+        Task<(List<HelperRequest> Items, int TotalCount)> GetRequestCardsByHelperIdAsync(int helperId, int pageNumber = 1, int pageSize = 10);
 
     }
 }

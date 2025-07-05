@@ -23,5 +23,8 @@ namespace DisabilitySupport.BLL.DTOs
         public int? DisabledId { get; set; }
         [Required]
         public int? HelperServiceId { get; set; }
+        public int? CategoryId { get; set; }
+        public string? HelperName { get; set; }
+        public string? HelperImage { get; set; }
     }
 } 

@@ -172,5 +172,26 @@ namespace DisabilitySupport.Api.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [HttpGet("cards")]
+        public async Task<IActionResult> GetRequestCards([FromQuery] int helperId, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        {
+            if (helperId <= 0)
+                return BadRequest("Invalid Helper ID.");
+
+            try
+            {
+                var result = await _helperRequest.GetCardsByHelperIdAsync(helperId, page, pageSize);
+                return Ok(result);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Internal server error", details = ex.Message });
+            }
+        }
+
     }
 }
