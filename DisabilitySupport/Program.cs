@@ -18,6 +18,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
 using System.Security.Claims;
+using DisabilitySupport.BLL.settings;
 
 
 
@@ -115,8 +116,9 @@ namespace DisabilitySupport
 
             builder.Services.AddScoped<IDisabledRequestRepository, DisabledRequestRepository>();
             builder.Services.AddScoped<IHelperRepository, HelperRepository>();
+            builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 
-            
+
             builder.Services.AddScoped<IServiceCategoryRepository, ServiceCategoryRepository>();
 
             // BLL
@@ -129,6 +131,10 @@ namespace DisabilitySupport
 
             builder.Services.AddScoped<IServiceCategoryService, ServiceCategoryService>();
 
+     
+            builder.Services.AddScoped<IPaymentService, PaymentService>();
+    
+            builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 
 
             //Unit Of Work
