@@ -168,8 +168,22 @@ namespace DisabilitySupport.BLL.Services
             };
         }
 
-    
+        public async Task<PaginatedResult<HelperRequestCardDto>> GetCardsByHelperIdAsync(int helperId, int pageNumber = 1, int pageSize = 10)
+        {
+            if (!await _unitOfWork._helperRequestRepository.HelperExists(helperId))
+                throw new KeyNotFoundException($"Helper with ID {helperId} does not exist.");
 
+            var (entities, totalCount) = await _unitOfWork._helperRequestRepository
+                .GetRequestCardsByHelperIdAsync(helperId, pageNumber, pageSize);
+
+            var result = new PaginatedResult<HelperRequestCardDto>
+            {
+                Items = _mapper.Map<List<HelperRequestCardDto>>(entities),
+                TotalCount = totalCount
+            };
+
+            return result;
+        }
 
     }
 }

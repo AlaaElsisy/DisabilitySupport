@@ -71,11 +71,13 @@ namespace DisabilitySupport.BLL.Services
 
             var (entities, totalCount) = await _unitOfWork._disabledRequestRepository.GetPagedAsync(
                 query.DisabledId,
-                query.HelperServiceId,
+                query.HelperServiceId,   
                 query.Status,
                 query.SearchWord,
                 query.PageNumber,
-                query.PageSize
+                query.PageSize,
+                query.CategoryId
+               
             );
 
             var items = entities.Select(_mapper.Map<DisabledRequestDto>).ToList();

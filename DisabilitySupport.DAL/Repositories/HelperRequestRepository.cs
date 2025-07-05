@@ -115,6 +115,26 @@ namespace DisabilitySupport.DAL.Repositories
 
             return (items, totalCount);
         }
+        public async Task<(List<HelperRequest> Items, int TotalCount)> GetRequestCardsByHelperIdAsync(int helperId, int pageNumber = 1, int pageSize = 10)
+        {
+            var query = _Context.HelperRequests
+                .Include(x => x.DisabledOffer)
+                    .ThenInclude(o => o.ServiceCategory)
+                .Include(x => x.DisabledOffer)
+                    .ThenInclude(o => o.Disabled)
+                        .ThenInclude(d => d.User)
+                .Where(x => x.HelperId == helperId)
+                .OrderByDescending(x => x.ApplicationDate);
+
+            var totalCount = await query.CountAsync();
+            var items = await query
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return (items, totalCount);
+        }
+
 
     }
 
