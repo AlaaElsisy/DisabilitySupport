@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DisabilitySupport.DAL.Models.Enumerations;
 
-namespace DisabilitySupport.BLL.DTOs
+namespace DisabilitySupport.BLL.DTOs.Disabled
 {
     public class DisabledDto
     {
@@ -17,7 +17,7 @@ namespace DisabilitySupport.BLL.DTOs
         public string? EmergencyContactPhone { get; set; }
         public string? EmergencyContactRelation { get; set; }
 
-         
+
         public string? UserId { get; set; }
         public string? FullName { get; set; }
         public string? Address { get; set; }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using DisabilitySupport.BLL.DTOs;
+using DisabilitySupport.BLL.DTOs.Disabled;
 using DisabilitySupport.BLL.DTOs.helper;
 using DisabilitySupport.BLL.DTOs.helper.Request;
 using DisabilitySupport.BLL.DTOs.helper.service;
@@ -56,20 +56,25 @@ namespace DisabilitySupport.BLL.Mapping
              .ReverseMap()
              .ForMember(dest => dest.Status, opt => opt.MapFrom(src => Enum.Parse<DisabledOfferStatus>(src.Status)));
 
-            CreateMap<DisabledRequest, DisabledRequestDto>()
-     .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()))
-     .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src =>
-         src.HelperService != null ? src.HelperService.ServiceCategoryId : (int?)null))
-     .ForMember(dest => dest.HelperName, opt => opt.MapFrom(src =>
-         src.HelperService != null && src.HelperService.Helper != null && src.HelperService.Helper.User != null
-             ? src.HelperService.Helper.User.FullName : null))
-     .ForMember(dest => dest.HelperImage, opt => opt.MapFrom(src =>
-         src.HelperService != null && src.HelperService.Helper != null && src.HelperService.Helper.User != null
-             ? src.HelperService.Helper.User.ProfileImage : null))
-     .ReverseMap()
-     .ForMember(dest => dest.Status, opt => opt.MapFrom(src =>
-         Enum.Parse<DisabilitySupport.DAL.Models.Enumerations.RequestStatus>(src.Status)));
+            CreateMap<DisabledRequest, DisabledRequestDetailsDto>()
+               .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()))
+               .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src =>
+                   src.HelperService != null ? src.HelperService.ServiceCategoryId : (int?)null))
+               .ForMember(dest => dest.HelperName, opt => opt.MapFrom(src =>
+                   src.HelperService != null && src.HelperService.Helper != null && src.HelperService.Helper.User != null
+                       ? src.HelperService.Helper.User.FullName : null))
+               .ForMember(dest => dest.HelperImage, opt => opt.MapFrom(src =>
+                   src.HelperService != null && src.HelperService.Helper != null && src.HelperService.Helper.User != null
+                       ? src.HelperService.Helper.User.ProfileImage : null))
+               .ReverseMap()
+               .ForMember(dest => dest.Status, opt => opt.MapFrom(src =>
+                   Enum.Parse<DisabilitySupport.DAL.Models.Enumerations.RequestStatus>(src.Status)));
 
+            CreateMap<DisabledRequest, DisabledRequestDto>()
+               .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()))
+               .ReverseMap()
+               .ForMember(dest => dest.Status, opt => opt.MapFrom(src =>
+                Enum.Parse<DisabilitySupport.DAL.Models.Enumerations.RequestStatus>(src.Status)));
 
 
 

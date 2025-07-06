@@ -1,4 +1,5 @@
 ﻿using DisabilitySupport.BLL.DTOs;
+using DisabilitySupport.BLL.DTOs.Disabled;
 using DisabilitySupport.DAL.Models;
 using DisabilitySupport.DAL.Models.Enumerations;
 

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using DisabilitySupport.BLL.DTOs;
+using DisabilitySupport.BLL.DTOs.Disabled;
 using DisabilitySupport.BLL.Interfaces;
 using DisabilitySupport.DAL.Interfaces;
 using DisabilitySupport.DAL.Models;
