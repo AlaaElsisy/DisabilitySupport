@@ -18,7 +18,7 @@ namespace DisabilitySupport.BLL.DTOs.Disabled
         [Required]
         public DateTime RequestDate { get; set; }
 
-        public string? Status { get; set; }
+        public string? Status { get; set; } = "Pending";
         public DateTime? Start { get; set; }
         public DateTime? End { get; set; }
         public decimal? price { get; set; }
