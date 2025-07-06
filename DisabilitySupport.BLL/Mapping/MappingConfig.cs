@@ -89,6 +89,22 @@ namespace DisabilitySupport.BLL.Mapping
 
             CreateMap<Payment, PaymentResponseDto>()
                  .ForMember(dest => dest.PaymentId, opt => opt.MapFrom(src => src.Id));
-        }
+
+
+
+
+
+
+
+
+
+
+
+
+          CreateMap<UpdateHelperServiceDto, HelperService>()
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => Enum.Parse<HelperServiceStatus>(src.Status, true)))
+            .ReverseMap()
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()));
+                }
     }
 }

@@ -16,5 +16,6 @@ namespace DisabilitySupport.BLL.DTOs.helper.service
          public decimal? MinBudget { get; set; }
         public decimal? MaxBudget { get; set; }
         public string? SortBy { get; set; }
+        public string? Status { get; set; }
     }
 }
