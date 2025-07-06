@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace DisabilitySupport.BLL.DTOs
+namespace DisabilitySupport.BLL.DTOs.Disabled
 {
     public class DisabledOfferDto
     {
@@ -20,7 +20,7 @@ namespace DisabilitySupport.BLL.DTOs
 
         public decimal? Budget { get; set; }
 
-       
+
         public int? DisabledId { get; set; }
 
         [Required]

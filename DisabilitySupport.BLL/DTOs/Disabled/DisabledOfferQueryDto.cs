@@ -1,4 +1,4 @@
-﻿namespace DisabilitySupport.BLL.DTOs
+﻿namespace DisabilitySupport.BLL.DTOs.Disabled
 {
     public class DisabledOfferQueryDto
     {

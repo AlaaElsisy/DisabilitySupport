@@ -1,4 +1,4 @@
-﻿using DisabilitySupport.BLL.DTOs;
+﻿using DisabilitySupport.BLL.DTOs.Disabled;
 using DisabilitySupport.DAL.Models;
 using System;
 using System.Collections.Generic;

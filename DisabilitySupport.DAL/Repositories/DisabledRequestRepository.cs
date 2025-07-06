@@ -16,7 +16,7 @@ namespace DisabilitySupport.DAL.Repositories
         {
         } 
 
-        public async Task<(IEnumerable<DisabledRequest> Items, int TotalCount)> GetPagedAsync(int? disabledId, int? helperServiceId, string status, string? searchWord, int pageNumber, int pageSize, int? categoryId)
+        public async Task<(IEnumerable<DisabledRequest> Items, int TotalCount)> GetPagedAsync(int? disabledId, int? helperServiceId, string? status, string? searchWord, int pageNumber, int pageSize, int? categoryId)
         {
             var query = _Context.DisabledRequests
             .Include(x => x.HelperService)

@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using DisabilitySupport.BLL.Interfaces;
-using DisabilitySupport.BLL.DTOs;
 using DisabilitySupport.BLL.Services;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using DisabilitySupport.DAL.Models.Enumerations;
+using DisabilitySupport.BLL.DTOs.Disabled;
 
 namespace DisabilitySupport.Api.Controllers
 {
