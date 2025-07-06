@@ -1,6 +1,9 @@
 ﻿using DisabilitySupport.BLL.DTOs.payment;
+using DisabilitySupport.BLL.DTOs.payment.pay;
 using DisabilitySupport.BLL.Interfaces;
+using DisabilitySupport.DAL.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DisabilitySupport.Api.Controllers
@@ -11,10 +14,11 @@ namespace DisabilitySupport.Api.Controllers
     {
 
         private readonly IPaymentService _paymentService;
-
-        public PaymentController(IPaymentService paymentService)
+        private readonly UserManager<ApplicationUser> _userManager;
+        public PaymentController(IPaymentService paymentService, UserManager<ApplicationUser> userManager)
         {
             _paymentService = paymentService;
+            _userManager = userManager;
         }
         [HttpPost("charge")]
         public async Task<IActionResult> Charge([FromBody] PaymentRequestDto request)
@@ -31,6 +35,24 @@ namespace DisabilitySupport.Api.Controllers
             if (result == null || result.Count == 0)
                 return NotFound($"No payments found for DisabledId: {disabledId}");
 
+            return Ok(result);
+        }
+
+
+        ///////////////////////////////////////
+        ///
+        [HttpPost("create")]
+        public async Task<IActionResult> CreatePayment([FromBody] PaymentRequest2Dto dto)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var result = await _paymentService.CreateStripeSessionAsync(dto, user.Email);
+            return Ok(result);
+        }
+
+        [HttpGet("success")]
+        public async Task<IActionResult> PaymentSuccess([FromQuery] string sessionId)
+        {
+            var result = await _paymentService.ProcessPaymentSuccessAsync(sessionId);
             return Ok(result);
         }
 

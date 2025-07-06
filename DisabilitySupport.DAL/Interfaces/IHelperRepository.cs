@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DisabilitySupport.DAL.Interfaces
 {
-    public interface IHelperRepository
+    public interface IHelperRepository:IGenericRepository<Helper>
     {
         Task<Helper?> GetByUserIdAsync(string userId);
         Task<Helper> GetByIdAsync(int id);
