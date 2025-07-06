@@ -14,5 +14,5 @@ namespace DisabilitySupport.DAL.Models.Enumerations
         Completed,
         Cancelled,
         Rejected
-    }
+    }   
 }

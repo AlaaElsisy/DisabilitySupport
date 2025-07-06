@@ -7,7 +7,6 @@
 
         public int? DisabledId { get; set; }
         public int? ServiceCategoryId { get; set; }
-
         public string? Status { get; set; }
         public string? SearchWord { get; set; }
     }

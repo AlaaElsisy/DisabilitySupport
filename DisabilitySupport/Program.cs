@@ -192,6 +192,7 @@ namespace DisabilitySupport
                 app.MapOpenApi();
             }
 
+            app.UseStaticFiles();
             app.UseHttpsRedirection();
 
             app.UseCors("AllowAll");

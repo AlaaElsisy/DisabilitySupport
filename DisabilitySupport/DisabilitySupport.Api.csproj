@@ -27,4 +27,8 @@
     <ProjectReference Include="..\DisabilitySupport.DAL\DisabilitySupport.DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Services Categories\" />
+  </ItemGroup>
+
 </Project>
