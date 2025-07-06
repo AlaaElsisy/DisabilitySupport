@@ -1,4 +1,4 @@
-﻿namespace DisabilitySupport.BLL.DTOs
+﻿namespace DisabilitySupport.BLL.DTOs.Disabled
 {
     public class DisabledOfferQueryDto
     {
@@ -7,7 +7,6 @@
 
         public int? DisabledId { get; set; }
         public int? ServiceCategoryId { get; set; }
-
         public string? Status { get; set; }
         public string? SearchWord { get; set; }
     }

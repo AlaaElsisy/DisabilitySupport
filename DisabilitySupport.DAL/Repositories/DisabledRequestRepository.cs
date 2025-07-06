@@ -1,6 +1,7 @@
 ﻿using DisabilitySupport.DAL.Data;
 using DisabilitySupport.DAL.Interfaces;
 using DisabilitySupport.DAL.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +16,15 @@ namespace DisabilitySupport.DAL.Repositories
         {
         } 
 
-        public async Task<(IEnumerable<DisabledRequest> Items, int TotalCount)> GetPagedAsync(int? disabledId, int? helperServiceId, string status, string? searchWord, int pageNumber, int pageSize)
+        public async Task<(IEnumerable<DisabledRequest> Items, int TotalCount)> GetPagedAsync(int? disabledId, int? helperServiceId, string? status, string? searchWord, int pageNumber, int pageSize, int? categoryId)
         {
-            var query = _Context.DisabledRequests.AsQueryable();
+            var query = _Context.DisabledRequests
+            .Include(x => x.HelperService)
+         .ThenInclude(hs => hs.Helper)
+             .ThenInclude(h => h.User)
+          .AsQueryable();
+
+
 
             if (disabledId.HasValue)
                 query = query.Where(x => x.DisabledId == disabledId.Value);
@@ -27,7 +34,8 @@ namespace DisabilitySupport.DAL.Repositories
                 query = query.Where(x => x.Status.ToString().ToLower() == status.ToLower());
             if (!string.IsNullOrEmpty(searchWord))
                 query = query.Where(x => x.Description != null && x.Description.ToLower().Contains(searchWord.ToLower()));
-
+            if (categoryId.HasValue)
+                query = query.Where(x => x.HelperService.ServiceCategoryId == categoryId.Value);
             var totalCount = await Task.FromResult(query.Count());
             var items = await Task.FromResult(query
                 .Skip((pageNumber - 1) * pageSize)

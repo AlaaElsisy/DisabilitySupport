@@ -9,6 +9,6 @@ namespace DisabilitySupport.DAL.Interfaces
 {
     public interface IDisabledRequestRepository : IGenericRepository<DisabledRequest>
     {
-        Task<(IEnumerable<DisabledRequest> Items, int TotalCount)> GetPagedAsync(int? disabledId, int? helperServiceId, string status, string? searchWord, int pageNumber, int pageSize);
+        Task<(IEnumerable<DisabledRequest> Items, int TotalCount)> GetPagedAsync(int? disabledId, int? helperServiceId, string status, string? searchWord, int pageNumber, int pageSize, int? categoryId);
     }
 }
