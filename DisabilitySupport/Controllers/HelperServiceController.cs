@@ -1,6 +1,8 @@
 ﻿using DisabilitySupport.BLL.DTOs.helper.service;
 using DisabilitySupport.BLL.Interfaces;
 using DisabilitySupport.BLL.Services;
+using DisabilitySupport.DAL.Models.Enumerations;
+using DisabilitySupport.DAL.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -174,5 +176,32 @@ namespace DisabilitySupport.Api.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+
+
+
+        [HttpPatch("service/status")]
+        public async Task<IActionResult> UpdateStatus([FromQuery] int requestId, [FromQuery] HelperServiceStatus status)
+        {
+            if (requestId <= 0)
+                return BadRequest("Invalid request ID.");
+            try
+            {
+                var updated = await _helperService.UpdateStatusAsync(requestId, status);
+                return Ok(new
+                {
+                    message = "Status updated successfully.",
+                    data = updated
+                });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
     }
 }

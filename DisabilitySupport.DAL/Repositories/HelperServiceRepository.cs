@@ -52,7 +52,7 @@ namespace DisabilitySupport.DAL.Repositories
         }
 
 
-        public async Task<(List<HelperService> Items, int TotalCount)> GetPagedAsync(  int? helperId,  int? serviceCategoryId,  string? searchWord, decimal? minBudget, decimal? maxBudget, string? sortBy, int pageNumber, int pageSize)
+        public async Task<(List<HelperService> Items, int TotalCount)> GetPagedAsync(  int? helperId,  int? serviceCategoryId,  string? searchWord, decimal? minBudget, decimal? maxBudget, string? sortBy, int pageNumber, int pageSize, string? status)
         {
             var query = _Context.HelperServices
                 .Include(x => x.Helper)
@@ -74,6 +74,8 @@ namespace DisabilitySupport.DAL.Repositories
 
             if (maxBudget.HasValue)
                 query = query.Where(x => x.PricePerHour <= maxBudget.Value);
+            if (!string.IsNullOrEmpty(status))
+                query = query.Where(x => x.Status.ToString().ToLower() == status.ToLower());
 
             // Sorting logic
             if (!string.IsNullOrEmpty(sortBy))
