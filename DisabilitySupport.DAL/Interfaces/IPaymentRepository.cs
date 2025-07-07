@@ -12,6 +12,7 @@ namespace DisabilitySupport.DAL.Interfaces
         Task<List<Payment>> GetByHelperId(int id);
         Task<List<Payment>> GetByDisabledId(int id);
         //Task<List<Payment>> GetPaymentsByDisabledIdAsync(int disabledId);
-
+        Task<HelperRequest> GetHelperRequestWithDetailsAsync(int id);
+        Task<DisabledRequest> GetDisabledRequestWithDetailsAsync(int id);
     }
 }

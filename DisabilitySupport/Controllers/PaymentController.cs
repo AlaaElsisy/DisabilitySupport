@@ -39,22 +39,7 @@ namespace DisabilitySupport.Api.Controllers
         }
 
 
-        ///////////////////////////////////////
-        ///
-        [HttpPost("create")]
-        public async Task<IActionResult> CreatePayment([FromBody] PaymentRequest2Dto dto)
-        {
-            var user = await _userManager.GetUserAsync(User);
-            var result = await _paymentService.CreateStripeSessionAsync(dto, user.Email);
-            return Ok(result);
-        }
-
-        [HttpGet("success")]
-        public async Task<IActionResult> PaymentSuccess([FromQuery] string sessionId)
-        {
-            var result = await _paymentService.ProcessPaymentSuccessAsync(sessionId);
-            return Ok(result);
-        }
+       
 
     }
 }

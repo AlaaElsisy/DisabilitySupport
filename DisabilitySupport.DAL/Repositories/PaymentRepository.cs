@@ -43,7 +43,20 @@ namespace DisabilitySupport.DAL.Repositories
           .ToListAsync();
         }
 
-
-       
+        public async Task<HelperRequest> GetHelperRequestWithDetailsAsync(int id)
+        {
+            return await _Context.HelperRequests
+                .Include(h => h.Helper).ThenInclude(u => u.User)
+                .Include(h => h.DisabledOffer).ThenInclude(d => d.Disabled).ThenInclude(u => u.User)
+                .FirstOrDefaultAsync(h => h.Id == id);
+        }
+        public async Task<DisabledRequest> GetDisabledRequestWithDetailsAsync(int id)
+        {
+            return await _Context.DisabledRequests
+                .Include(d => d.Disabled)   
+                    .ThenInclude(u => u.User) 
+                 .Include(h => h.HelperService).ThenInclude(h=>h.Helper).ThenInclude(h=>h.User)
+                .FirstOrDefaultAsync(d => d.Id == id);
+        }
     }
 }
