@@ -9,5 +9,7 @@ public class HelperServiceDetailsDto
     public string? HelperImage { get; set; } 
     public string? HelperName { get; set; }
     public int ServiceCategoryId { get; set; }
-    public string? ServiceCategoryName { get; set; } 
+    public string? ServiceCategoryName { get; set; }
+    //public string Status { get; set; } = string.Empty;
+
 }

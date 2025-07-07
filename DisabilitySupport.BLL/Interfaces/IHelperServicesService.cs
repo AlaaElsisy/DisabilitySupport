@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DisabilitySupport.BLL.DTOs;
+using DisabilitySupport.BLL.DTOs.helper.Request;
 using DisabilitySupport.BLL.DTOs.helper.service;
 using DisabilitySupport.DAL.Models;
 using DisabilitySupport.DAL.Models.Enumerations;
@@ -27,5 +28,8 @@ namespace DisabilitySupport.BLL.Interfaces
 
         //Task AddHelperRequestAsync(HelperRequestDto dto);
         //Task<List<HelperRequest>> GetRequestsByHelperIdAsync(int helperId);
+
+        Task<HelperServiceDto> UpdateStatusAsync(int requestId, HelperServiceStatus status);
+
     }
 }

@@ -8,6 +8,7 @@ using DisabilitySupport.BLL.DTOs.Disabled;
 using DisabilitySupport.BLL.DTOs.helper;
 using DisabilitySupport.BLL.DTOs.helper.Request;
 using DisabilitySupport.BLL.DTOs.helper.service;
+using DisabilitySupport.BLL.DTOs.payment;
 using DisabilitySupport.BLL.DTOs.ServiceCategory;
 using DisabilitySupport.DAL.Models;
 using DisabilitySupport.DAL.Models.Enumerations;
@@ -112,6 +113,26 @@ namespace DisabilitySupport.BLL.Mapping
             .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.User.Gender))
             .ForMember(dest => dest.ProfileImage, opt => opt.MapFrom(src => src.User.ProfileImage))
             .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.User.CreatedAt));
-        }
+
+
+            CreateMap<Payment, PaymentResponseDto>()
+                 .ForMember(dest => dest.PaymentId, opt => opt.MapFrom(src => src.Id));
+
+
+
+
+
+
+
+
+
+
+
+
+          CreateMap<UpdateHelperServiceDto, HelperService>()
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => Enum.Parse<HelperServiceStatus>(src.Status, true)))
+            .ReverseMap()
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()));
+                }
     }
 }

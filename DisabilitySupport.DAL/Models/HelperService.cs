@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DisabilitySupport.DAL.Models.Enumerations;
 
 namespace DisabilitySupport.DAL.Models
 {
@@ -24,5 +25,8 @@ namespace DisabilitySupport.DAL.Models
         public ServiceCategory ServiceCategory { get; set; }
 
         public virtual List<DisabledRequest>? DisabledRequests { get; set; } = new List<DisabledRequest>();
+
+        public HelperServiceStatus Status { get; set; }
+
     }
 }

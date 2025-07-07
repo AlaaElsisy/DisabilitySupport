@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using DisabilitySupport.BLL.DTOs;
+using DisabilitySupport.BLL.DTOs.helper.Request;
 using DisabilitySupport.BLL.DTOs.helper.service;
 using DisabilitySupport.BLL.Interfaces;
 using DisabilitySupport.DAL.Interfaces;
 using DisabilitySupport.DAL.Models;
-
+using DisabilitySupport.DAL.Models.Enumerations;
 using DisabilitySupport.DAL.Repositories;
 using MimeKit;
 
@@ -157,7 +158,8 @@ namespace DisabilitySupport.BLL.Services
                 query.MaxBudget,
                 query.SortBy,
                 query.PageNumber,
-                query.PageSize
+                query.PageSize,
+                query.Status
             );
 
             var items = _mapper.Map<List<HelperServiceDetailsDto>>(entities);
@@ -169,6 +171,22 @@ namespace DisabilitySupport.BLL.Services
             };
         }
 
-       
+        public async Task<HelperServiceDto> UpdateStatusAsync(int serviceId, HelperServiceStatus status)
+        {
+            var Sercice = await _unitOfWork._helperServiceRepository.GetById(serviceId);
+            if (Sercice == null)
+                throw new KeyNotFoundException("No Sercice with that ID");
+
+
+            if (!Enum.IsDefined(typeof(HelperServiceStatus), status))
+            {
+                throw new ArgumentException("Invalid status.");
+            }
+            Sercice.Status = status;
+
+            await _unitOfWork.Save();
+            return _mapper.Map<HelperServiceDto>(Sercice);
+        }
+
     }
 }

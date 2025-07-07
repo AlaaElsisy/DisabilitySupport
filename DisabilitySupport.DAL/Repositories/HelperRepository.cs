@@ -10,25 +10,23 @@ using System.Threading.Tasks;
 
 namespace DisabilitySupport.DAL.Repositories
 {
-    public class HelperRepository : IHelperRepository
+    public class HelperRepository :GenericRepository<Helper>, IHelperRepository
     {
-        private readonly ApplicationDbContext _context;
+        //private readonly ApplicationDbContext _context;
 
-        public HelperRepository(ApplicationDbContext context)
-        {
-            _context = context;
-        }
+        public HelperRepository(ApplicationDbContext context):base(context) { }
+       
 
         public async Task<Helper?> GetByUserIdAsync(string userId)
         {
-            return await _context.Helpers!
+            return await _Context.Helpers!
                 .Include(h => h.User)
                 .FirstOrDefaultAsync(h => h.UserId == userId);
         }
 
         public async Task<Helper> GetByIdAsync(int id)
         {
-            return await _context.Helpers
+            return await _Context.Helpers
                  .Include(d => d.User)
                  .FirstOrDefaultAsync(d => d.Id == id);
         }
