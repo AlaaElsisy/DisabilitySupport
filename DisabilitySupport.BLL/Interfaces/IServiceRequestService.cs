@@ -15,5 +15,6 @@ namespace DisabilitySupport.BLL.Interfaces
         Task<bool> UpdateAsync(DisabledRequestDto dto);
         Task<bool> DeleteAsync(int id);
         Task<PaginatedResult<DisabledRequestDetailsDto>> GetPagedAsync(DisabledRequestQueryDto query);
+        Task<DisabledRequestByIdDetailsDto> GetDetailsByIdAsync(int id);
     }
 }

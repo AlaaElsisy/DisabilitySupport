@@ -76,7 +76,30 @@ namespace DisabilitySupport.BLL.Mapping
                .ForMember(dest => dest.Status, opt => opt.MapFrom(src =>
                 Enum.Parse<DisabilitySupport.DAL.Models.Enumerations.RequestStatus>(src.Status)));
 
-
+            CreateMap<DisabledRequest, DisabledRequestByIdDetailsDto>()
+              .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()))
+              .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src =>
+                  src.HelperService != null ? src.HelperService.ServiceCategoryId : (int?)null))
+              .ForMember(dest => dest.HelperName, opt => opt.MapFrom(src =>
+                  src.HelperService != null && src.HelperService.Helper != null && src.HelperService.Helper.User != null
+                      ? src.HelperService.Helper.User.FullName : null))
+              .ForMember(dest => dest.HelperImage, opt => opt.MapFrom(src =>
+                  src.HelperService != null && src.HelperService.Helper != null && src.HelperService.Helper.User != null
+                      ? src.HelperService.Helper.User.ProfileImage : null))
+              .ForMember(dest => dest.serviceDescription, opt => opt.MapFrom(src =>
+                  src.HelperService != null ? src.HelperService.Description : null))
+              .ForMember(dest => dest.pricePerHour, opt => opt.MapFrom(src =>
+                  src.HelperService != null ? src.HelperService.PricePerHour : (decimal?)null))
+              .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src =>
+                  src.HelperService != null && src.HelperService.ServiceCategory != null
+                      ? src.HelperService.ServiceCategory.Name : null))
+              .ForMember(dest => dest.availableDateFrom, opt => opt.MapFrom(src =>
+                  src.HelperService != null ? src.HelperService.AvailableDateFrom : (DateTime?)null))
+              .ForMember(dest => dest.availableDateTo, opt => opt.MapFrom(src =>
+                  src.HelperService != null ? src.HelperService.AvailableDateTo : (DateTime?)null))
+              .ReverseMap()
+              .ForMember(dest => dest.Status, opt => opt.MapFrom(src =>
+                  Enum.Parse<DisabilitySupport.DAL.Models.Enumerations.RequestStatus>(src.Status, true)));
 
             #endregion
             CreateMap<HelperService, HelperServiceDetailsDto>()

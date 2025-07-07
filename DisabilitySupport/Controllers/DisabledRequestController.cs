@@ -42,6 +42,14 @@ namespace DisabilitySupport.Api.Controllers
             return Ok(result);
         }
 
+        [HttpGet("details/{id}")]
+        public async Task<IActionResult> GetDetailsById(int id)
+        {
+            var result = await _service.GetDetailsByIdAsync(id);
+            if (result == null) return NotFound();
+            return Ok(result);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] DisabledRequestDto dto)
         {
