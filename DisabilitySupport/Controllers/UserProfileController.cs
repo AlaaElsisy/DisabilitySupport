@@ -19,20 +19,20 @@ public class UserProfileController : ControllerBase
     }
 
     [HttpGet("patient")]
-    [Authorize(Roles = "Patient")]
-    public async Task<IActionResult> GetDisabledProfile()
+   // [Authorize(Roles = "Patient")]
+    public async Task<IActionResult> GetDisabledProfile([FromQuery] string userId)
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+       // var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         var profile = await _profileService.GetDisabledProfileAsync(userId!);
         if (profile == null) return NotFound();
         return Ok(profile);
     }
 
     [HttpGet("helper")]
-    [Authorize(Roles = "Helper")]
-    public async Task<IActionResult> GetHelperProfile()
+    //[Authorize(Roles = "Helper")]
+    public async Task<IActionResult> GetHelperProfile([FromQuery] string userId)
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         var profile = await _profileService.GetHelperProfileAsync(userId!);
         if (profile == null) return NotFound();
         return Ok(profile);
