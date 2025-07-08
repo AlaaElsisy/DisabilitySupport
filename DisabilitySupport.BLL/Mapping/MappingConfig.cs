@@ -98,6 +98,8 @@ namespace DisabilitySupport.BLL.Mapping
                   src.HelperService != null ? src.HelperService.AvailableDateFrom : (DateTime?)null))
               .ForMember(dest => dest.availableDateTo, opt => opt.MapFrom(src =>
                   src.HelperService != null ? src.HelperService.AvailableDateTo : (DateTime?)null))
+              .ForMember(dest => dest.PatientName, opt => opt.MapFrom(src =>
+                  src.Disabled != null && src.Disabled.User != null ? src.Disabled.User.FullName: null))
               .ReverseMap()
               .ForMember(dest => dest.Status, opt => opt.MapFrom(src =>
                   Enum.Parse<DisabilitySupport.DAL.Models.Enumerations.RequestStatus>(src.Status, true)));
