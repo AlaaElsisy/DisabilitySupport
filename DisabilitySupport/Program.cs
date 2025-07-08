@@ -17,6 +17,8 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using System.Security.Claims;
+using DisabilitySupport.BLL.settings;
 
 
 
@@ -36,7 +38,14 @@ namespace DisabilitySupport
 
             builder.Services.AddScoped<IDisabledOfferRepository, DisabledOfferRepository>();
             builder.Services.AddScoped<IDisabledOfferService, DisabledOfferService>();
+            builder.Services.AddScoped<IDisabledRepository, DisabledRepository>();
+            builder.Services.AddScoped<IHelperRepository, HelperRepository>();
+            builder.Services.AddScoped<IUserProfileService, UserProfileService>();
+            builder.Services.AddScoped<IDisabledService, DisabledService>();
+            builder.Services.AddScoped<IServiceCategoryService, ServiceCategoryService>();
 
+       
+            
             // Add CORS
             builder.Services.AddCors(options =>
             {
@@ -106,11 +115,27 @@ namespace DisabilitySupport
 
 
             builder.Services.AddScoped<IDisabledRequestRepository, DisabledRequestRepository>();
- 
+            builder.Services.AddScoped<IHelperRepository, HelperRepository>();
+            builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+
+
+            builder.Services.AddScoped<IServiceCategoryRepository, ServiceCategoryRepository>();
 
             // BLL
             builder.Services.AddScoped<BLL.Interfaces.IHelperServicesService, BLL.Services.HelperServicesService>();
+            builder.Services.AddScoped<BLL.Interfaces.IHelperRequestsService, BLL.Services.HelperRequestsService>();
+
             builder.Services.AddScoped<IServiceRequestService, ServiceRequestService>();
+            builder.Services.AddScoped<IHelperService, s_helperservise>();
+
+
+            builder.Services.AddScoped<IServiceCategoryService, ServiceCategoryService>();
+
+     
+            builder.Services.AddScoped<IPaymentService, PaymentService>();
+    
+            builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
+
 
             //Unit Of Work
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -142,9 +167,7 @@ namespace DisabilitySupport
                     ValidateAudience = true,
                     ValidAudience = configuiration["JWT:ValidAudience"],
                     ValidIssuer = configuiration["JWT:ValidIssuer"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuiration["JWT:Secret"]))
-
-
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuiration["JWT:Secret"])),
                     };
                 }
                 );
@@ -175,6 +198,7 @@ namespace DisabilitySupport
                 app.MapOpenApi();
             }
 
+            app.UseStaticFiles();
             app.UseHttpsRedirection();
 
             app.UseCors("AllowAll");

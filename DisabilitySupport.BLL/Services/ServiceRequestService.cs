@@ -9,6 +9,7 @@ using DisabilitySupport.DAL.Interfaces;
 using DisabilitySupport.DAL.Models;
 using DisabilitySupport.DAL.Models.Enumerations;
 using AutoMapper;
+using DisabilitySupport.BLL.DTOs.Disabled;
 
 namespace DisabilitySupport.BLL.Services
 {
@@ -38,12 +39,18 @@ namespace DisabilitySupport.BLL.Services
             return _mapper.Map<DisabledRequestDto>(entity);
         }
 
+        public async Task<DisabledRequestByIdDetailsDto> GetDetailsByIdAsync(int id)
+        {
+            var entity = await _unitOfWork._disabledRequestRepository.GetDetailsById(id);
+            if (entity == null) return null;
+            return  _mapper.Map<DisabledRequestByIdDetailsDto>(entity);
+        }
+
         public async Task<bool> UpdateStatusAsync(int requestId, RequestStatus status)
         {
             var entity = await _unitOfWork._disabledRequestRepository.GetById(requestId);
             if (entity == null) return false;
             entity.Status = status;
-            await _unitOfWork._disabledRequestRepository.Update(entity);
             await _unitOfWork._disabledRequestRepository.Save();
             return true;
         }
@@ -62,26 +69,35 @@ namespace DisabilitySupport.BLL.Services
 
         public async Task<bool> DeleteAsync(int id)
         {
-            await _unitOfWork._disabledRequestRepository.Delete(id);
-            await _unitOfWork._disabledRequestRepository.Save();
-            return true;
+
+            var request = await GetByIdAsync(id);
+            if (request != null)
+            {
+                await _unitOfWork._disabledRequestRepository.Delete(id);
+                await _unitOfWork._disabledRequestRepository.Save();
+                return true;
+            }
+            else
+                return false;
         }
 
-        public async Task<PaginatedResult<DisabledRequestDto>> GetPagedAsync(DisabledRequestQueryDto query)
+        public async Task<PaginatedResult<DisabledRequestDetailsDto>> GetPagedAsync(DisabledRequestQueryDto query)
         {
 
             var (entities, totalCount) = await _unitOfWork._disabledRequestRepository.GetPagedAsync(
                 query.DisabledId,
-                query.HelperServiceId,
+                query.HelperServiceId,   
                 query.Status,
                 query.SearchWord,
                 query.PageNumber,
-                query.PageSize
+                query.PageSize,
+                query.CategoryId
+               
             );
 
-            var items = entities.Select(_mapper.Map<DisabledRequestDto>).ToList();
+            var items = entities.Select(_mapper.Map<DisabledRequestDetailsDto>).ToList();
 
-            return new PaginatedResult<DisabledRequestDto>
+            return new PaginatedResult<DisabledRequestDetailsDto>
             {
                 Items = items,
                 TotalCount = totalCount

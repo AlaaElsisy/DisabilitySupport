@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using DisabilitySupport.BLL.DTOs;
+using DisabilitySupport.BLL.DTOs.Disabled;
 using DisabilitySupport.BLL.Interfaces;
 using DisabilitySupport.DAL.Interfaces;
 using DisabilitySupport.DAL.Models;
 using DisabilitySupport.DAL.Models.Enumerations;
+using DisabilitySupport.DAL.Repositories;
+
 
 namespace DisabilitySupport.BLL.Services
 {
@@ -11,11 +14,12 @@ namespace DisabilitySupport.BLL.Services
     {
         private readonly IDisabledOfferRepository _repository;
         private readonly IMapper _mapper;
-
+   
         public DisabledOfferService(IDisabledOfferRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
+          
         }
 
         public async Task<PaginatedResult<DisabledOfferDto>> GetPagedAsync(DisabledOfferQueryDto query)
@@ -43,6 +47,7 @@ namespace DisabilitySupport.BLL.Services
             var offer = await _repository.GetById(id);
             return offer == null ? null : _mapper.Map<DisabledOfferDto>(offer);
         }
+       
 
         public async Task<DisabledOfferDto> CreateAsync(DisabledOfferDto dto)
         {
@@ -59,6 +64,16 @@ namespace DisabilitySupport.BLL.Services
 
             _mapper.Map(dto, entity);
             await _repository.Update(entity);
+            await _repository.Save();
+            return true;
+        }
+
+
+        public async Task<bool> UpdateStatusAsync(int offerId, DisabledOfferStatus status)
+        {
+            var entity = await _repository.GetById(offerId);
+            if (entity == null) return false;
+            entity.Status = status;
             await _repository.Save();
             return true;
         }

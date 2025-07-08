@@ -5,12 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using DisabilitySupport.BLL.DTOs;
+using DisabilitySupport.BLL.DTOs.helper.Request;
 using DisabilitySupport.BLL.DTOs.helper.service;
 using DisabilitySupport.BLL.Interfaces;
 using DisabilitySupport.DAL.Interfaces;
 using DisabilitySupport.DAL.Models;
-
+using DisabilitySupport.DAL.Models.Enumerations;
 using DisabilitySupport.DAL.Repositories;
+using MimeKit;
 
 namespace DisabilitySupport.BLL.Services
 {
@@ -139,6 +141,52 @@ namespace DisabilitySupport.BLL.Services
              
         }
 
-        
+        public async Task<PaginatedResult<HelperServiceDetailsDto>> GetPagedAsync(HelperServiceQueryDto query)
+        {
+            if (query.HelperId.HasValue)
+            {
+                var exists = await _unitOfWork._helperServiceRepository.HelperExists(query.HelperId.Value);
+                if (!exists)
+                    throw new KeyNotFoundException($"Helper with ID {query.HelperId} does not exist.");
+            }
+
+            var (entities, totalCount) = await _unitOfWork._helperServiceRepository.GetPagedAsync(
+                query.HelperId,
+                query.ServiceCategoryId,
+                query.SearchWord,
+                query.MinBudget,
+                query.MaxBudget,
+                query.SortBy,
+                query.PageNumber,
+                query.PageSize,
+                query.Status
+            );
+
+            var items = _mapper.Map<List<HelperServiceDetailsDto>>(entities);
+
+            return new PaginatedResult<HelperServiceDetailsDto>
+            {
+                Items = items,
+                TotalCount = totalCount
+            };
+        }
+
+        public async Task<HelperServiceDto> UpdateStatusAsync(int serviceId, HelperServiceStatus status)
+        {
+            var Sercice = await _unitOfWork._helperServiceRepository.GetById(serviceId);
+            if (Sercice == null)
+                throw new KeyNotFoundException("No Sercice with that ID");
+
+
+            if (!Enum.IsDefined(typeof(HelperServiceStatus), status))
+            {
+                throw new ArgumentException("Invalid status.");
+            }
+            Sercice.Status = status;
+
+            await _unitOfWork.Save();
+            return _mapper.Map<HelperServiceDto>(Sercice);
+        }
+
     }
 }

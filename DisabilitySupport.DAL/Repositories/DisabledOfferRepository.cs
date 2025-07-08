@@ -16,7 +16,7 @@ namespace DisabilitySupport.DAL.Repositories
         {
             var query = _Context.DisabledOffers
                 .Include(o => o.Disabled)
-                .Include(o => o.ServiceCategory)
+                .Include(o => o.ServiceCategory).OrderByDescending(o => o.OfferPostDate)
                 .AsQueryable();
 
             if (disabledId.HasValue)

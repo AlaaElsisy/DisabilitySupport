@@ -18,6 +18,8 @@ namespace DisabilitySupport.BLL.DTOs.helper.service
         public DateTime? AvailableDateTo { get; set; }
         public int? HelperId { get; set; }
         public int ServiceCategoryId { get; set; }
+        public string Status { get; set; } = string.Empty;
+
 
     }
 }

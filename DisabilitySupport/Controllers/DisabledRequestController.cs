@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using DisabilitySupport.BLL.Interfaces;
-using DisabilitySupport.BLL.DTOs;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using DisabilitySupport.DAL.Models.Enumerations;
+using DisabilitySupport.DAL.Models;
+using DisabilitySupport.BLL.DTOs.Disabled;
 
 namespace DisabilitySupport.Api.Controllers
 {
@@ -40,6 +42,14 @@ namespace DisabilitySupport.Api.Controllers
             return Ok(result);
         }
 
+        [HttpGet("details/{id}")]
+        public async Task<IActionResult> GetDetailsById(int id)
+        {
+            var result = await _service.GetDetailsByIdAsync(id);
+            if (result == null) return NotFound();
+            return Ok(result);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] DisabledRequestDto dto)
         {
@@ -66,6 +76,26 @@ namespace DisabilitySupport.Api.Controllers
             return NoContent();
         }
 
-       
+
+
+        [HttpPatch("request/status")]
+        public async Task<IActionResult> UpdateStatus([FromQuery] int requestId, [FromQuery] RequestStatus status)
+        {
+            if (requestId <= 0)
+                return BadRequest("Invalid request ID.");
+            try
+            {
+                var updated = await _service.UpdateStatusAsync(requestId, status);
+                return Ok(updated);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
     }
 }

@@ -176,7 +176,7 @@ namespace DisabilitySupport.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("DisabledPeople", (string)null);
+                    b.ToTable("DisabledPeople");
 
                     b.HasData(
                         new
@@ -210,13 +210,16 @@ namespace DisabilitySupport.DAL.Migrations
                     b.Property<int?>("DisabledId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("EndServiceTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("OfferPostDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("ServiceCategorId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("ServiceTime")
+                    b.Property<DateTime?>("StartServiceTime")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Status")
@@ -228,7 +231,7 @@ namespace DisabilitySupport.DAL.Migrations
 
                     b.HasIndex("ServiceCategorId");
 
-                    b.ToTable("DisabledOffers", (string)null);
+                    b.ToTable("DisabledOffers");
 
                     b.HasData(
                         new
@@ -237,10 +240,11 @@ namespace DisabilitySupport.DAL.Migrations
                             Budget = 500m,
                             Description = "Need transportation to hospital every Monday",
                             DisabledId = 1,
+                            EndServiceTime = new DateTime(2024, 6, 27, 15, 0, 0, 0, DateTimeKind.Unspecified),
                             OfferPostDate = new DateTime(2024, 6, 24, 12, 0, 0, 0, DateTimeKind.Unspecified),
                             ServiceCategorId = 1,
-                            ServiceTime = new DateTime(2024, 6, 26, 14, 0, 0, 0, DateTimeKind.Unspecified),
-                            Status = 0
+                            StartServiceTime = new DateTime(2024, 6, 26, 14, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 1
                         });
                 });
 
@@ -258,14 +262,23 @@ namespace DisabilitySupport.DAL.Migrations
                     b.Property<int?>("DisabledId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("End")
+                        .HasColumnType("datetime2");
+
                     b.Property<int?>("HelperServiceId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("RequestDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("Start")
+                        .HasColumnType("datetime2");
+
                     b.Property<int?>("Status")
                         .HasColumnType("int");
+
+                    b.Property<decimal?>("price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -273,7 +286,7 @@ namespace DisabilitySupport.DAL.Migrations
 
                     b.HasIndex("HelperServiceId");
 
-                    b.ToTable("DisabledRequests", (string)null);
+                    b.ToTable("DisabledRequests");
 
                     b.HasData(
                         new
@@ -305,7 +318,7 @@ namespace DisabilitySupport.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Helpers", (string)null);
+                    b.ToTable("Helpers");
 
                     b.HasData(
                         new
@@ -349,7 +362,7 @@ namespace DisabilitySupport.DAL.Migrations
 
                     b.HasIndex("HelperId");
 
-                    b.ToTable("HelperRequests", (string)null);
+                    b.ToTable("HelperRequests");
 
                     b.HasData(
                         new
@@ -394,13 +407,16 @@ namespace DisabilitySupport.DAL.Migrations
                     b.Property<int>("ServiceCategoryId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("HelperId");
 
                     b.HasIndex("ServiceCategoryId");
 
-                    b.ToTable("HelperServices", (string)null);
+                    b.ToTable("HelperServices");
 
                     b.HasData(
                         new
@@ -412,7 +428,8 @@ namespace DisabilitySupport.DAL.Migrations
                             Description = "Transportation support",
                             HelperId = 1,
                             PricePerHour = 100m,
-                            ServiceCategoryId = 1
+                            ServiceCategoryId = 1,
+                            Status = 0
                         });
                 });
 
@@ -449,7 +466,7 @@ namespace DisabilitySupport.DAL.Migrations
 
                     b.HasIndex("HelperRequestId");
 
-                    b.ToTable("Payments", (string)null);
+                    b.ToTable("Payments");
 
                     b.HasData(
                         new
@@ -475,13 +492,16 @@ namespace DisabilitySupport.DAL.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("ServiceCategories", (string)null);
+                    b.ToTable("ServiceCategories");
 
                     b.HasData(
                         new

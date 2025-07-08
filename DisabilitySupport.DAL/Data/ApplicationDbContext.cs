@@ -108,8 +108,10 @@ namespace DisabilitySupport.DAL.Data
 
             // Seed ServiceCategory
             modelBuilder.Entity<ServiceCategory>().HasData(
-                new ServiceCategory { Id = 1, Name = "Transportation", Description = "Help with getting to appointments" },
-                new ServiceCategory { Id = 2, Name = "Medical Aid", Description = "First aid or ongoing medical support" }
+                new ServiceCategory { Id = 1, Name = "Medical Service", Description = "Access to healthcare professionals and medical assistance.", Image = "Services Categories/MedicalService.png" },
+                new ServiceCategory { Id = 2, Name = "Driver Service", Description = "Transportation assistance for individuals with disabilities, ensuring safe and accessible travel.", Image = "Services Categories/DriverService.png" },
+                new ServiceCategory { Id = 3, Name = "Public Service", Description = "Assistance with navigating public services and resources.", Image = "Services Categories/PublicService.png" },
+                new ServiceCategory { Id = 4, Name = "Delivery Service", Description = "Reliable delivery services for essential items and groceries.", Image = "" }
             );
 
             // Seed DisabledOffer
@@ -122,8 +124,8 @@ namespace DisabilitySupport.DAL.Data
                 Budget = 500,
                 DisabledId = 1,
                 ServiceCategorId = 1,
-                ServiceTime = new DateTime(2024, 06, 26, 14, 0, 0)
-
+                StartServiceTime = new DateTime(2024, 06, 26, 14, 0, 0),
+                EndServiceTime = new DateTime(2024, 06, 27, 15, 0, 0)
             });
 
             // Seed DisabledRequest

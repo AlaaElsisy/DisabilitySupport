@@ -13,6 +13,9 @@ namespace DisabilitySupport.DAL.Models
         public int Id { get; set; }
         public string? Description { get; set; }
         public DateTime RequestDate { get; set; }
+        public DateTime? Start {  get; set; }
+        public DateTime? End { get; set; }
+        public decimal? price { get; set; }
         public RequestStatus? Status { get; set; }
 
         [ForeignKey("Disabled")]

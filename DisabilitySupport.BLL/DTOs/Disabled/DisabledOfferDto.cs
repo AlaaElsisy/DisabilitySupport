@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace DisabilitySupport.BLL.DTOs
+namespace DisabilitySupport.BLL.DTOs.Disabled
 {
     public class DisabledOfferDto
     {
@@ -14,13 +14,13 @@ namespace DisabilitySupport.BLL.DTOs
         [Required]
         public DateTime OfferPostDate { get; set; }
 
-        public DateTime? ServiceTime { get; set; }
-
+        public DateTime? StartServiceTime { get; set; }
+        public DateTime? EndServiceTime { get; set; }
         public string? Status { get; set; }
 
         public decimal? Budget { get; set; }
 
-        [Required]
+
         public int? DisabledId { get; set; }
 
         [Required]
