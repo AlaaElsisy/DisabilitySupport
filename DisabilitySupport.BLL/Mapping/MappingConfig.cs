@@ -19,7 +19,11 @@ namespace DisabilitySupport.BLL.Mapping
     {
         public MappingConfig() {
             #region helper
-            CreateMap<HelperRequest,HelperRequestDto>().ReverseMap();
+            CreateMap<HelperRequest,HelperRequestDto>()
+             .ForMember(dest => dest.HelperName, opt => opt.MapFrom(src => src.Helper != null && src.Helper.User != null ? src.Helper.User.FullName : null))
+             .ForMember(dest => dest.DisabledName, opt => opt.MapFrom(src => src.DisabledOffer.Disabled.User.FullName))
+             .ForMember(dest => dest.Service, opt => opt.MapFrom(src => src.DisabledOffer.Description))
+              .ReverseMap();
 
             CreateMap<HelperRequest,HelperRequestDetailsDto>()
             .ForMember(dest => dest.HelperName, opt => opt.MapFrom(src => src.Helper != null && src.Helper.User != null ? src.Helper.User.FullName : null))

@@ -92,8 +92,9 @@ namespace DisabilitySupport.BLL.Services
                 query.PageNumber,
                 query.PageSize,
                 query.CategoryId
-               
             );
+
+
 
             var items = entities.Select(_mapper.Map<DisabledRequestDetailsDto>).ToList();
 
