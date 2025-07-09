@@ -19,23 +19,48 @@ public class UserProfileController : ControllerBase
     }
 
     [HttpGet("patient")]
-    [Authorize(Roles = "Patient")]
-    public async Task<IActionResult> GetDisabledProfile()
+   // [Authorize(Roles = "Patient")]
+    public async Task<IActionResult> GetDisabledProfile([FromQuery] string userId)
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+       // var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         var profile = await _profileService.GetDisabledProfileAsync(userId!);
         if (profile == null) return NotFound();
         return Ok(profile);
     }
 
     [HttpGet("helper")]
-    [Authorize(Roles = "Helper")]
-    public async Task<IActionResult> GetHelperProfile()
+    //[Authorize(Roles = "Helper")]
+    public async Task<IActionResult> GetHelperProfile([FromQuery] string userId)
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         var profile = await _profileService.GetHelperProfileAsync(userId!);
         if (profile == null) return NotFound();
         return Ok(profile);
     }
 
+
+    [HttpGet("helper/data")]
+    [Authorize(Roles = "Helper")]
+    public async Task<IActionResult> GetMyHelperProfile()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrEmpty(userId)) return Unauthorized();
+
+        var profile = await _profileService.GetHelperProfileAsync(userId);
+        if (profile == null) return NotFound();
+
+        return Ok(profile);
+    }
+    [HttpGet("patient/data")]
+    [Authorize(Roles = "Patient")]
+    public async Task<IActionResult> GetMyPatientProfile()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrEmpty(userId)) return Unauthorized();
+
+        var profile = await _profileService.GetDisabledProfileAsync(userId);
+        if (profile == null) return NotFound();
+
+        return Ok(profile);
+    }
 }

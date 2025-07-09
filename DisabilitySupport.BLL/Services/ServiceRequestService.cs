@@ -39,6 +39,13 @@ namespace DisabilitySupport.BLL.Services
             return _mapper.Map<DisabledRequestDto>(entity);
         }
 
+        public async Task<DisabledRequestByIdDetailsDto> GetDetailsByIdAsync(int id)
+        {
+            var entity = await _unitOfWork._disabledRequestRepository.GetDetailsById(id);
+            if (entity == null) return null;
+            return  _mapper.Map<DisabledRequestByIdDetailsDto>(entity);
+        }
+
         public async Task<bool> UpdateStatusAsync(int requestId, RequestStatus status)
         {
             var entity = await _unitOfWork._disabledRequestRepository.GetById(requestId);
@@ -85,8 +92,9 @@ namespace DisabilitySupport.BLL.Services
                 query.PageNumber,
                 query.PageSize,
                 query.CategoryId
-               
             );
+
+
 
             var items = entities.Select(_mapper.Map<DisabledRequestDetailsDto>).ToList();
 

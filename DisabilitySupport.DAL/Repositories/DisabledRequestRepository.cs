@@ -16,13 +16,26 @@ namespace DisabilitySupport.DAL.Repositories
         {
         } 
 
+        public async Task<DisabledRequest> GetDetailsById(int id)
+        {
+            return await _Context.DisabledRequests
+         .Include(x => x.HelperService)
+             .ThenInclude(hs => hs.ServiceCategory)
+         .Include(x => x.HelperService)
+             .ThenInclude(hs => hs.Helper)
+                 .ThenInclude(h => h.User)
+
+                 .Include(x => x.Disabled) 
+            .ThenInclude(d => d.User)
+        .FirstOrDefaultAsync(d => d.Id == id);
+        }
         public async Task<(IEnumerable<DisabledRequest> Items, int TotalCount)> GetPagedAsync(int? disabledId, int? helperServiceId, string? status, string? searchWord, int pageNumber, int pageSize, int? categoryId)
         {
             var query = _Context.DisabledRequests
             .Include(x => x.HelperService)
-         .ThenInclude(hs => hs.Helper)
-             .ThenInclude(h => h.User)
-          .AsQueryable();
+            .ThenInclude(hs => hs.Helper)
+            .ThenInclude(h => h.User)
+            .AsQueryable();
 
 
 
@@ -36,6 +49,7 @@ namespace DisabilitySupport.DAL.Repositories
                 query = query.Where(x => x.Description != null && x.Description.ToLower().Contains(searchWord.ToLower()));
             if (categoryId.HasValue)
                 query = query.Where(x => x.HelperService.ServiceCategoryId == categoryId.Value);
+
             var totalCount = await Task.FromResult(query.Count());
             var items = await Task.FromResult(query
                 .Skip((pageNumber - 1) * pageSize)
