@@ -27,7 +27,9 @@ namespace DisabilitySupport.BLL.Mapping
 
             CreateMap<HelperRequest,HelperRequestDetailsDto>()
             .ForMember(dest => dest.HelperName, opt => opt.MapFrom(src => src.Helper != null && src.Helper.User != null ? src.Helper.User.FullName : null))
-            .ForMember(dest => dest.HelperImage, opt => opt.MapFrom(src => src.Helper != null && src.Helper.User != null ? src.Helper.User.ProfileImage : null)).ReverseMap();
+            .ForMember(dest => dest.HelperImage, opt => opt.MapFrom(src => src.Helper != null && src.Helper.User != null ? src.Helper.User.ProfileImage : null))
+            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Helper.UserId))
+            .ReverseMap();
 
 
             CreateMap<HelperService,HelperServiceDto>().ReverseMap();
@@ -39,16 +41,24 @@ namespace DisabilitySupport.BLL.Mapping
                  .ForMember(dest => dest.Status,  opt => opt.MapFrom(src => src.Status.ToString()));
 
             CreateMap<HelperRequest, HelperRequestCardDto>()
-    .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()))
-    .ForMember(dest => dest.OfferDescription, opt => opt.MapFrom(src => src.DisabledOffer.Description))
-    .ForMember(dest => dest.StartServiceTime, opt => opt.MapFrom(src => src.DisabledOffer.StartServiceTime))
-    .ForMember(dest => dest.EndServiceTime, opt => opt.MapFrom(src => src.DisabledOffer.EndServiceTime))
-    .ForMember(dest => dest.Budget, opt => opt.MapFrom(src => src.DisabledOffer.Budget))
-    .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.DisabledOffer.ServiceCategory.Name))
-    .ForMember(dest => dest.PosterName, opt => opt.MapFrom(src => src.DisabledOffer.Disabled.User.FullName))
-    .ForMember(dest => dest.PosterImage, opt => opt.MapFrom(src => src.DisabledOffer.Disabled.User.ProfileImage))
-    .ForMember(dest => dest.PosterUserId, opt => opt.MapFrom(src => src.DisabledOffer.Disabled.User.Id));
-
+               .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()))
+               .ForMember(dest => dest.OfferDescription, opt => opt.MapFrom(src => src.DisabledOffer.Description))
+               .ForMember(dest => dest.StartServiceTime, opt => opt.MapFrom(src => src.DisabledOffer.StartServiceTime))
+               .ForMember(dest => dest.EndServiceTime, opt => opt.MapFrom(src => src.DisabledOffer.EndServiceTime))
+               .ForMember(dest => dest.Budget, opt => opt.MapFrom(src => src.DisabledOffer.Budget))
+               .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.DisabledOffer.ServiceCategory.Name))
+               .ForMember(dest => dest.PosterName, opt => opt.MapFrom(src => src.DisabledOffer.Disabled.User.FullName))
+               .ForMember(dest => dest.PosterImage, opt => opt.MapFrom(src => src.DisabledOffer.Disabled.User.ProfileImage))
+               .ForMember(dest => dest.PosterUserId, opt => opt.MapFrom(src => src.DisabledOffer.Disabled.User.Id));
+              
+            CreateMap<HelperService, HelperServiceDetailsDto>()
+               .ForMember(dest => dest.HelperId, opt => opt.MapFrom(src => src.HelperId))
+               .ForMember(dest => dest.ServiceCategoryId, opt => opt.MapFrom(src => src.ServiceCategoryId))
+               .ForMember(dest => dest.HelperName, opt => opt.MapFrom(src => src.Helper != null && src.Helper.User != null ? src.Helper.User.FullName : null))
+               .ForMember(dest => dest.HelperImage, opt => opt.MapFrom(src => src.Helper != null && src.Helper.User != null ? src.Helper.User.ProfileImage : null))
+               .ForMember(dest => dest.ServiceCategoryName, opt => opt.MapFrom(src => src.ServiceCategory != null ? src.ServiceCategory.Name : null))
+               .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Helper.UserId ))
+               .ReverseMap();
 
             #endregion
 
@@ -109,12 +119,7 @@ namespace DisabilitySupport.BLL.Mapping
                   Enum.Parse<DisabilitySupport.DAL.Models.Enumerations.RequestStatus>(src.Status, true)));
 
             #endregion
-            CreateMap<HelperService, HelperServiceDetailsDto>()
-                .ForMember(dest => dest.HelperId, opt => opt.MapFrom(src => src.HelperId))
-                .ForMember(dest => dest.ServiceCategoryId, opt => opt.MapFrom(src => src.ServiceCategoryId))
-                .ForMember(dest => dest.HelperName, opt => opt.MapFrom(src => src.Helper != null && src.Helper.User != null ? src.Helper.User.FullName : null))
-                .ForMember(dest => dest.HelperImage, opt => opt.MapFrom(src => src.Helper != null && src.Helper.User != null ? src.Helper.User.ProfileImage : null))
-                .ForMember(dest => dest.ServiceCategoryName, opt => opt.MapFrom(src => src.ServiceCategory != null ? src.ServiceCategory.Name : null));
+           
 
 
             #region ServiceCategory

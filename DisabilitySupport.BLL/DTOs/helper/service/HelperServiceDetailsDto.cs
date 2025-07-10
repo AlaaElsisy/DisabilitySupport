@@ -10,6 +10,7 @@ public class HelperServiceDetailsDto
     public string? HelperName { get; set; }
     public int ServiceCategoryId { get; set; }
     public string? ServiceCategoryName { get; set; }
+    public string? UserId { get; set; } 
     //public string Status { get; set; } = string.Empty;
 
 }
