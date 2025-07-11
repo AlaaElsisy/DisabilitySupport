@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DisabilitySupport.BLL.Interfaces;
 using DisabilitySupport.DAL.Hubs;
+using DisabilitySupport.DAL.Interfaces;
 using DisabilitySupport.DAL.Models;
 using Microsoft.AspNetCore.SignalR;
 
@@ -12,14 +13,19 @@ namespace DisabilitySupport.BLL.Services
 {
     public class NotificationService : INotificationService
     {
-        private readonly IHubContext<NotificationHub> _hubContex;
-        public NotificationService(IHubContext<NotificationHub> hubContext)
+        private readonly INotificationRepository notificationRepository;
+       
+        public NotificationService(INotificationRepository notificationRepository)
         {
-            _hubContex = hubContext;
+            this.notificationRepository = notificationRepository;
+           
         }
-        public async Task NotifiyUserAsync(string userId, string message)
+
+
+        async Task<List<Notification>> INotificationService.GetNotificationsAsync(string userId)
         {
-            await _hubContex.Clients.User(userId).SendAsync("ReceiveNotification", message);
+           return await notificationRepository.GetAll(userId);
+
         }
     }
 }

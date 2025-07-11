@@ -16,6 +16,7 @@ namespace DisabilitySupport.DAL.Interfaces
 
         public IDisabledRepository _disabledRepository { get; }
         public IHelperRepository _helperRepository { get; }
+        public INotificationRepository _notificationRepository { get; }
 
         IPaymentRepository _paymentRepository { get; }
 

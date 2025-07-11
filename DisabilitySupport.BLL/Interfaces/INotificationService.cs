@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DisabilitySupport.DAL.Models;
 
 namespace DisabilitySupport.BLL.Interfaces
 {
     public interface INotificationService
     {
-        Task NotifiyUserAsync(string userId,string message);
+        Task<List<Notification>> GetNotificationsAsync(string userId);
     }
 }
