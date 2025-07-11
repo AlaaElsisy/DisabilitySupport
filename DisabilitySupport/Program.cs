@@ -49,6 +49,8 @@ namespace DisabilitySupport
             builder.Services.AddScoped<IUserProfileService, UserProfileService>();
             builder.Services.AddScoped<IDisabledService, DisabledService>();
             builder.Services.AddScoped<IServiceCategoryService, ServiceCategoryService>();
+            builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+            builder.Services.AddScoped<INotificationService, NotificationService>();
             builder.Services.AddScoped<NotificationHub>();
             builder.Services.AddScoped<ISubscribeTableDependency, SubscribeNotificationTableDependency>();
 
