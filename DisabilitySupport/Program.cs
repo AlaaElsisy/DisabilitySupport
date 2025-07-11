@@ -19,6 +19,12 @@ using System.Text;
 using Microsoft.OpenApi.Models;
 using System.Security.Claims;
 using DisabilitySupport.BLL.settings;
+using DisabilitySupport.Api;
+using Microsoft.AspNetCore.SignalR;
+using DisabilitySupport.DAL.Hubs;
+using DisabilitySupport.SubscribeTableDependencies;
+using DisabilitySupport.MiddlewareExtensions;
+
 
 
 
@@ -43,16 +49,22 @@ namespace DisabilitySupport
             builder.Services.AddScoped<IUserProfileService, UserProfileService>();
             builder.Services.AddScoped<IDisabledService, DisabledService>();
             builder.Services.AddScoped<IServiceCategoryService, ServiceCategoryService>();
+            builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+            builder.Services.AddScoped<INotificationService, NotificationService>();
+            builder.Services.AddScoped<NotificationHub>();
+            builder.Services.AddScoped<ISubscribeTableDependency, SubscribeNotificationTableDependency>();
 
-       
-            
+
+
+
             // Add CORS
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll",
-                    policy => policy.AllowAnyOrigin()
-                                    .AllowAnyHeader()
-                                    .AllowAnyMethod());
+                    policy => policy.WithOrigins("http://localhost:4200")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials());
             });
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
@@ -186,6 +198,13 @@ namespace DisabilitySupport
                 );
 
             #endregion
+
+            #region SignalR Notifucations
+            builder.Services.AddSignalR();
+
+
+
+            #endregion
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -197,6 +216,9 @@ namespace DisabilitySupport
                 #endregion
                 app.MapOpenApi();
             }
+            app.UseSqlTableDependency<SubscribeNotificationTableDependency>(
+      builder.Configuration.GetConnectionString("connectionString"));
+
 
             app.UseStaticFiles();
             app.UseHttpsRedirection();
@@ -204,8 +226,10 @@ namespace DisabilitySupport
             app.UseCors("AllowAll");
             app.UseAuthentication();
 
-            app.UseAuthorization();
+            app.MapHub<NotificationHub>("/notificationHub");
 
+            app.UseAuthorization();
+  
 
             app.MapControllers();
 
