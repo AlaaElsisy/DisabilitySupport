@@ -12,6 +12,8 @@ namespace DisabilitySupport.DAL.Interfaces
         Task<Disabled?> GetByUserIdAsync(string userId);
 
         Task<Disabled> GetByIdAsync(int id);
+        Task UpdateAsync(Disabled disabled);
+
 
     }
 

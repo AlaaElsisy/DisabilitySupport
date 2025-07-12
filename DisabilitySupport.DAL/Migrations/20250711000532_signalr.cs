@@ -43,6 +43,7 @@ namespace DisabilitySupport.DAL.Migrations
                     table.PrimaryKey("PK_Notifications", x => x.Id);
                 });
 
+
         }
 
         /// <inheritdoc />
@@ -54,7 +55,6 @@ namespace DisabilitySupport.DAL.Migrations
             migrationBuilder.DropTable(
                 name: "Notifications");
 
-          
         }
     }
 }

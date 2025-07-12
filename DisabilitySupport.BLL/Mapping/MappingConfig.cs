@@ -20,6 +20,7 @@ namespace DisabilitySupport.BLL.Mapping
         public MappingConfig() {
             #region helper
 
+
             CreateMap<HelperRequest, HelperRequestDto>()
                 .ForMember(dest => dest.HelperName,
                     opt => opt.MapFrom(src => src.Helper != null && src.Helper.User != null ? src.Helper.User.FullName : null))
@@ -69,6 +70,7 @@ namespace DisabilitySupport.BLL.Mapping
                .ForMember(dest => dest.ServiceCategoryName, opt => opt.MapFrom(src => src.ServiceCategory != null ? src.ServiceCategory.Name : null))
                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Helper.UserId ))
                .ReverseMap();
+
 
             #endregion
 

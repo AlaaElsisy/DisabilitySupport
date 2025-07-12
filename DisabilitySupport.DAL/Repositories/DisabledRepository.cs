@@ -25,4 +25,12 @@ public class DisabledRepository : IDisabledRepository
              .Include(d => d.User)
              .FirstOrDefaultAsync(d => d.Id == id);
     }
+
+    public async Task UpdateAsync(Disabled disabled)
+    {
+        _context.DisabledPeople.Update(disabled);
+        await _context.SaveChangesAsync();
+    }
+
+
 }
