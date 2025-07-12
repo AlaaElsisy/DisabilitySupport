@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DisabilitySupport.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250706073848_add-category-image")]
-    partial class addcategoryimage
+    [Migration("20250706191100_FixPriceDecimalPrecision")]
+    partial class FixPriceDecimalPrecision
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -410,6 +410,9 @@ namespace DisabilitySupport.DAL.Migrations
                     b.Property<int>("ServiceCategoryId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("HelperId");
@@ -428,7 +431,8 @@ namespace DisabilitySupport.DAL.Migrations
                             Description = "Transportation support",
                             HelperId = 1,
                             PricePerHour = 100m,
-                            ServiceCategoryId = 1
+                            ServiceCategoryId = 1,
+                            Status = 0
                         });
                 });
 
@@ -506,14 +510,30 @@ namespace DisabilitySupport.DAL.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "Help with getting to appointments",
-                            Name = "Transportation"
+                            Description = "Access to healthcare professionals and medical assistance.",
+                            Image = "Services Categories/MedicalService.png",
+                            Name = "Medical Service"
                         },
                         new
                         {
                             Id = 2,
-                            Description = "First aid or ongoing medical support",
-                            Name = "Medical Aid"
+                            Description = "Transportation assistance for individuals with disabilities, ensuring safe and accessible travel.",
+                            Image = "Services Categories/DriverService.png",
+                            Name = "Driver Service"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Assistance with navigating public services and resources.",
+                            Image = "Services Categories/PublicService.png",
+                            Name = "Public Service"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Reliable delivery services for essential items and groceries.",
+                            Image = "",
+                            Name = "Delivery Service"
                         });
                 });
 
