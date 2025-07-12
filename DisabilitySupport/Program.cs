@@ -147,8 +147,6 @@ namespace DisabilitySupport
             builder.Services.AddScoped<IPaymentService, PaymentService>();
     
             builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
-
-
             //Unit Of Work
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 

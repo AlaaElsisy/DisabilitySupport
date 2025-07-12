@@ -14,6 +14,8 @@
 
   <ItemGroup>
 	  <Folder Include="Data\" />
+	  <Folder Include="Interfaces\chat\" />
+	  <Folder Include="Repositories\chat\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,6 +31,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.7" />
     <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="9.0.6" />
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="9.0.6" />
     <PackageReference Include="NETCore.MailKit" Version="2.1.0" />
