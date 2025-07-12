@@ -15,7 +15,7 @@ namespace DisabilitySupport.BLL.Interfaces
     {
         Task<HelperRequestDto> AddAsync(HelperRequestDto dto);
       
-        Task<HelperRequestDto> GetByIdAsync(int id);
+        Task<HelperRequestDetailsDto> GetByIdAsync(int id);
 
         Task<HelperRequestDto> UpdateAsync(UpdateHelperRequestDto dto);
         Task<bool> DeleteAsync(int id);

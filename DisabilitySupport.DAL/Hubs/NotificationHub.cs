@@ -30,37 +30,26 @@ namespace DisabilitySupport.DAL.Hubs
 
         public async Task SendNotificationToClient(string message, string userId)
         {
-            //Notification notification = new Notification()
-            //{
-            //    Message = message,
-            //    NotificationDateTime = DateTime.UtcNow,
-            //    MessageType = "Personal",
-            //    UserId = userId
 
-            //};
+            Notification notification = new Notification()
+            {
+                Message = message,
+                NotificationDateTime = DateTime.UtcNow,
+                MessageType = "Personal",
+                UserId = userId
 
-            //dbContext.Notifications.Add(notification);
-            //await dbContext.SaveChangesAsync();
+            };
+
+            dbContext.Notifications.Add(notification);
+            await dbContext.SaveChangesAsync();
+
             var hubConnections = dbContext.HubConnections.Where(con => con.UserId == userId).ToList();
             foreach (var hubConnection in hubConnections)
             {
                 await Clients.Client(hubConnection.ConnectionId).SendAsync("ReceivedPersonalNotification", message, userId);
             }
         }
-        //public async Task SendNotificationToGroup(string message, string[] userIds)
-        //{
-        //    var hubConnections = dbContext.HubConnections
-        //.Where(c => userIds.Contains(c.UserId))
-        //.ToList();
 
-        //    foreach (var hubConnection in hubConnections)
-        //    {
-        //        string userId = hubConnection.UserId;
-        //        await Clients.Client(hubConnection.ConnectionId)
-        //            .SendAsync("ReceivedPersonalNotification", message, userId);
-
-        //    }
-        //}
 
         public override Task OnConnectedAsync()
         {
