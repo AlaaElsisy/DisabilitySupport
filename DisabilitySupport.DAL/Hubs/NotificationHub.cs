@@ -47,20 +47,6 @@ namespace DisabilitySupport.DAL.Hubs
                 await Clients.Client(hubConnection.ConnectionId).SendAsync("ReceivedPersonalNotification", message, userId);
             }
         }
-        //public async Task SendNotificationToGroup(string message, string[] userIds)
-        //{
-        //    var hubConnections = dbContext.HubConnections
-        //.Where(c => userIds.Contains(c.UserId))
-        //.ToList();
-
-        //    foreach (var hubConnection in hubConnections)
-        //    {
-        //        string userId = hubConnection.UserId;
-        //        await Clients.Client(hubConnection.ConnectionId)
-        //            .SendAsync("ReceivedPersonalNotification", message, userId);
-
-        //    }
-        //}
 
         public override Task OnConnectedAsync()
         {
