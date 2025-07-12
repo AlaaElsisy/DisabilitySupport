@@ -24,10 +24,10 @@ namespace DisabilitySupport.DAL.Repositories
          .Include(x => x.HelperService)
              .ThenInclude(hs => hs.Helper)
                  .ThenInclude(h => h.User)
+
                  .Include(x => x.Disabled) 
             .ThenInclude(d => d.User)
         .FirstOrDefaultAsync(d => d.Id == id);
-        
         }
         public async Task<(IEnumerable<DisabledRequest> Items, int TotalCount)> GetPagedAsync(int? disabledId, int? helperServiceId, string? status, string? searchWord, int pageNumber, int pageSize, int? categoryId)
         {

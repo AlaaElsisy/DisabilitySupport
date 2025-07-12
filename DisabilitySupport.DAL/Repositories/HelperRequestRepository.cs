@@ -27,6 +27,18 @@ namespace DisabilitySupport.DAL.Repositories
         }
 
 
+        public async Task<HelperRequest> GetById(int id)
+        {
+            return await _Context.HelperRequests
+                .Include(x => x.DisabledOffer)
+                    .ThenInclude(o => o.Disabled)
+                        .ThenInclude(d => d.User)
+                .Include(x => x.Helper)
+                    .ThenInclude(h => h.User)
+                .FirstOrDefaultAsync(h => h.Id == id);
+        }
+
+
 
 
         public async Task<bool> HelperExists(int id)

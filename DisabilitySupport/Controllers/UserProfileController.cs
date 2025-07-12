@@ -1,4 +1,6 @@
-﻿using DisabilitySupport.BLL.Interfaces;
+﻿using DisabilitySupport.BLL.DTOs.Disabled;
+using DisabilitySupport.BLL.DTOs;
+using DisabilitySupport.BLL.Interfaces;
 using DisabilitySupport.DAL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -38,6 +40,7 @@ public class UserProfileController : ControllerBase
         return Ok(profile);
     }
 
+
     [HttpGet("helper/data")]
     [Authorize(Roles = "Helper")]
     public async Task<IActionResult> GetMyHelperProfile()
@@ -62,4 +65,48 @@ public class UserProfileController : ControllerBase
 
         return Ok(profile);
     }
+    [HttpPut("Patient")]
+    [Authorize(Roles = "Patient")]
+    public async Task<IActionResult> UpdatePatientProfile(EditPatientProfileDto dto)
+    {
+
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrEmpty(userId)) return Unauthorized();
+
+        var result = await _profileService.UpdatePatientProfileAsync(userId, dto);
+        if (!result) return BadRequest("Failed to update patient profile.");
+
+        return Ok(new { message = "Patient profile updated successfully." });
+    }
+
+    [HttpPut("Helper")]
+    [Authorize(Roles = "Helper")]
+    public async Task<IActionResult> UpdateHelperProfile([FromBody] EditHelperProfileDto dto)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrEmpty(userId)) return Unauthorized();
+
+        var result = await _profileService.UpdateHelperProfileAsync(userId, dto);
+        if (!result) return BadRequest("Failed to update helper profile.");
+
+        return Ok(new { message = "Helper profile updated successfully." });
+    }
+    [HttpPost("upload-image")]
+    [Authorize]
+    public async Task<IActionResult> UploadProfileImage(IFormFile file)
+    {
+        if (file == null || file.Length == 0)
+            return BadRequest("Invalid image file");
+
+        var fileName = $"{Guid.NewGuid()}_{file.FileName}";
+        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
+
+        using (var stream = new FileStream(path, FileMode.Create))
+        {
+            await file.CopyToAsync(stream);
+        }
+
+        return Ok(new { imageUrl = $"/images/{fileName}" });
+    }
+
 }

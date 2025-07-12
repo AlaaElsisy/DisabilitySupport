@@ -16,5 +16,8 @@ namespace DisabilitySupport.BLL.DTOs.helper.Request
         public decimal? TotalPrice { get; set; }
         public int? HelperId { get; set; }
         public int? DisabledOfferId { get; set; }
+        public string? HelperName { get; set; }
+        public string? DisabledName { get; set; }
+        public string? Service { get; set; }
     }
 }

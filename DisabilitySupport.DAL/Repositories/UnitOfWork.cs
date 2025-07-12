@@ -25,9 +25,10 @@ namespace DisabilitySupport.DAL.Repositories
         public IHelperRepository _helperRepository{ get; }
         public IPaymentRepository _paymentRepository { get; }
 
+        public INotificationRepository _notificationRepository { get; }
 
-        public UnitOfWork(ApplicationDbContext context , IDisabledRequestRepository disabledRequestRepository
-            ,IHelperServiceRepository helperServiceRepository,IHelperRequestRepository helperRequestRepository,IServiceCategoryRepository serviceCategoryRepository ,IDisabledRepository disabledRepository,IHelperRepository helperRepository, IPaymentRepository paymentRepository)
+        public UnitOfWork(ApplicationDbContext context, IDisabledRequestRepository disabledRequestRepository
+            , IHelperServiceRepository helperServiceRepository, IHelperRequestRepository helperRequestRepository, IServiceCategoryRepository serviceCategoryRepository, IDisabledRepository disabledRepository, IHelperRepository helperRepository, IPaymentRepository paymentRepository, INotificationRepository notificationRepository)
         {
             _context = context;
             _disabledRequestRepository = disabledRequestRepository;
@@ -37,6 +38,7 @@ namespace DisabilitySupport.DAL.Repositories
             _disabledRepository = disabledRepository;
             _helperRepository = helperRepository;
             _paymentRepository = paymentRepository;
+            _notificationRepository = notificationRepository;
         }
 
 

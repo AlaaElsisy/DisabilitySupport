@@ -1,0 +1,111 @@
+[33m904003e[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mAya[m[33m)[m add update profiles with pic
+[33m803ae5b[m add update profile
+[33mdc55258[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m Update README.md
+[33mc227e28[m Create README.md
+[33maf31b29[m Merge pull request #41 from AlaaElsisy/shimaa
+[33ma2fafcb[m Adding Notification controller
+[33mbbca4e9[m Merge pull request #40 from AlaaElsisy/shimaa
+[33mc70a9ac[m Adding Notification using signalr and  sqlTableDependency
+[33m3f308d6[m Merge pull request #39 from AlaaElsisy/Ahmed
+[33ma0a6b3c[m Attaching profiles
+[33md105fee[m Merge pull request #38 from AlaaElsisy/Ahmed
+[33m0799821[m update Helper service DTO
+[33ma0ed9a5[m Merge pull request #37 from AlaaElsisy/Ahmed
+[33m78285c8[m Helper Request Update
+[33mb22fa88[m Merge pull request #36 from AlaaElsisy/Aya
+[33mbfda797[m Merge branch 'master' into Aya
+[33m8f583d6[m[33m ([m[1;31morigin/Aya[m[33m)[m add PatientName to detailsDTO
+[33m8b6803b[m[33m ([m[1;32mmaster[m[33m)[m Merge pull request #35 from AlaaElsisy/Ahmed
+[33maa146df[m[33m ([m[1;31morigin/Ahmed[m[33m)[m Merge branch 'master' into Ahmed
+[33m71446cf[m DisabledRequest Details
+[33m2ce3482[m Merge pull request #34 from AlaaElsisy/shimaa
+[33m354e5b7[m[33m ([m[1;31morigin/shimaa[m[33m)[m update user profile controller
+[33m76f540f[m Merge pull request #33 from AlaaElsisy/Alaa
+[33m0bf5c79[m[33m ([m[1;31morigin/Alaa[m[33m)[m update payment part
+[33m2cb5573[m get last updates from master
+[33m3aa3140[m Merge branch 'master' of https://github.com/AlaaElsisy/DisabilitySupport into Alaa
+[33md2e9de0[m add sevice stauts to database
+[33m4442886[m Merge pull request #32 from AlaaElsisy/Abuelmagd
+[33mefb7bc0[m[33m ([m[1;31morigin/Abuelmagd[m[33m)[m updates
+[33m890be31[m Merge pull request #31 from AlaaElsisy/Abuelmagd
+[33m8600661[m Update Disabled Request
+[33m8b5b054[m add payment second v
+[33me139183[m Fixing DisabledREquest
+[33madf0c42[m Merge pull request #30 from AlaaElsisy/Abuelmagd
+[33m6b86eca[m UseStaticFiles
+[33ma0036c3[m add initial version of the Payment endpoint
+[33mbb28bd1[m Merge pull request #29 from AlaaElsisy/Aya
+[33m74fb6ad[m add card in HelperRequest
+[33m952cf42[m Merge pull request #28 from AlaaElsisy/Abuelmagd
+[33m3174873[m Enhance Services and add ChangeDisabledOfferStatus endpoint
+[33m16d9046[m Merge pull request #27 from AlaaElsisy/Alaa
+[33m79185ba[m add endpoint to update disabled request status
+[33mdad562b[m Merge pull request #26 from AlaaElsisy/Abuelmagd
+[33m3cc6028[m Merge branch 'master' into Abuelmagd
+[33m8d9b4e5[m Merge pull request #25 from AlaaElsisy/Alaa
+[33m02a326a[m commit1
+[33m82a59cc[m change connection string
+[33m092a7f5[m get last updates from master
+[33m9ea2bc0[m Merge branch 'master' into Alaa
+[33m99632ed[m adding endpoint  to get helper data
+[33m49306a1[m DTOs Update
+[33m9e95118[m add endpoints to get ServiceCategory data and disabled data
+[33mfbdbcb6[m Merge pull request #24 from AlaaElsisy/Aya
+[33mf928ba2[m Update DisabledOffer
+[33m5a06644[m Merge pull request #23 from AlaaElsisy/Aya
+[33m8eb2411[m Merge pull request #22 from AlaaElsisy/master
+[33md39c3de[m Merge pull request #21 from AlaaElsisy/Aya
+[33m1e7fa1b[m Resolve Conflict
+[33ma985132[m Resolve merge conflict in AppDbContect
+[33m00e6f96[m[33m ([m[1;31morigin/hatem[m[33m)[m Merge pull request #20 from AlaaElsisy/Aya
+[33me00c74a[m Merge branch 'master' into Aya
+[33me8ce8df[m update disapledOffer
+[33mb62608f[m Merge pull request #19 from AlaaElsisy/Alaa
+[33m5637c7e[m add end point to get helper id
+[33md6ea6af[m Merge pull request #18 from AlaaElsisy/Abuelmagd
+[33m7fc8c70[m AddDisabledRequest Update
+[33mb72e534[m Merge pull request #17 from AlaaElsisy/Abuelmagd
+[33m2ba5b08[m HelperServices Update
+[33mc52b119[m Merge pull request #16 from AlaaElsisy/Alaa
+[33m00f1695[m change conection string
+[33m8ea462b[m get last updates from master with profile endpints
+[33md3c1509[m Merge pull request #15 from AlaaElsisy/Aya
+[33mb94fdd0[m update register&add profile
+[33m37a0e7a[m add all endpints of helper request
+[33m79b29c5[m Merge pull request #14 from AlaaElsisy/Aya
+[33m73e4d46[m Add DisabledOffer
+[33m9255c88[m Merge pull request #13 from AlaaElsisy/Abuelmagd
+[33m1ae6ffd[m Merge branch 'master' into Abuelmagd
+[33mc7ed25f[m Enable CORS
+[33m274642b[m Merge pull request #12 from AlaaElsisy/shimaa
+[33m021cddb[m remove unnecessary user management
+[33m392c7cf[m Merge pull request #11 from AlaaElsisy/shimaa
+[33m502c0cc[m Adding forgot password and reset password actions
+[33mfdf28cc[m Merge pull request #10 from AlaaElsisy/shimaa
+[33m39f6292[m Adding Role based authorization configuration
+[33m2333ea3[m Merge pull request #9 from AlaaElsisy/Alaa
+[33me9b90c9[m Merge pull request #8 from AlaaElsisy/shimaa
+[33mb80a55c[m Merge branch 'master' into shimaa
+[33m988ddeb[m Refactor email confirmation
+[33me10ce14[m Adding email confirmation and login
+[33m874c7ea[m Add paginated GetPagedByHelperIdAsync service
+[33ma6b06db[m Merge pull request #7 from AlaaElsisy/Alaa
+[33m972ef58[m add helper services end points
+[33m7b0aa17[m Merge pull request #6 from AlaaElsisy/Abuelmagd
+[33m20ebdb3[m Update Disability Request
+[33m8bc3764[m merge Alaa branch with latest changes from master
+[33m73220d4[m separate IHelperService and HelperRequest
+[33mc0124a6[m Merge pull request #5 from AlaaElsisy/shimaa
+[33mcf5943a[m Registeration
+[33mcb2eeb1[m Merge pull request #4 from AlaaElsisy/Abuelmagd
+[33m32033f3[m Enhance DisabledRequest
+[33m74a35f4[m Authenticatin module, Adding Registeration
+[33mb8a55b6[m Merge pull request #3 from AlaaElsisy/Alaa
+[33m2e065b7[m Merge pull request #2 from AlaaElsisy/Abuelmagd
+[33m349b337[m DisabledRequest
+[33m243b478[m Added data seeding
+[33m6380cfc[m Merge pull request #1 from AlaaElsisy/Alaa
+[33mdeec95f[m Created add Helper Reques & Services  Bll
+[33m2e0d1f4[m Add Generic Repository & Interface
+[33m59ecd41[m Add project files.
+[33md9c6ff9[m Add .gitattributes and .gitignore.

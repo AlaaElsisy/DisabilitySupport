@@ -32,6 +32,8 @@ namespace DisabilitySupport.DAL.Data
         public virtual DbSet<Payment>? Payments { get; set; }
         public virtual DbSet<ServiceCategory> ServiceCategories { get; set; }
 
+        public virtual DbSet<HubConnection> HubConnections { get; set; } = null!;
+        public virtual DbSet<Notification> Notifications { get; set; } = null!;
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
