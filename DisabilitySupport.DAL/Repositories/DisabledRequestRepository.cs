@@ -35,6 +35,7 @@ namespace DisabilitySupport.DAL.Repositories
             .Include(x => x.HelperService)
             .ThenInclude(hs => hs.Helper)
             .ThenInclude(h => h.User)
+            .Include(x => x.Disabled)
             .AsQueryable();
 
 
