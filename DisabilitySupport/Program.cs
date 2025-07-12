@@ -215,7 +215,9 @@ namespace DisabilitySupport
                 app.MapOpenApi();
             }
             app.UseSqlTableDependency<SubscribeNotificationTableDependency>(
-      builder.Configuration.GetConnectionString("connectionString"));
+
+           builder.Configuration.GetConnectionString("connectionString"));
+
 
 
             app.UseStaticFiles();

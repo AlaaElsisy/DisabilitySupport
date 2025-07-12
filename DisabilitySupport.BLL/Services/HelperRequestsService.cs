@@ -47,7 +47,7 @@ namespace DisabilitySupport.BLL.Services
 
        
 
-        public async Task<HelperRequestDto> GetByIdAsync(int id)
+        public async Task<HelperRequestDetailsDto> GetByIdAsync(int id)
         {
             var exists = await _unitOfWork._helperRequestRepository.RequestExixts(id);
             if (!exists)
@@ -58,7 +58,7 @@ namespace DisabilitySupport.BLL.Services
             if (Request == null)
                 throw new KeyNotFoundException("No Request with that ID");
 
-            return _mapper.Map<HelperRequestDto>(Request);
+            return _mapper.Map<HelperRequestDetailsDto>(Request);
         }
 
 

@@ -16,7 +16,7 @@ namespace DisabilitySupport.DAL.Repositories
         {
         }
 
-
+ 
         public async Task<bool> HelperExists(int id)
         {
             return await _Context.Helpers.AnyAsync(h => h.Id == id);
