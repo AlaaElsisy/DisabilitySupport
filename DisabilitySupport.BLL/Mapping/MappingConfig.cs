@@ -40,6 +40,11 @@ namespace DisabilitySupport.BLL.Mapping
             .ForMember(dest => dest.HelperName, opt => opt.MapFrom(src => src.Helper != null && src.Helper.User != null ? src.Helper.User.FullName : null))
             .ForMember(dest => dest.HelperImage, opt => opt.MapFrom(src => src.Helper != null && src.Helper.User != null ? src.Helper.User.ProfileImage : null))
             .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Helper.UserId))
+            .ForMember(dest => dest.DisabledName,
+                    opt => opt.MapFrom(src => src.DisabledOffer != null && src.DisabledOffer.Disabled != null && src.DisabledOffer.Disabled.User != null
+                        ? src.DisabledOffer.Disabled.User.FullName : null))
+                .ForMember(dest => dest.Service,
+                    opt => opt.MapFrom(src => src.DisabledOffer != null ? src.DisabledOffer.Description : null))
             .ReverseMap();
 
 

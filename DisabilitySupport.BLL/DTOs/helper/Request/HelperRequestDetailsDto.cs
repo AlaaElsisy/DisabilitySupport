@@ -18,5 +18,8 @@ namespace DisabilitySupport.BLL.DTOs.helper.Request
         public string? HelperImage { get; set; }
         public int? DisabledOfferId { get; set; }
         public string? UserId { get; set; }
+
+        public string? DisabledName { get; set; }
+        public string? Service { get; set; }
     }
 }
