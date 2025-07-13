@@ -36,6 +36,8 @@ namespace DisabilitySupport.BLL.DTOs.Disabled
         public DateTime? availableDateFrom { get; set; }
         public DateTime? availableDateTo { get; set; }
         public string? PatientName { get; set; }
+        public string? HelperUserId { get; set; }
+
 
     }
 }
