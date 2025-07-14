@@ -15,9 +15,8 @@ namespace DisabilitySupport.BLL.Interfaces
 
 
         Task<List<PaymentDetailsDto>> GetPaymentsByDisabledIdAsync(int disabledId);
-        //Task<List<PaymentDetailsDto>> GetPaymentsByHelperIdAsync(int helperId);
 
-       
+        Task<WithdrawalResponseDto> ProcessWithdrawalAsync(WithdrawalRequestDto request);
 
     }
 }

@@ -9,6 +9,6 @@ namespace DisabilitySupport.BLL.Interfaces
 {
     public interface INotificationService
     {
-        Task<List<Notification>> GetNotificationsAsync(string userId);
+        Task<List<Notification>> GetNotificationsAsync(string userId, int pageNumber);
     }
 }

@@ -27,5 +27,6 @@ namespace DisabilitySupport.BLL.DTOs.Disabled
         public string? HelperName { get; set; }
         public string? HelperImage { get; set; }
         public string? UserId {get; set; }
+        public string? HelperUserId { get; set; }
     }
 }

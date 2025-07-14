@@ -5,29 +5,22 @@
 namespace DisabilitySupport.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class addcategoryimage : Migration
+    public partial class AddBalacnetoHelper : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "Image",
-                table: "ServiceCategories",
-                type: "nvarchar(max)",
+            migrationBuilder.AddColumn<decimal>(
+                name: "Balance",
+                table: "Helpers",
+                type: "decimal(18,2)",
                 nullable: true);
 
             migrationBuilder.UpdateData(
-                table: "ServiceCategories",
+                table: "Helpers",
                 keyColumn: "Id",
                 keyValue: 1,
-                column: "Image",
-                value: null);
-
-            migrationBuilder.UpdateData(
-                table: "ServiceCategories",
-                keyColumn: "Id",
-                keyValue: 2,
-                column: "Image",
+                column: "Balance",
                 value: null);
         }
 
@@ -35,8 +28,8 @@ namespace DisabilitySupport.DAL.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Image",
-                table: "ServiceCategories");
+                name: "Balance",
+                table: "Helpers");
         }
     }
 }

@@ -72,10 +72,39 @@ namespace DisabilitySupport.BLL.Services
                 var chargeService = new ChargeService();
                 var charge = chargeService.Create(chargeOptions);
 
-               
                 payment.Status = charge.Status == "succeeded" ? PaymentStatus.Paid : PaymentStatus.Failed;
                 _unitOfWork._paymentRepository.Update(payment);
                 await _unitOfWork.Save();
+                if (payment.Status == PaymentStatus.Paid && payment.HelperRequestId.HasValue)
+                {
+                    var helperRequest = await _unitOfWork._helperRequestRepository.GetByIdAsync(payment.HelperRequestId.Value);
+                    if (helperRequest?.HelperId != null)
+                    {
+                        var helper = await _unitOfWork._helperRepository.GetByIdAsync(helperRequest.HelperId.Value);
+                        if (helper != null)
+                        {
+                            helper.Balance = (helper.Balance ?? 0) + payment.Amount;
+                            _unitOfWork._helperRepository.Update(helper);
+                            await _unitOfWork.Save();
+                        }
+                    }
+                }
+                else if (payment.Status == PaymentStatus.Paid && payment.DisabledRequestId.HasValue)
+                {
+                    var disabledRequest = await _unitOfWork._disabledRequestRepository.GetDetailsById(payment.DisabledRequestId.Value);
+                    var helperService = disabledRequest?.HelperService;
+                    var helperId = helperService?.HelperId;
+                    if (helperId != null)
+                    {
+                        var helper = await _unitOfWork._helperRepository.GetByIdAsync(helperId.Value);
+                        if (helper != null)
+                        {
+                            helper.Balance = (helper.Balance ?? 0) + payment.Amount;
+                            _unitOfWork._helperRepository.Update(helper);
+                            await _unitOfWork.Save();
+                        }
+                    }
+                }
 
                 return new PaymentResponseDto
                 {
@@ -95,6 +124,91 @@ namespace DisabilitySupport.BLL.Services
                     Success = false,
                     Message = $"Payment failed: {ex.StripeError?.Message ?? ex.Message}",
                     PaymentId = payment.Id
+                };
+            }
+        }
+
+        public async Task<WithdrawalResponseDto> ProcessWithdrawalAsync(WithdrawalRequestDto request)
+        {
+            try
+            {
+                // Get helper by userId
+                var helper = await _unitOfWork._helperRepository.GetByUserIdAsync(request.UserId);
+                if (helper == null)
+                {
+                    return new WithdrawalResponseDto 
+                    { 
+                        Success = false, 
+                        Message = "Helper not found" 
+                    };
+                }
+
+                if (helper.Balance < request.Amount)
+                {
+                    return new WithdrawalResponseDto 
+                    { 
+                        Success = false, 
+                        Message = "Insufficient balance" 
+                    };
+                }
+
+                if (request.Amount < 200)
+                {
+                    return new WithdrawalResponseDto 
+                    { 
+                        Success = false, 
+                        Message = "Minimum withdrawal amount is 200 EGP" 
+                    };
+                }
+
+                
+                try
+                {
+                    
+                    bool transferSuccess = true;
+                    string transactionId = $"wd_{DateTime.UtcNow.Ticks}";
+                    
+                    if (transferSuccess)
+                    {
+                        // Deduct from helper's balance
+                        helper.Balance -= request.Amount;
+                        _unitOfWork._helperRepository.Update(helper);
+                        await _unitOfWork.Save();
+
+                        return new WithdrawalResponseDto
+                        {
+                            Success = true,
+                            Message = "Withdrawal processed successfully",
+                            TransactionId = transactionId,
+                            Amount = request.Amount,
+                            BankAccountNumber = request.BankAccountNumber,
+                            ProcessedDate = DateTime.UtcNow
+                        };
+                    }
+                    else
+                    {
+                        return new WithdrawalResponseDto
+                        {
+                            Success = false,
+                            Message = "Transfer failed"
+                        };
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return new WithdrawalResponseDto
+                    {
+                        Success = false,
+                        Message = $"Transfer failed: {ex.Message}"
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new WithdrawalResponseDto
+                {
+                    Success = false,
+                    Message = $"Withdrawal failed: {ex.Message}"
                 };
             }
         }

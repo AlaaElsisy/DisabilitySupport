@@ -36,6 +36,7 @@ namespace DisabilitySupport.DAL.Repositories
             .ThenInclude(hs => hs.Helper)
             .ThenInclude(h => h.User)
             .Include(x => x.Disabled)
+            .OrderByDescending(x => x.RequestDate)
             .AsQueryable();
 
 

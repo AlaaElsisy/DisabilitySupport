@@ -22,9 +22,9 @@ namespace DisabilitySupport.BLL.Services
         }
 
 
-        async Task<List<Notification>> INotificationService.GetNotificationsAsync(string userId)
+        async Task<List<Notification>> INotificationService.GetNotificationsAsync(string userId, int pageNumber)
         {
-           return await notificationRepository.GetAll(userId);
+           return await notificationRepository.GetAll(userId,pageNumber);
 
         }
     }

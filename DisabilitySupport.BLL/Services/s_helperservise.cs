@@ -51,5 +51,9 @@ namespace DisabilitySupport.BLL.Services
             }
         }
 
+        public Task<decimal?> WithdrawAsync(int helperId, decimal amount)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -58,7 +58,7 @@ namespace DisabilitySupport.Api.Controllers
 
             dto.DisabledId = disabled.Id;
             dto.OfferPostDate = DateTime.UtcNow;
-            dto.Status = "Pending";
+            dto.Status = "Open";
 
             var created = await _service.CreateAsync(dto);
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
