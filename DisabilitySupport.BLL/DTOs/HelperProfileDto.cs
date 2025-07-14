@@ -15,6 +15,7 @@ namespace DisabilitySupport.BLL.DTOs
         public string? Zone { get; set; }
         public string? ProfileImage { get; set; }
         public string? Bio { get; set; }
+        public decimal? Balance { get; set; }
     }
 
 }

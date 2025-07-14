@@ -308,6 +308,9 @@ namespace DisabilitySupport.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<decimal?>("Balance")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("Bio")
                         .HasColumnType("nvarchar(max)");
 

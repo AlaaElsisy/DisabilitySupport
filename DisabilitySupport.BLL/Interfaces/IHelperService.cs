@@ -13,5 +13,6 @@ namespace DisabilitySupport.BLL.Interfaces
 
         Task<int?> GetHelperIdByUserIdAsync(string userId);
         Task<HelperDto> GetByIdAsync(int id);
+        Task<decimal?> WithdrawAsync(int helperId, decimal amount);
     }
 }

@@ -11,6 +11,7 @@ namespace DisabilitySupport.DAL.Models
     {
         public int Id { get; set; }
         public string? Bio { get; set; }
+        public decimal? Balance { get; set; }
 
         [ForeignKey("User")]
         public string? UserId { get; set; }

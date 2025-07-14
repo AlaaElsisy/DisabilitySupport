@@ -10,7 +10,8 @@ namespace DisabilitySupport.DAL.Interfaces
     public interface IHelperRequestRepository: IGenericRepository<HelperRequest>
     {
         Task<List<HelperRequest>> GetHelperRequestByHelperId(int helperId);
-
+        Task<HelperRequest> GetById(int id);
+        Task<HelperRequest?> GetByIdAsync(int id);
 
 
         Task<bool> HelperExists(int id);
