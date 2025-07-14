@@ -89,6 +89,22 @@ namespace DisabilitySupport.BLL.Services
                         }
                     }
                 }
+                else if (payment.Status == PaymentStatus.Paid && payment.DisabledRequestId.HasValue)
+                {
+                    var disabledRequest = await _unitOfWork._disabledRequestRepository.GetDetailsById(payment.DisabledRequestId.Value);
+                    var helperService = disabledRequest?.HelperService;
+                    var helperId = helperService?.HelperId;
+                    if (helperId != null)
+                    {
+                        var helper = await _unitOfWork._helperRepository.GetByIdAsync(helperId.Value);
+                        if (helper != null)
+                        {
+                            helper.Balance = (helper.Balance ?? 0) + payment.Amount;
+                            _unitOfWork._helperRepository.Update(helper);
+                            await _unitOfWork.Save();
+                        }
+                    }
+                }
 
                 return new PaymentResponseDto
                 {
