@@ -15,9 +15,9 @@ namespace DisabilitySupport.Api.Controllers
             _notificationService = notificationService;
         }
         [HttpGet]
-        public async Task<IActionResult> GetNotifications([FromQuery] string userId)
+        public async Task<IActionResult> GetNotifications([FromQuery] string userId, int pageNumber)
         {
-          var result = await _notificationService.GetNotificationsAsync(userId);
+          var result = await _notificationService.GetNotificationsAsync(userId, pageNumber);
             return Ok(result);
         }
     }
