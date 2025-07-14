@@ -18,7 +18,7 @@ namespace DisabilitySupport.DAL.Hubs
             Notification notification = new Notification()
             {
                 Message = message,
-                NotificationDateTime = DateTime.UtcNow,
+                NotificationDateTime = DateTime.Now,
                 MessageType = "All",
                 UserId = "All"
 
@@ -30,11 +30,10 @@ namespace DisabilitySupport.DAL.Hubs
 
         public async Task SendNotificationToClient(string message, string userId)
         {
-
             Notification notification = new Notification()
             {
                 Message = message,
-                NotificationDateTime = DateTime.UtcNow,
+                NotificationDateTime = DateTime.Now,
                 MessageType = "Personal",
                 UserId = userId
 
@@ -42,7 +41,6 @@ namespace DisabilitySupport.DAL.Hubs
 
             dbContext.Notifications.Add(notification);
             await dbContext.SaveChangesAsync();
-
             var hubConnections = dbContext.HubConnections.Where(con => con.UserId == userId).ToList();
             foreach (var hubConnection in hubConnections)
             {

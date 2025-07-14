@@ -9,6 +9,6 @@ namespace DisabilitySupport.DAL.Interfaces
 {
     public interface INotificationRepository : IGenericRepository<Notification>
     {
-        Task<List<Notification>> GetAll(string userId);
+        Task<List<Notification>> GetAll(string userId, int pageNumber);
     }
 }

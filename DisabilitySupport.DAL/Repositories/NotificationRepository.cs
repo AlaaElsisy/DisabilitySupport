@@ -20,9 +20,10 @@ namespace DisabilitySupport.DAL.Repositories
 
    
 
-        public async Task<List<Notification>> GetAll(string userId)
+        public async Task<List<Notification>> GetAll(string userId,int pageNumber)
         {
-          return  await _Context.Notifications.Where(x=>x.UserId==userId || x.MessageType == "All").ToListAsync();
+            int notificationNumber = pageNumber * 10;
+          return  await _Context.Notifications.Where(x=>x.UserId==userId || x.MessageType == "All").Take(notificationNumber).ToListAsync();
         }
     }
 }
